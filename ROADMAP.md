@@ -14,7 +14,7 @@ Decisions: docs/stage-2-decisions.md.
 - [x] self-hosting: run the API on a personal server or home network
 Skipped: esp32-client (ESP32 calls the API over the network); not part of stage 2.
 
-## Stage 3: accuracy, personal card and hosting hardening (current)
+## Stage 3: accuracy, personal card and hosting hardening (complete)
 Decisions: docs/stage-3-decisions.md.
 - [x] table-verification: verify durmuhurta, varjyam, gowri and functional against sources
 - [x] hora-generic-source: replace the placeholder generic hora-lord table with a sourced one
