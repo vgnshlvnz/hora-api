@@ -160,3 +160,60 @@ def test_only_the_checked_rows_are_marked_verified() -> None:
     assert not {u for u in unverified if u.startswith("durmuhurta")}
     # Table-level flags stay while any row is unchecked.
     assert {"varjyam", "gowri"} <= unverified and "durmuhurta" not in unverified
+
+
+# Drik Panchang Gowri Panchangam (Nalla Neram), Kuala Lumpur, 2026-11-01 (Sunday) to 2026-11-07
+# (Saturday): (day sequence, night sequence). The 8th Saturday night segment is omitted: Drik
+# printed Soram twice there and no Rogam, so the table's Rogam is an inference.
+DRIK_GOWRI = {
+    date(2026, 11, 1): (
+        "Uthi Amirdha Rogam Laabam Dhanam Sugam Soram Visham",
+        "Dhanam Sugam Soram Visham Uthi Amirdha Rogam Laabam",
+    ),
+    date(2026, 11, 2): (
+        "Amirdha Visham Rogam Laabam Dhanam Sugam Soram Uthi",
+        "Sugam Soram Uthi Amirdha Visham Rogam Laabam Dhanam",
+    ),
+    date(2026, 11, 3): (
+        "Rogam Laabam Dhanam Sugam Soram Uthi Visham Amirdha",
+        "Soram Uthi Visham Amirdha Rogam Laabam Dhanam Sugam",
+    ),
+    date(2026, 11, 4): (
+        "Laabam Dhanam Sugam Soram Visham Uthi Amirdha Rogam",
+        "Uthi Amirdha Rogam Laabam Dhanam Sugam Soram Visham",
+    ),
+    date(2026, 11, 5): (
+        "Dhanam Sugam Soram Uthi Amirdha Visham Rogam Laabam",
+        "Amirdha Visham Rogam Laabam Dhanam Sugam Soram Uthi",
+    ),
+    date(2026, 11, 6): (
+        "Sugam Soram Uthi Visham Amirdha Rogam Laabam Dhanam",
+        "Rogam Laabam Dhanam Sugam Soram Uthi Visham Amirdha",
+    ),
+    date(2026, 11, 7): (
+        "Soram Uthi Visham Amirdha Rogam Laabam Dhanam Sugam",
+        "Laabam Dhanam Sugam Soram Uthi Visham Amirdha",  # first 7 only
+    ),
+}
+
+
+def test_gowri_sequences_and_times_match_drik() -> None:
+    for d, (day_names, night_names) in DRIK_GOWRI.items():
+        day = D.make_day(d, KL, 3.139, 101.6869)
+        segs = D.gowri(day, TABLES)
+        day_segs = [g for g in segs if not g.is_night]
+        night_segs = [g for g in segs if g.is_night]
+        assert [g.name for g in day_segs] == day_names.split(), d
+        assert [g.name for g in night_segs][: len(night_names.split())] == night_names.split(), d
+        # 90-minute segments from sunrise (06:57) and from sunset (18:57).
+        assert (
+            minutes_off(day_segs[0].start, 6, 57) <= 2 and minutes_off(day_segs[7].end, 18, 57) <= 2
+        )
+        assert minutes_off(night_segs[0].start, 18, 57) <= 2
+        assert abs((day_segs[0].end - day_segs[0].start).total_seconds() / 60 - 90) <= 2
+
+
+def test_uthi_is_good_as_in_drik() -> None:
+    assert TABLES.gowri.nature["Uthi"] == "good"
+    assert {n for n, v in TABLES.gowri.nature.items() if v == "bad"} == {"Rogam", "Soram", "Visham"}
+    assert "gowri:saturday" in TABLES.unverified and "gowri:sunday" not in TABLES.unverified
