@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- hora-generic-source: `hora_generic.yaml` now uses the conventional benefic (Jupiter, Venus 1.0), variable (Moon, Mercury 0.5) and malefic (Sun, Mars, Saturn 0.0) grouping instead of the five-step placeholder (Sun moves 0.25 to 0.0, Moon and Mercury 0.75 to 0.5). It has no primary text, so it stays `verify: true` and the rasi hora term stays off by default.
 - api-tiers: per-subscriber API keys in a keys file (hashed, `hora-keys` CLI, reloaded on change) with `free` and `paid` tiers, 403 `tier-required` on paid endpoints, per-key stored-profile scopes, owner keys via `API_KEYS`, key ids in logs, fail-closed keys file; MCP passthrough mode forwarding each caller's own key; deploy files and smoke test updated.
 - vimshottari-dasha: `core.dasha` computes Vimshottari maha and antar periods from the Moon's longitude at birth; profiles take an optional `birth_datetime` (never returned), scoring uses computed periods when no explicit `dasha` is given, and `/v1/horas/personal` lists the periods overlapping the day; `data/vimshottari.yaml`, `dasha_year_days` setting.
 - paksha-chandrabala: chandrabala houses 2, 5 and 9 take a value per paksha (`chandra_conditional_shukla_value` 1.0, `chandra_conditional_krishna_value` 0.5), judged at the start of the hora, on by default (`chandra_paksha`); `core.astro.paksha`; the personal card splits chandrabala rows at the full and new moon.
