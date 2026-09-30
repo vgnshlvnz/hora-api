@@ -1,6 +1,6 @@
 <!-- Feature state: [ ] planned, [~] in progress, [x] done. -->
 
-## Stage 1: query API (current)
+## Stage 1: query API (complete)
 - [x] astro-core: sunrise/sunset, nakshatra/rasi/tithi transitions
 - [x] hora-engine: horas, kalams, durmuhurta, varjyam, gowri
 - [x] personal-scoring: tarabala, chandrabala, hora lord rank, dasha

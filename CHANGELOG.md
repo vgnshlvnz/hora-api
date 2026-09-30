@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.1.0] - Stage 1
+
 ### Added
 
 - scaffold: repo layout, tooling, git hooks and workflow scripts.
