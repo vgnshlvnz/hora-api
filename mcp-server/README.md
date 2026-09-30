@@ -10,6 +10,7 @@ uv project with its own environment; it talks to the API over HTTP and does not 
 | ---- | ----- | ------- |
 | `hora_day_card` | `GET /v1/cards/day` | Day card: sun, Moon, windows to avoid, Nalla Neram, horas |
 | `hora_rasi_card` | `GET /v1/cards/rasi` | Rasi card: Chandrashtama rasis, best rasis, all twelve |
+| `hora_personal_card` | `GET /v1/cards/personal` | Personal card: best windows, why horas are blocked, tara and chandra for a stored `profile_id` |
 | `hora_personal_horas` | `GET /v1/horas/personal` | Scored horas and top windows for a stored `profile_id` |
 
 Every tool takes optional `date`, `lat`, `lon`, `tz`, `convention` (`tamil` or `classical`) and
