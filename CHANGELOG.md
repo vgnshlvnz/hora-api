@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- docker-autorestart: a `watcher` sidecar in `deploy/` (`watcher.py`, compose service and Dockerfile target) that restarts unhealthy labelled containers, capped at 3 per 30 minutes, then gives up and writes a status file; `scripts/smoke.sh` can check that file.
 - personal-card: `GET /v1/cards/personal?profile_id=` (best windows, why horas are blocked, tara and chandra over the day) and the `hora_personal_card` MCP tool.
 
 ## [0.2.0] - Stage 2

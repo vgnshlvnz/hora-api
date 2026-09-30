@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # Build from the repository root:  docker build -f deploy/Dockerfile --target api .
-# Targets: api (the HTTP API) and mcp (the MCP server).
+# Targets: api (the HTTP API), mcp (the MCP server) and watcher (restarts unhealthy containers).
 
 FROM python:3.12-slim AS base
 ENV PYTHONUNBUFFERED=1 \
@@ -33,3 +33,12 @@ ENV PATH="/app/.venv/bin:$PATH" \
 USER hora
 EXPOSE 8765
 CMD ["hora-mcp"]
+
+# The watcher needs only the standard library: no uv, no project code.
+FROM python:3.12-slim AS watcher
+ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
+RUN useradd --system --uid 10001 --home-dir /app --shell /usr/sbin/nologin hora
+WORKDIR /app
+COPY deploy/watcher.py /app/watcher.py
+USER hora
+CMD ["python", "/app/watcher.py"]

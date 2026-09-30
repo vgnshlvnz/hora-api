@@ -49,7 +49,7 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 [tool.mypy]
 strict = true
 mypy_path = "src"
-files = ["src", "tests"]
+files = ["src", "tests", "deploy/healthcheck.py", "deploy/watcher.py"]
 
 # pyswisseph ships no type stubs.
 [[tool.mypy.overrides]]
