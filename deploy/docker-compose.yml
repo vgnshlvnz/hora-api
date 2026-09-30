@@ -10,6 +10,8 @@ services:
       target: api
     image: hora-api:local
     restart: unless-stopped
+    labels:
+      hora.autorestart: "true"   # opts in to the watcher below
     environment:
       # Plain HTTP on the LAN: keys are mandatory, so this refuses to start without them.
       API_KEYS: ${API_KEYS:?set API_KEYS in deploy/.env}
@@ -35,6 +37,8 @@ services:
       target: mcp
     image: hora-mcp:local
     restart: unless-stopped
+    labels:
+      hora.autorestart: "true"
     depends_on:
       api:
         condition: service_healthy
@@ -48,6 +52,40 @@ services:
       - "${MCP_PUBLISH:-0.0.0.0:8765}:8765"
     healthcheck:
       test: ["CMD", "python", "/app/healthcheck.py", "mcp"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  # Restarts containers that report "unhealthy" (Docker itself only restarts ones that exit),
+  # at most WATCHER_MAX_RESTARTS per WATCHER_WINDOW seconds each, then gives up and says so in
+  # the status file. It needs the Docker socket: see docs/self-hosting.md before enabling.
+  watcher:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: watcher
+    image: hora-watcher:local
+    restart: unless-stopped
+    user: "10001:10001"
+    # Group that owns the Docker socket on the host: stat -c %g /var/run/docker.sock
+    group_add:
+      - "${DOCKER_GID:?set DOCKER_GID in deploy/.env}"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      WATCHER_INTERVAL: ${WATCHER_INTERVAL:-15}
+      WATCHER_MAX_RESTARTS: ${WATCHER_MAX_RESTARTS:-3}
+      WATCHER_WINDOW: ${WATCHER_WINDOW:-1800}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # The status file lives on the host so scripts/smoke.sh or a monitor can read it. The
+      # directory must be writable by uid 10001.
+      - ${WATCHER_STATUS_DIR:-./watcher-status}:/status
+    healthcheck:
+      test: ["CMD", "python", "/app/watcher.py", "--healthcheck"]
       interval: 30s
       timeout: 5s
       retries: 3
