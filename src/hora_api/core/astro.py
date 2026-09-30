@@ -146,6 +146,16 @@ def moon_state(t: datetime, ayanamsa: Ayanamsa = Ayanamsa.LAHIRI) -> MoonState:
     return _state_from_longitude(_moon_sidereal_longitude_jd(_to_jd(t), ayanamsa))
 
 
+def ascendant(t: datetime, lat: float, lon: float, ayanamsa: Ayanamsa = Ayanamsa.LAHIRI) -> float:
+    """Sidereal longitude of the ascendant (lagna) at `t` for a place, in degrees [0, 360).
+
+    The rasi of the lagna is `int(ascendant // 30)`.
+    """
+    with _sidereal(ayanamsa):
+        _, ascmc = swe.houses_ex(_to_jd(t), lat, lon, b"W", swe.FLG_SIDEREAL)
+    return float(ascmc[0]) % 360.0
+
+
 def tithi(t: datetime) -> int:
     """Tithi number 1-30 at `t` (1-15 shukla, 16-30 krishna)."""
     return _tithi_index_jd(_to_jd(t))
@@ -237,6 +247,7 @@ __all__ = [
     "MoonState",
     "SunEvents",
     "Transition",
+    "ascendant",
     "moon_state",
     "sun_events",
     "tithi",
