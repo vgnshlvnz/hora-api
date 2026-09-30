@@ -29,3 +29,8 @@ class ScoringSettings(BaseSettings):
     # Dasha match: hora lord is the running dasha/bhukti lord, or a natural friend of one.
     dasha_match_value: float = 1.0
     dasha_friend_value: float = 0.5
+
+    # Rasi matrix: chandrabala only, plus an optional generic hora-lord term (off by default).
+    rasi_hora_generic: bool = False
+    rasi_weight_chandra: float = 50.0
+    rasi_weight_hora: float = 50.0
