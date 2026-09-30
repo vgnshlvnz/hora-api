@@ -50,10 +50,7 @@ nakshatra (every window is 4.0 ghatikas long). One more value was wrong: **Hasta
 gives 21** (15:06-16:45 on 2026-11-06, 20.97). Ardra 21 was confirmed a second time
 (03:45-05:11 on 2026-11-26). The other 24 values matched to within 0.1 ghatika.
 
-**Open: Mula.** Its window at 20 ghatikas matches (01:48-03:36 on 2026-11-13), but Drik also
-lists a second Varjyam window in the same Mula, 17:59-19:47 on 2026-11-13 (56 ghatikas, ending
-with the nakshatra). `varjyam.yaml` holds one window per nakshatra, so the second is not
-modelled and Mula stays `verify: true`. Nothing else in the 28 days showed a second window.
+**Mula (stage 5).** Its window at 20 ghatikas matches (01:48-03:36 on 2026-11-13), and Drik also lists a second window in the same Mula, 17:59-19:47 on 2026-11-13 (56 ghatikas, ending with the nakshatra). `varjyam.yaml` now takes a list of `start_ghati` values per nakshatra and Mula has `[20, 56]`. Each window was seen once, so Mula stays `verify: true` until a second Mula day matches.
 
 ## Gowri Panchangam (checked after stage 3 closed)
 
@@ -76,7 +73,7 @@ table uses Rogam for segment 8, an inference, so `gowri:saturday` stays `verify:
 | Table | Rows checked | Rows unchecked | What would check them |
 | ----- | ------------ | -------------- | --------------------- |
 | `durmuhurta.yaml` | all 7 weekdays | none | done |
-| `varjyam.yaml` | 26 nakshatras | Mula (second window, see above) | Decide whether Mula needs a second window; then one more Drik check |
+| `varjyam.yaml` | 26 nakshatras | Mula (two windows modelled, each seen once) | A second Mula day on Drik |
 | `gowri.yaml` | 6 weekdays (Sun to Fri) | Saturday night (8th segment inferred) | A printed panchangam or another Drik date for Saturday night |
 | `functional.yaml` | none | all | A sourced functional-nature table per lagna (a text, not a calendar page) |
 | `hora_generic.yaml` | none | all | Replaced the placeholder with the conventional benefic/variable/malefic grouping (1.0 / 0.5 / 0.0) by the `hora-generic-source` feature. No primary text: stays `verify: true` until a cited source confirms it |

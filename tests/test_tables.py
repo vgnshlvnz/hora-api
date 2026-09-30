@@ -31,7 +31,8 @@ def test_tables_load_with_expected_shape() -> None:
         "Moon",
     )
     assert t.horas.weekday_lords == ("Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn")
-    assert len(t.varjyam.start_ghati) == 27
+    assert len(t.varjyam.start_ghatis) == 27
+    assert t.varjyam.start_ghatis[18] == (20.0, 56.0)  # Mula has two windows
     assert t.dasha.lords[0] == "Ketu" and sum(t.dasha.years) == 120
     assert len(t.kalams.rahu_kalam) == len(t.durmuhurta.day) == len(t.gowri.day) == 7
     assert all(len(row) == t.gowri.segments for row in t.gowri.day + t.gowri.night)

@@ -67,6 +67,15 @@ def _by_weekday(mapping: dict[str, Any], where: str) -> tuple[Any, ...]:
     return tuple(mapping[d] for d in WEEKDAYS)
 
 
+def _start_ghatis(row: dict[str, Any]) -> tuple[float, ...]:
+    """A varjyam row's `start_ghati` is one number, or a list when it has several windows."""
+    raw = row["start_ghati"]
+    values = tuple(float(x) for x in (raw if isinstance(raw, list) else [raw]))
+    if not values:
+        raise ValueError(f"varjyam.yaml: {row['name']} has no start_ghati")
+    return values
+
+
 def load_tables(data_dir: Path | None = None) -> Tables:
     root = data_dir or default_data_dir()
     docs = {name: _read(root, name) for name in TABLE_FILES}
@@ -108,7 +117,7 @@ def load_tables(data_dir: Path | None = None) -> Tables:
     varj = VarjyamTable(
         ghatikas_per_nakshatra=float(v["ghatikas_per_nakshatra"]),
         duration_ghatikas=float(v["duration_ghatikas"]),
-        start_ghati=tuple(float(n["start_ghati"]) for n in v["nakshatras"]),
+        start_ghatis=tuple(_start_ghatis(n) for n in v["nakshatras"]),
     )
 
     g = docs["gowri"]

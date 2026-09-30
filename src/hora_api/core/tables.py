@@ -37,7 +37,7 @@ class DurmuhurtaTable:
 class VarjyamTable:
     ghatikas_per_nakshatra: float
     duration_ghatikas: float
-    start_ghati: tuple[float, ...]  # 27 entries, Ashwini first
+    start_ghatis: tuple[tuple[float, ...], ...]  # 27 entries, Ashwini first; Mula has two
 
 
 @dataclass(frozen=True, slots=True)

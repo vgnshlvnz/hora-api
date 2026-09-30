@@ -256,12 +256,13 @@ def varjyam(day: Day, tables: Tables) -> list[Window]:
     out: list[Window] = []
     for span in day.nakshatra_spans:
         duration = span.end - span.start
-        start = span.start + duration * (t.start_ghati[span.index] / t.ghatikas_per_nakshatra)
-        end = start + duration * (t.duration_ghatikas / t.ghatikas_per_nakshatra)
-        start, end = max(start, day.sunrise), min(end, day.next_sunrise)
-        if start < end:
-            out.append(Window(start, end, REASON_VARJYAM))
-    return out
+        for ghati in t.start_ghatis[span.index]:
+            start = span.start + duration * (ghati / t.ghatikas_per_nakshatra)
+            end = start + duration * (t.duration_ghatikas / t.ghatikas_per_nakshatra)
+            start, end = max(start, day.sunrise), min(end, day.next_sunrise)
+            if start < end:
+                out.append(Window(start, end, REASON_VARJYAM))
+    return sorted(out, key=lambda w: w.start)
 
 
 def gowri(day: Day, tables: Tables) -> list[GowriSegment]:
