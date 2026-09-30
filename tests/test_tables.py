@@ -3,11 +3,17 @@ from pathlib import Path
 
 import pytest
 
-from hora_api.data.loader import TABLE_FILES, default_data_dir, load_tables
+from hora_api.data.loader import (
+    SCORING_TABLE_FILES,
+    TABLE_FILES,
+    default_data_dir,
+    load_scoring_tables,
+    load_tables,
+)
 
 
 def test_every_table_has_a_source_comment() -> None:
-    for name in TABLE_FILES:
+    for name in TABLE_FILES + SCORING_TABLE_FILES:
         path = default_data_dir() / f"{name}.yaml"
         first = next(ln for ln in path.read_text().splitlines() if ln.strip())
         assert first.startswith("# Source:"), path
@@ -45,3 +51,11 @@ def test_missing_source_comment_is_rejected(tmp_path: Path) -> None:
     )
     with pytest.raises(ValueError, match="Source"):
         load_tables(tmp_path)
+
+
+def test_scoring_tables_load_and_report_unverified() -> None:
+    t = load_scoring_tables()
+    assert len(t.names.nakshatras) == 27 and t.names.rasis[10] == "Kumbha"
+    assert len(t.functional) == 12 and t.functional[10].yogakaraka == "Venus"
+    assert "Jupiter" in t.friends["Sun"]
+    assert t.unverified == {"functional"}
