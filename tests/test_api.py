@@ -346,6 +346,7 @@ def test_openapi_is_published_and_valid(client: TestClient) -> None:
     validate(spec)
     assert set(spec["paths"]) == {
         "/v1/day", "/v1/horas/personal", "/v1/horas/rasi", "/v1/profiles", "/healthz", "/readyz",
+        "/v1/cards/day", "/v1/cards/rasi",
     }  # fmt: skip
     assert set(spec["paths"]["/v1/horas/personal"]) == {"get", "post"}
     assert "X-API-Key" in str(spec["components"]["securitySchemes"])

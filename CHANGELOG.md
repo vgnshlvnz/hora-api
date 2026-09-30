@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- chat-cards: client-neutral chat cards from the API, `GET /v1/cards/day` and `GET /v1/cards/rasi` (sections with stable ids, tone per row, times in the request timezone).
+
 ## [0.1.0] - Stage 1
 
 ### Added
