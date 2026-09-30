@@ -28,9 +28,9 @@ Questions the decisions raise. None is answered here.
 - **Paksha-dependent chandrabala.** Which houses count as good in shukla paksha and which in
   krishna, which tradition is followed, and is the paksha taken at the start of a hora or over
   its clean time (a tithi can change inside a hora)?
-- **Personal card.** Which fields does it show (top windows, the scored horas, blocked reasons,
-  tara and chandra changes), and does it take a stored `profile_id` only or an inline profile
-  too? The MCP tool for it follows the same answer.
+- **Personal card:** decided. It takes a stored `profile_id` only and shows best windows, why
+  horas are blocked (fully blocked horas only) and tara and chandra over the day; the MCP tool
+  is `hora_personal_card`. Not decided: a scored-horas section, and an inline-profile form.
 - **TLS proxy.** Which proxy, which hostnames, and how are certificates issued for a private
   LAN name (an internal CA, or a local DNS name with a real CA)? How do MCP clients trust it?
   Are the plain HTTP ports still published?
