@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.5.0] - Stage 5
+
 ### Added
 
 - mula-varjyam-window: a nakshatra can have more than one varjyam window (`start_ghati` may be a list in `varjyam.yaml`; `VarjyamTable.start_ghatis`), and Mula has two, at 20 and 56 ghatikas, as Drik Panchang lists (Kuala Lumpur, 2026-11-13). Hora overlapping Mula's second window are now blocked. Mula stays `verify: true` (each window seen once).

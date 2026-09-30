@@ -29,6 +29,6 @@ Skipped: tls-proxy (TLS reverse proxy); not needed while OpenClaw runs on the sa
 Decisions: docs/stage-4-decisions.md.
 - [x] gowri-verification: replace the Gowri Panchangam table with Drik Panchang's (the recalled cycle was wrong) and fix the Uthi nature
 
-## Stage 5: varjyam model (current)
+## Stage 5: varjyam model (complete)
 Decisions: docs/stage-5-decisions.md.
 - [x] mula-varjyam-window: let a nakshatra carry more than one varjyam window, for Mula's second one
