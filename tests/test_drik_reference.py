@@ -68,7 +68,7 @@ def test_friday_durmuhurta_matches_drik() -> None:
 
 def test_ardra_varjyam_matches_drik() -> None:
     """Ardra starts its varjyam 21 ghatikas in (not the 11 first recalled): 19:19-20:47."""
-    assert TABLES.varjyam.start_ghati[ARDRA] == 21
+    assert TABLES.varjyam.start_ghatis[ARDRA] == (21.0,)
     windows = D.varjyam(DAY, TABLES)
     assert len(windows) == 1
     assert minutes_off(windows[0].start, 19, 19) <= 1 and minutes_off(windows[0].end, 20, 47) <= 1
@@ -217,3 +217,14 @@ def test_uthi_is_good_as_in_drik() -> None:
     assert TABLES.gowri.nature["Uthi"] == "good"
     assert {n for n, v in TABLES.gowri.nature.items() if v == "bad"} == {"Rogam", "Soram", "Visham"}
     assert "gowri:saturday" in TABLES.unverified and "gowri:sunday" not in TABLES.unverified
+
+
+def test_mula_second_varjyam_window_matches_drik() -> None:
+    """Mula's second window (56 ghatikas) on Drik, 2026-11-13: 17:59-19:47, ending with Mula."""
+    d = date(2026, 11, 13)
+    day = D.make_day(d, KL, 3.139, 101.6869)
+    start, end = _at(d, "17:59"), _at(d, "19:47")
+    (w,) = [x for x in D.varjyam(day, TABLES) if abs((x.start - start).total_seconds()) < 3600]
+    assert (
+        abs((w.start - start).total_seconds()) <= 120 and abs((w.end - end).total_seconds()) <= 120
+    )
