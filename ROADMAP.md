@@ -9,7 +9,7 @@
 
 ## Stage 2: consumers and hosting (current)
 Decisions: docs/stage-2-decisions.md.
-- [ ] chat-cards: API renders ready-to-show chat card payloads
+- [~] chat-cards: API renders ready-to-show chat card payloads
 - [ ] mcp-server: MCP server wrapping the HTTP API
 - [ ] esp32-client: ESP32 calls the API over the network
 - [ ] self-hosting: run the API on a personal server or home network
