@@ -172,7 +172,7 @@ def test_durmuhurta_day_and_night() -> None:
     night_start = datetime(2026, 9, 29, 18, 0, tzinfo=UTC)
     assert [w.start for w in tuesday] == [
         datetime(2026, 9, 29, 6, 0, tzinfo=UTC) + 3 * timedelta(minutes=48),  # 4th day muhurta
-        night_start + 7 * timedelta(minutes=48),  # 8th night muhurta
+        night_start + 6 * timedelta(minutes=48),  # 7th night muhurta (Drik 23:45)
     ]
 
 

@@ -95,7 +95,7 @@ def test_golden_day(client: TestClient) -> None:
         assert minutes_from(x["time"], hh, mm) <= 2
 
     assert len(j["gowri"]) == 16 and {g["nature"] for g in j["gowri"]} <= {"good", "bad"}
-    assert j["unverified_tables"] == ["durmuhurta", "gowri", "varjyam"]
+    assert j["unverified_tables"] == ["gowri", "varjyam"]
 
 
 def test_times_are_whole_seconds_and_contiguous(client: TestClient) -> None:
@@ -196,7 +196,7 @@ def test_golden_personal_via_stored_profile(client: TestClient) -> None:
         s["15:02"]["chandra_change"]["after"]["house"],
     ) == (12, 1)
     assert s["07:02"]["components"] == {"tara": 25.0, "chandra": 0.0, "hora": 33.3, "dasha": None}
-    assert j["unverified_tables"] == ["durmuhurta", "functional", "varjyam"]
+    assert j["unverified_tables"] == ["functional", "varjyam"]
 
 
 def test_top_windows(client: TestClient) -> None:
@@ -250,7 +250,7 @@ def test_rasi_matrix(client: TestClient) -> None:
     assert sum("chandrashtama" in c["blocked_reasons"] for c in kanya["cells"]) == 9
     assert sum("chandrashtama" in c["blocked_reasons"] for c in tula["cells"]) == 16
     assert j["horas"][0]["start"].endswith("+08:00")
-    assert j["unverified_tables"] == ["durmuhurta", "varjyam"]
+    assert j["unverified_tables"] == ["varjyam"]
 
 
 def test_profiles_list_never_leaks_birth_data(client: TestClient) -> None:

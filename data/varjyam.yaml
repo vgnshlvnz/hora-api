@@ -1,36 +1,46 @@
 # Source: Tyajya / Varjyam ghatikas per nakshatra, Muhurta Chintamani (Tyajya table) as
-#   reproduced in common panchangams (e.g. Drik Panchang "Varjyam"). RECALLED FROM MEMORY,
-#   NOT CHECKED AGAINST A PRIMARY TEXT; verify each start ghati before trusting it.
+#   reproduced in common panchangams (e.g. Drik Panchang "Varjyam"). The values were first
+#   RECALLED FROM MEMORY; they have now been checked against Drik Panchang for Kuala Lumpur
+#   (geoname-id 1735161) on the 28 days 2026-11-01 to 2026-11-28 (plus Ardra on Fri 2026-10-30).
+#   On each day the Drik window was converted to ghatikas into the nakshatra (window start minus
+#   nakshatra start, over the nakshatra's duration, times 60); every window was 4.0 ghatikas long.
+#   Two values were wrong and are corrected: Ardra 11 -> 21 (Drik 19:19-20:47 on 2026-10-30 and
+#   03:45-05:11 on 2026-11-26) and Hasta 22 -> 21 (Drik 15:06-16:45 on 2026-11-06, 20.97).
+#   The other 24 values matched to within 0.1 ghatika, including Punarvasu (30, Drik 04:29-05:56
+#   on 2026-11-28).
+#   Mula stays verify: true. Its window at 20 ghatikas matches (Drik 01:48-03:36 on 2026-11-13),
+#   but Drik lists a second Varjyam window in the same Mula (17:59-19:47 on 2026-11-13, at 56
+#   ghatikas), and this table holds one window per nakshatra. Decide how to model it.
 # Varjyam starts `start_ghati` ghatikas into the nakshatra (of `ghatikas_per_nakshatra` in
 # total) and lasts `duration_ghatikas`. Both are scaled to the nakshatra's actual duration.
-verify: true
+verify: true  # stays true while Mula is open
 ghatikas_per_nakshatra: 60
 duration_ghatikas: 4
 nakshatras:
-  - {name: Ashwini,           start_ghati: 50}
-  - {name: Bharani,           start_ghati: 24}
-  - {name: Krittika,          start_ghati: 30}
-  - {name: Rohini,            start_ghati: 40}
-  - {name: Mrigashira,        start_ghati: 14}
-  - {name: Ardra,             start_ghati: 11}
-  - {name: Punarvasu,         start_ghati: 30}
-  - {name: Pushya,            start_ghati: 20}
-  - {name: Ashlesha,          start_ghati: 32}
-  - {name: Magha,             start_ghati: 30}
-  - {name: Purva Phalguni,    start_ghati: 20}
-  - {name: Uttara Phalguni,   start_ghati: 18}
-  - {name: Hasta,             start_ghati: 22}
-  - {name: Chitra,            start_ghati: 20}
-  - {name: Swati,             start_ghati: 14}
-  - {name: Vishakha,          start_ghati: 14}
-  - {name: Anuradha,          start_ghati: 10}
-  - {name: Jyeshtha,          start_ghati: 14}
-  - {name: Mula,              start_ghati: 20}
-  - {name: Purva Ashadha,     start_ghati: 24}
-  - {name: Uttara Ashadha,    start_ghati: 20}
-  - {name: Shravana,          start_ghati: 10}
-  - {name: Dhanishta,         start_ghati: 10}
-  - {name: Shatabhisha,       start_ghati: 18}
-  - {name: Purva Bhadrapada,  start_ghati: 16}
-  - {name: Uttara Bhadrapada, start_ghati: 24}
-  - {name: Revati,            start_ghati: 30}
+  - {name: Ashwini,           start_ghati: 50, verify: false}
+  - {name: Bharani,           start_ghati: 24, verify: false}
+  - {name: Krittika,          start_ghati: 30, verify: false}
+  - {name: Rohini,            start_ghati: 40, verify: false}
+  - {name: Mrigashira,        start_ghati: 14, verify: false}
+  - {name: Ardra,            start_ghati: 21, verify: false}  # was 11: corrected, see above
+  - {name: Punarvasu,         start_ghati: 30, verify: false}
+  - {name: Pushya,            start_ghati: 20, verify: false}
+  - {name: Ashlesha,          start_ghati: 32, verify: false}
+  - {name: Magha,             start_ghati: 30, verify: false}
+  - {name: Purva Phalguni,    start_ghati: 20, verify: false}
+  - {name: Uttara Phalguni,   start_ghati: 18, verify: false}
+  - {name: Hasta,             start_ghati: 21, verify: false}  # was 22: Drik 15:06-16:45 on 2026-11-06
+  - {name: Chitra,            start_ghati: 20, verify: false}
+  - {name: Swati,             start_ghati: 14, verify: false}
+  - {name: Vishakha,          start_ghati: 14, verify: false}
+  - {name: Anuradha,          start_ghati: 10, verify: false}
+  - {name: Jyeshtha,          start_ghati: 14, verify: false}
+  - {name: Mula,              start_ghati: 20, verify: true}
+  - {name: Purva Ashadha,     start_ghati: 24, verify: false}
+  - {name: Uttara Ashadha,    start_ghati: 20, verify: false}
+  - {name: Shravana,          start_ghati: 10, verify: false}
+  - {name: Dhanishta,         start_ghati: 10, verify: false}
+  - {name: Shatabhisha,       start_ghati: 18, verify: false}
+  - {name: Purva Bhadrapada,  start_ghati: 16, verify: false}
+  - {name: Uttara Bhadrapada, start_ghati: 24, verify: false}
+  - {name: Revati,            start_ghati: 30, verify: false}

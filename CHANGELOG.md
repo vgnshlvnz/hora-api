@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- table-verification: checked `durmuhurta.yaml` and `varjyam.yaml` against Drik Panchang (Kuala Lumpur, 2026-11-01 to 2026-11-28 and 2026-10-30). Varjyam: Ardra 11 -> 21 and Hasta 22 -> 21; 26 of 27 rows are now `verify: false`, Mula stays open (Drik lists a second window). Durmuhurta: Tuesday night 8 -> 7, Thursday day 7 -> 6 and 12, Saturday day 1 -> 1 and 2; the table is fully checked and no longer reported as unverified. Per-nakshatra `verify` flags are reported as `varjyam:<name>`. Gowri and functional remain unverified. See `docs/table-verification.md`.
+
 ### Added
 
 - api-tiers: per-subscriber API keys in a keys file (hashed, `hora-keys` CLI, reloaded on change) with `free` and `paid` tiers, 403 `tier-required` on paid endpoints, per-key stored-profile scopes, owner keys via `API_KEYS`, key ids in logs, fail-closed keys file; MCP passthrough mode forwarding each caller's own key; deploy files and smoke test updated.

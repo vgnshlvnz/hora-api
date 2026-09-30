@@ -1,6 +1,8 @@
 # Source: Rahu Kalam, Yamagandam and Gulika Kalam segment tables as widely published in
 #   Tamil and North Indian panchangams (e.g. Drik Panchang "Rahu Kalam", "Yamaganda",
 #   "Gulika Kalam" pages). Values supplied in the project brief.
+# Also matched against Drik Panchang for Friday (Kuala Lumpur, 2026-10-30: Rahu 11:27-12:57,
+#   Yamaganda 15:57-17:27, Gulikai 08:27-09:57); the other weekdays rest on the brief.
 # The day (sunrise to sunset) is split into `parts` equal segments; each value below is the
 # 1-based segment that is inauspicious on that weekday.
 verify: false
