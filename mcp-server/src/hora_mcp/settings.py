@@ -29,6 +29,9 @@ class Settings:
     port: int = DEFAULT_PORT
     # Bearer token clients must send as "Authorization: Bearer <token>"; None turns it off.
     token: str | None = None
+    # Forward each caller's own bearer token to the API as its X-API-Key, so the API (not this
+    # server) decides who the caller is and what tier they have. Replaces the static token above.
+    passthrough: bool = False
     # Extra Host header values (for DNS-rebinding protection) when not on loopback, e.g.
     # "hora.home:8765,192.168.1.20:8765".
     allowed_hosts: tuple[str, ...] = ()
@@ -43,5 +46,6 @@ class Settings:
             host=e.get("HORA_MCP_HOST", DEFAULT_HOST),
             port=int(e.get("HORA_MCP_PORT", DEFAULT_PORT)),
             token=e.get("HORA_MCP_TOKEN") or None,
+            passthrough=e.get("HORA_MCP_PASSTHROUGH", "").strip().lower() in {"1", "true", "yes"},
             allowed_hosts=tuple(_csv(e.get("HORA_MCP_ALLOWED_HOSTS", ""))),
         )

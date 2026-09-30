@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.3.0] - Stage 3
+
+### Fixed
+
+- table-verification: checked `durmuhurta.yaml` and `varjyam.yaml` against Drik Panchang (Kuala Lumpur, 2026-11-01 to 2026-11-28 and 2026-10-30). Varjyam: Ardra 11 -> 21 and Hasta 22 -> 21; 26 of 27 rows are now `verify: false`, Mula stays open (Drik lists a second window). Durmuhurta: Tuesday night 8 -> 7, Thursday day 7 -> 6 and 12, Saturday day 1 -> 1 and 2; the table is fully checked and no longer reported as unverified. Per-nakshatra `verify` flags are reported as `varjyam:<name>`. Gowri and functional remain unverified. See `docs/table-verification.md`.
+
+### Added
+
+- hora-generic-source: `hora_generic.yaml` now uses the conventional benefic (Jupiter, Venus 1.0), variable (Moon, Mercury 0.5) and malefic (Sun, Mars, Saturn 0.0) grouping instead of the five-step placeholder (Sun moves 0.25 to 0.0, Moon and Mercury 0.75 to 0.5). It has no primary text, so it stays `verify: true` and the rasi hora term stays off by default.
+- api-tiers: per-subscriber API keys in a keys file (hashed, `hora-keys` CLI, reloaded on change) with `free` and `paid` tiers, 403 `tier-required` on paid endpoints, per-key stored-profile scopes, owner keys via `API_KEYS`, key ids in logs, fail-closed keys file; MCP passthrough mode forwarding each caller's own key; deploy files and smoke test updated.
+- vimshottari-dasha: `core.dasha` computes Vimshottari maha and antar periods from the Moon's longitude at birth; profiles take an optional `birth_datetime` (never returned), scoring uses computed periods when no explicit `dasha` is given, and `/v1/horas/personal` lists the periods overlapping the day; `data/vimshottari.yaml`, `dasha_year_days` setting.
+- paksha-chandrabala: chandrabala houses 2, 5 and 9 take a value per paksha (`chandra_conditional_shukla_value` 1.0, `chandra_conditional_krishna_value` 0.5), judged at the start of the hora, on by default (`chandra_paksha`); `core.astro.paksha`; the personal card splits chandrabala rows at the full and new moon.
+- docker-autorestart: a `watcher` sidecar in `deploy/` (`watcher.py`, compose service and Dockerfile target) that restarts unhealthy labelled containers, capped at 3 per 30 minutes, then gives up and writes a status file; `scripts/smoke.sh` can check that file.
+- personal-card: `GET /v1/cards/personal?profile_id=` (best windows, why horas are blocked, tara and chandra over the day) and the `hora_personal_card` MCP tool.
+
 ## [0.2.0] - Stage 2
 
 ### Added

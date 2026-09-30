@@ -8,6 +8,10 @@
 #   HORA_MCP_TOKEN   bearer token, if set on the MCP server
 #   SKIP_MCP=1       skip the MCP checks
 #   REQUIRE_AUTH=1   fail (instead of warn) if the API answers without a key
+#   FREE_KEY         a free-tier key: if set, check it gets the day card and a 403 on /v1/horas/rasi
+#                    (HORA_API_KEY must then be a paid or owner key)
+#   WATCHER_STATUS_FILE  the watcher's status file (deploy/watcher-status/watcher.json); if set,
+#                    check it is fresh and no container was given up on
 #
 # The day card is the golden Petaling Jaya day (Wed 2026-09-30, Lahiri, tamil), so the checks
 # assert known values; they do not depend on today's date.
@@ -67,6 +71,48 @@ fi
 code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "${api_key[@]}" "$API/v1/profiles")
 [[ $code == 200 ]] && pass "API /v1/profiles" || fail "API /v1/profiles returned $code"
 
+# --- Tiers -------------------------------------------------------------------------------
+if [[ -n ${FREE_KEY:-} ]]; then
+  code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 -H "X-API-Key: $FREE_KEY" \
+    "$API/v1/cards/day?$QUERY")
+  [[ $code == 200 ]] && pass "free key gets the day card" || fail "free key day card returned $code"
+  body=$(curl -s -w '\n%{http_code}' --max-time 15 -H "X-API-Key: $FREE_KEY" "$API/v1/horas/rasi?$QUERY")
+  code=${body##*$'\n'}
+  if [[ $code == 403 && $body == *tier-required* ]]; then
+    pass "free key is refused on paid endpoints (403 tier-required)"
+  else
+    fail "free key on /v1/horas/rasi returned $code, expected 403 tier-required"
+  fi
+fi
+
+# --- Watcher -----------------------------------------------------------------------------
+if [[ -n ${WATCHER_STATUS_FILE:-} ]]; then
+  if [[ -r $WATCHER_STATUS_FILE ]]; then
+    verdict=$(python3 - "$WATCHER_STATUS_FILE" <<'PY'
+import json, sys, time
+d = json.load(open(sys.argv[1]))
+age = time.time() - d["updated_epoch"]
+stale = age > 3 * d["policy"]["interval_seconds"]
+gave_up = [n for n, s in d["services"].items() if s["state"] == "gave_up"]
+if d.get("docker_error"):
+    print("FAIL|watcher cannot reach Docker: " + d["docker_error"])
+elif stale:
+    print("FAIL|watcher status is stale (%.0fs old)" % age)
+elif gave_up:
+    print("FAIL|watcher gave up restarting: " + ", ".join(gave_up))
+else:
+    print("PASS|watcher status fresh; restarts in window: " + str(sum(s["restarts_in_window"] for s in d["services"].values())))
+PY
+)
+    case ${verdict%%|*} in
+      PASS) pass "${verdict#*|}" ;;
+      *) fail "${verdict#*|}" ;;
+    esac
+  else
+    fail "WATCHER_STATUS_FILE $WATCHER_STATUS_FILE is not readable"
+  fi
+fi
+
 # --- MCP ---------------------------------------------------------------------------------
 if [[ ${SKIP_MCP:-0} != 1 ]]; then
   mcp_h=(-H "Content-Type: application/json" -H "Accept: application/json, text/event-stream")
@@ -89,7 +135,7 @@ if [[ ${SKIP_MCP:-0} != 1 ]]; then
     tools=$(curl -sS --max-time 15 "${mcp_h[@]}" -X POST "$MCP" \
       -d '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' | payload)
     names=$(json_get '",".join(sorted(t["name"] for t in d["result"]["tools"]))' <<<"$tools")
-    if [[ $names == hora_day_card,hora_personal_horas,hora_rasi_card ]]; then
+    if [[ $names == hora_day_card,hora_personal_card,hora_personal_horas,hora_rasi_card ]]; then
       pass "MCP tools/list ($names)"
     else
       fail "MCP tools/list returned '$names'"

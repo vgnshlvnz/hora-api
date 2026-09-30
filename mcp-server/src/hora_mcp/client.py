@@ -46,11 +46,15 @@ class HoraApi:
             transport=transport,
         )
 
-    async def get(self, path: str, params: dict[str, Any]) -> Any:
-        """GET `path` with the non-None `params`; raise HoraApiError on any failure."""
+    async def get(self, path: str, params: dict[str, Any], api_key: str | None = None) -> Any:
+        """GET `path` with the non-None `params`; raise HoraApiError on any failure.
+
+        `api_key` replaces the configured key for this call (the caller's own, in passthrough).
+        """
         query = {k: v for k, v in params.items() if v is not None}
+        headers = {"X-API-Key": api_key} if api_key else None
         try:
-            response = await self._http.get(path, params=query)
+            response = await self._http.get(path, params=query, headers=headers)
         except httpx.HTTPError as e:
             raise HoraApiError(f"cannot reach hora-api at {self._base_url}: {e}") from e
         if response.is_success:

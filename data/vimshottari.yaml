@@ -1,0 +1,19 @@
+# Source: Vimshottari dasha, Brihat Parashara Hora Shastra (the Vimshottari dasha chapter): a
+#   120-year cycle of nine lords with the years below, in this order. A nakshatra starts in the
+#   dasha of sequence[nakshatra mod 9] (Ashwini = index 0: Ketu; Bharani: Venus; Krittika: Sun;
+#   Rohini: Moon; Mrigashira: Mars; Ardra: Rahu; Punarvasu: Jupiter; Pushya: Saturn;
+#   Ashlesha: Mercury; then the cycle repeats from Magha). The share of the nakshatra the Moon
+#   has already crossed at birth is the share of that first dasha already used up.
+#   Antardashas (bhuktis) run in the same order starting with the dasha lord, each lasting
+#   dasha years * bhukti years / 120.
+verify: false
+sequence:
+  - {lord: Ketu,    years: 7}
+  - {lord: Venus,   years: 20}
+  - {lord: Sun,     years: 6}
+  - {lord: Moon,    years: 10}
+  - {lord: Mars,    years: 7}
+  - {lord: Rahu,    years: 18}
+  - {lord: Jupiter, years: 16}
+  - {lord: Saturn,  years: 19}
+  - {lord: Mercury, years: 17}

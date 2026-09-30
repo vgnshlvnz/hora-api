@@ -7,6 +7,7 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 import pytest
+import yaml
 from fastapi.testclient import TestClient
 
 from hora_api.api.app import create_app
@@ -78,8 +79,8 @@ def test_horas_and_gowri_sections(client: TestClient) -> None:
 
 def test_unverified_tables_are_flagged(client: TestClient) -> None:
     card = client.get("/v1/cards/day", params=PJ).json()
-    assert card["unverified_tables"] == ["durmuhurta", "gowri", "varjyam"]
-    assert card["footer"] == "Unverified tables in use: durmuhurta, gowri, varjyam."
+    assert card["unverified_tables"] == ["gowri", "varjyam"]
+    assert card["footer"] == "Unverified tables in use: gowri, varjyam."
 
 
 def test_cards_use_request_timezone_and_options(client: TestClient) -> None:
@@ -112,8 +113,8 @@ def test_golden_rasi_card(client: TestClient) -> None:
     assert [label for label, _, _ in everything][:3] == ["Mesha", "Vrishabha", "Mithuna"]
     assert len(everything) == 12 and everything[-1][0] == "Meena"
     assert everything[5] == ("Kanya", "50% · 57.5% of the day clean", "neutral")
-    assert card["unverified_tables"] == ["durmuhurta", "varjyam"]
-    assert card["footer"] == "Unverified tables in use: durmuhurta, varjyam."
+    assert card["unverified_tables"] == ["varjyam"]
+    assert card["footer"] == "Unverified tables in use: varjyam."
 
 
 def test_span_words_and_clock() -> None:
@@ -153,3 +154,110 @@ def test_cards_share_the_day_cache(client: TestClient) -> None:
     client.get("/v1/cards/day", params=PJ)
     client.get("/v1/cards/rasi", params=PJ)
     assert (cache.hits, cache.misses) == (2, 1)
+
+
+# ---------------------------------------------------------------------------
+# Personal card
+# ---------------------------------------------------------------------------
+
+GOLDEN_PROFILE: dict[str, Any] = yaml.safe_load(
+    (Path(__file__).parent / "fixtures" / "golden.yaml").read_text()
+)["profile"]
+
+
+@pytest.fixture
+def personal_client(tmp_path: Path) -> Iterator[TestClient]:
+    profiles = tmp_path / "profiles.yaml"
+    kanya = {**GOLDEN_PROFILE, "id": "kanya", "display_name": "Kanya", "janma_rasi": "Kanya"}
+    profiles.write_text(yaml.safe_dump({"profiles": [GOLDEN_PROFILE, kanya]}))
+    with TestClient(create_app(ApiSettings(profiles_path=profiles))) as c:
+        yield c
+
+
+def test_golden_personal_card(personal_client: TestClient) -> None:
+    r = personal_client.get("/v1/cards/personal", params={**PJ, "profile_id": "golden"})
+    assert r.status_code == 200
+    card = r.json()
+    assert card["kind"] == "personal"
+    assert card["title"] == "Golden (fixture) · Wednesday 30 Sep 2026"
+    assert card["subtitle"] == "Asia/Kuala_Lumpur · 3.107, 101.606 · tamil · lahiri"
+    assert [s["id"] for s in card["sections"]] == ["top", "blocked", "tara_chandra"]
+
+    assert rows(card, "top") == [
+        ("Best overall", "16:02–17:02 Saturn (100)", "good"),
+        ("Best before noon", "07:02–08:02 Mercury (58.3)", "good"),
+        ("Best after sunset", "20:02–21:02 Venus (100)", "good"),
+    ]
+    assert rows(card, "blocked") == [
+        ("09:02–10:02", "Saturn — Yamagandam", "bad"),
+        ("12:02–13:02", "Sun — Durmuhurta, Gulika kalam", "bad"),
+        ("13:02–14:02", "Venus — Durmuhurta, Gulika kalam, Rahu kalam", "bad"),
+    ]
+    # Verified ephemeris times (the brief said ~10:17 and ~15:47).
+    assert rows(card, "tara_chandra") == [
+        ("Tarabala until 10:07", "Mitra (8th, good)", "good"),
+        ("Tarabala from 10:07", "Parama Mitra (9th, good)", "good"),
+        ("Chandrabala until 15:44", "12th house (bad)", "bad"),
+        ("Chandrabala from 15:44", "1st house (good)", "good"),
+    ]
+    assert card["unverified_tables"] == ["functional", "varjyam"]
+    assert card["footer"] == "Unverified tables in use: functional, varjyam."
+
+
+def test_personal_card_matches_the_scored_horas(personal_client: TestClient) -> None:
+    params = {**PJ, "profile_id": "golden"}
+    card = personal_client.get("/v1/cards/personal", params=params).json()
+    full = personal_client.get("/v1/horas/personal", params=params).json()
+    top = full["top"]["best_overall"]
+    assert f"{top['lord']} ({top['score']:g})" in rows(card, "top")[0][1]
+    blocked_lords = [h["lord"] for h in full["horas"] if h["score"] is None]
+    assert [value.split(" — ")[0] for _, value, _ in rows(card, "blocked")] == blocked_lords
+
+
+def test_personal_card_shows_chandrashtama(personal_client: TestClient) -> None:
+    card = personal_client.get("/v1/cards/personal", params={**PJ, "profile_id": "kanya"}).json()
+    assert card["title"] == "Kanya · Wednesday 30 Sep 2026"
+    # The Moon is in Mesha, 8th from Kanya, until ~15:44: nothing is left before noon.
+    assert rows(card, "top")[1] == ("Best before noon", "none", "neutral")
+    blocked = rows(card, "blocked")
+    assert len(blocked) == 8 and all("Chandrashtama" in value for _, value, _ in blocked)
+    assert rows(card, "tara_chandra")[2:] == [
+        ("Chandrabala until 15:44", "8th house (Chandrashtama)", "bad"),
+        ("Chandrabala from 15:44", "9th house (conditional, krishna paksha)", "neutral"),
+    ]
+
+
+def test_personal_card_errors_auth_and_cache(tmp_path: Path) -> None:
+    profiles = tmp_path / "profiles.yaml"
+    profiles.write_text(yaml.safe_dump({"profiles": [GOLDEN_PROFILE]}))
+    settings = ApiSettings(profiles_path=profiles, api_keys="k")
+    with TestClient(create_app(settings)) as c:
+        headers = {"X-API-Key": "k"}
+        params = {**PJ, "profile_id": "golden"}
+        assert c.get("/v1/cards/personal", params=params).status_code == 401
+        missing = c.get("/v1/cards/personal", params=PJ, headers=headers)
+        assert missing.status_code == 422 and missing.json()["title"] == "Invalid request"
+        unknown = c.get("/v1/cards/personal", params={**PJ, "profile_id": "x"}, headers=headers)
+        assert unknown.status_code == 404
+        assert unknown.json()["type"] == "urn:hora-api:problem:profile-not-found"
+        assert unknown.headers["content-type"] == "application/problem+json"
+        assert c.get("/v1/cards/personal", params=params, headers=headers).status_code == 200
+        assert c.get("/v1/cards/day", params=PJ, headers=headers).status_code == 200
+        cache = c.app.state.services.cache  # type: ignore[attr-defined]
+        assert cache.hits >= 1  # the day was computed once and shared
+
+
+def test_personal_card_splits_chandra_rows_at_the_full_moon(tmp_path: Path) -> None:
+    """2026-09-26: Moon in Meena, 5th from Vrischika; full moon at 00:49 on the 27th (KL)."""
+    profiles = tmp_path / "profiles.yaml"
+    vrischika = {**GOLDEN_PROFILE, "id": "v", "display_name": "V", "janma_rasi": "Vrischika"}
+    profiles.write_text(yaml.safe_dump({"profiles": [vrischika]}))
+    with TestClient(create_app(ApiSettings(profiles_path=profiles))) as c:
+        params = {**PJ, "date": "2026-09-26", "profile_id": "v"}
+        card = c.get("/v1/cards/personal", params=params).json()
+    chandra = [r for r in rows(card, "tara_chandra") if r[0].startswith("Chandrabala")]
+    assert chandra == [
+        ("Chandrabala until 08:03", "4th house (bad)", "bad"),  # Moon still in Kumbha
+        ("Chandrabala 08:03–00:49+1", "5th house (conditional, shukla paksha)", "good"),
+        ("Chandrabala from 00:49+1", "5th house (conditional, krishna paksha)", "neutral"),
+    ]

@@ -9,6 +9,7 @@ import structlog
 from fastapi import FastAPI, Request, Response
 
 import hora_api
+from hora_api.api.keys import KeyStore
 from hora_api.api.problems import install_handlers
 from hora_api.api.profiles import ProfileStore
 from hora_api.api.routes import health, router
@@ -36,6 +37,7 @@ def create_app(settings: ApiSettings | None = None) -> FastAPI:
         scoring_tables=load_scoring_tables(cfg.data_dir),
         scoring=ScoringSettings(),
         profiles=ProfileStore(cfg.profiles_file),
+        keys=KeyStore(cfg.keys_file, cfg.key_set),
         cache=DayCache(cfg.cache_size),
     )
     install_handlers(app)
@@ -53,6 +55,7 @@ def create_app(settings: ApiSettings | None = None) -> FastAPI:
             "request",
             method=request.method,
             path=request.url.path,
+            key_id=getattr(request.state, "principal_id", None),  # a label, never the key
             status=response.status_code,
             ms=round((time.perf_counter() - start) * 1000, 1),
         )

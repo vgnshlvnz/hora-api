@@ -60,25 +60,27 @@ def test_compose_services() -> None:
     assert mcp["depends_on"]["api"]["condition"] == "service_healthy"
     assert mcp["environment"]["HORA_API_URL"] == "http://api:8000"
     # Profiles are mounted read-only from outside the repo.
-    (volume,) = api["volumes"]
-    assert volume.endswith(":/profiles:ro") and "PROFILES_DIR" in volume
+    profiles = [v for v in api["volumes"] if v.endswith(":/profiles:ro")]
+    assert len(profiles) == 1 and "PROFILES_DIR" in profiles[0]
 
 
 def test_compose_requires_credentials_and_holds_no_secrets() -> None:
     text = (DEPLOY / "docker-compose.yml").read_text()
-    for var in ("API_KEYS", "HORA_API_KEY", "HORA_MCP_TOKEN", "PROFILES_DIR"):
+    for var in ("API_KEYS", "PROFILES_DIR", "DOCKER_GID"):
         assert f"${{{var}:?" in text, f"{var} must be mandatory"
     compose = yaml.safe_load(text)
     for svc in compose["services"].values():
         for value in svc["environment"].values():
-            assert str(value).startswith("${") or str(value).startswith("http://api")
+            assert str(value).startswith(("${", "http://api", "/keys/"))
             assert "change-me" not in str(value)
 
 
 def test_dockerfile_installs_locked_runtime_deps_as_non_root() -> None:
     text = (DEPLOY / "Dockerfile").read_text()
     assert text.count("uv sync --frozen --no-dev") == 2
-    assert text.count("USER hora") == 2 and "--uid 10001" in text
+    assert (
+        text.count("USER hora") == 3 and text.count("--uid 10001") == 2
+    )  # base (api, mcp) and watcher
     assert "DATA_DIR=/app/data" in text and "COPY data ./data" in text
     assert "COPY deploy/healthcheck.py" in text
 
@@ -101,7 +103,10 @@ def known_variables() -> set[str]:
     scoring = {f"HORA_SCORING_{name.upper()}" for name in ScoringSettings.model_fields}
     mcp_source = (ROOT / "mcp-server/src/hora_mcp/settings.py").read_text()
     mcp = set(re.findall(r'e\.get\("([A-Z_]+)"', mcp_source))
-    compose_only = {"PROFILES_DIR", "API_PUBLISH", "MCP_PUBLISH"}
+    compose_only = {
+        "PROFILES_DIR", "API_PUBLISH", "MCP_PUBLISH", "DOCKER_GID", "KEYS_DIR",
+        "WATCHER_STATUS_DIR", "WATCHER_INTERVAL", "WATCHER_MAX_RESTARTS", "WATCHER_WINDOW",
+    }  # fmt: skip
     systemd_only = {"HORA_BIND", "HORA_PORT"}
     return api | scoring | mcp | compose_only | systemd_only
 
@@ -120,13 +125,56 @@ def test_env_examples_only_use_variables_the_code_reads(path: Path) -> None:
     assert set(variables) <= known_variables(), set(variables) - known_variables()
     # Uncommented secret placeholders must be obviously placeholders.
     for name, value in variables.items():
-        if any(s in name for s in ("KEY", "TOKEN")):
+        if any(s in name for s in ("KEY", "TOKEN")) and not name.endswith(("_PATH", "_DIR")):
             assert value.startswith("change-me")
 
 
 def test_compose_env_example_covers_the_required_variables() -> None:
     variables = parse_env_example(DEPLOY / "env.example")
-    assert {"PROFILES_DIR", "API_KEYS", "HORA_API_KEY", "HORA_MCP_TOKEN"} <= set(variables)
+    required = {"PROFILES_DIR", "API_KEYS", "DOCKER_GID"}
+    assert required <= set(variables)
+
+
+def test_watcher_service_is_opt_in_capped_and_locked_down() -> None:
+    compose = yaml.safe_load((DEPLOY / "docker-compose.yml").read_text())
+    services = compose["services"]
+    # Only labelled services are watched, and only the two app services carry the label.
+    assert services["api"]["labels"] == {"hora.autorestart": "true"}
+    assert services["mcp"]["labels"] == {"hora.autorestart": "true"}
+    assert "labels" not in services["watcher"]
+
+    watcher = services["watcher"]
+    assert watcher["build"]["target"] == "watcher" and watcher["restart"] == "unless-stopped"
+    assert watcher["user"] == "10001:10001" and watcher["read_only"] is True
+    assert watcher["cap_drop"] == ["ALL"] and "no-new-privileges:true" in watcher["security_opt"]
+    assert watcher["group_add"] == ["${DOCKER_GID:?set DOCKER_GID in deploy/.env}"]
+    assert "/var/run/docker.sock:/var/run/docker.sock" in watcher["volumes"]
+    assert any(v.endswith(":/status") for v in watcher["volumes"])
+    env = watcher["environment"]
+    assert env["WATCHER_MAX_RESTARTS"] == "${WATCHER_MAX_RESTARTS:-3}"
+    assert env["WATCHER_WINDOW"] == "${WATCHER_WINDOW:-1800}"
+    assert watcher["healthcheck"]["test"][-1] == "--healthcheck"
+
+    dockerfile = (DEPLOY / "Dockerfile").read_text()
+    stage = dockerfile[dockerfile.index("AS watcher") :]
+    assert "uv" not in stage and "COPY deploy/watcher.py" in stage  # stdlib only
+
+    # Nothing else may mount the Docker socket.
+    assert not any(
+        "docker.sock" in str(v)
+        for name, svc in services.items()
+        if name != "watcher"
+        for v in svc.get("volumes", [])
+    )
+
+
+def test_watcher_status_dir_is_git_ignored() -> None:
+    result = subprocess.run(
+        ["git", "check-ignore", "-q", "deploy/watcher-status/watcher.json"],
+        cwd=ROOT,
+        capture_output=True,
+    )
+    assert result.returncode == 0
 
 
 # ---------------------------------------------------------------------------
@@ -226,3 +274,12 @@ def test_probe_fails_when_nothing_listens(probe: ModuleType) -> None:
     assert probe.check("api", 9) is False and probe.check("mcp", 9) is False
     assert probe.main([]) == 2 and probe.main(["nope"]) == 2
     assert probe.main(["api", "9"]) == 1
+
+
+def test_mcp_access_mode_is_configurable_and_keys_are_mounted_read_only() -> None:
+    compose = yaml.safe_load((DEPLOY / "docker-compose.yml").read_text())
+    mcp_env = compose["services"]["mcp"]["environment"]
+    assert {"HORA_MCP_TOKEN", "HORA_MCP_PASSTHROUGH", "HORA_API_KEY"} <= set(mcp_env)
+    api = compose["services"]["api"]
+    assert api["environment"]["KEYS_PATH"] == "/keys/keys.yaml"
+    assert any(v.endswith(":/keys:ro") for v in api["volumes"])

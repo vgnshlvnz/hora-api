@@ -181,3 +181,16 @@ def test_nakshatra_index_matches_longitude(t: datetime, ayanamsa: Ayanamsa) -> N
     assert s.rasi == math.floor(s.longitude / 30)
     assert 1 <= s.pada <= 4
     assert 1 <= astro.tithi(t) <= 30
+
+
+def test_paksha_follows_tithi() -> None:
+    assert astro.paksha(datetime(2026, 9, 20, 0, 0, tzinfo=UTC)) == "shukla"  # tithi 9
+    assert astro.paksha(datetime(2026, 9, 30, 0, 0, tzinfo=UTC)) == "krishna"  # tithi 19
+    # The full moon (tithi 15 to 16) is at about 16:49 UTC on 2026-09-26.
+    before = datetime(2026, 9, 26, 16, 0, tzinfo=UTC)
+    after = datetime(2026, 9, 26, 17, 30, tzinfo=UTC)
+    assert (astro.tithi(before), astro.paksha(before)) == (15, "shukla")
+    assert (astro.tithi(after), astro.paksha(after)) == (16, "krishna")
+    # The new moon (tithi 30 to 1) is at about 03:27 UTC on 2026-09-11.
+    assert astro.paksha(datetime(2026, 9, 11, 2, 0, tzinfo=UTC)) == "krishna"
+    assert astro.paksha(datetime(2026, 9, 11, 5, 0, tzinfo=UTC)) == "shukla"

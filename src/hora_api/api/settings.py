@@ -18,8 +18,12 @@ class ApiSettings(BaseSettings):
     # Real profiles live outside the repo.
     profiles_path: Path = Path("~/.config/hora-api/profiles.yaml")
 
-    # Comma-separated API keys. Empty (the default) turns authentication off.
+    # Comma-separated owner keys (paid, every profile). With no keys here and no keys file,
+    # authentication is off.
     api_keys: str = ""
+
+    # Per-subscriber keys with tiers and profile scopes, kept outside the repo. See api/keys.py.
+    keys_path: Path = Path("~/.config/hora-api/keys.yaml")
 
     # Override the directory holding the classical tables (default: the repo's data/).
     data_dir: Path | None = None
@@ -31,6 +35,10 @@ class ApiSettings(BaseSettings):
     @property
     def key_set(self) -> frozenset[str]:
         return frozenset(k.strip() for k in self.api_keys.split(",") if k.strip())
+
+    @property
+    def keys_file(self) -> Path:
+        return self.keys_path.expanduser()
 
     @property
     def profiles_file(self) -> Path:

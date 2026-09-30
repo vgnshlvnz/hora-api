@@ -13,6 +13,7 @@ from typing import Any, Final, cast
 import yaml
 
 from hora_api.core.tables import (
+    DashaTable,
     DurmuhurtaTable,
     GowriTable,
     HoraTable,
@@ -31,7 +32,7 @@ from hora_api.scoring.tables import (
 )
 
 WEEKDAYS: Final = ("sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday")
-TABLE_FILES: Final = ("horas", "kalams", "durmuhurta", "varjyam", "gowri")
+TABLE_FILES: Final = ("horas", "kalams", "durmuhurta", "varjyam", "gowri", "vimshottari")
 SCORING_TABLE_FILES: Final = (
     "names",
     "tarabala",
@@ -75,6 +76,9 @@ def load_tables(data_dir: Path | None = None) -> Tables:
         for day, row in docs[name]["weekdays"].items():
             if row.get("verify") is True:
                 unverified.add(f"{name}:{day}")
+    for row in docs["varjyam"]["nakshatras"]:
+        if row.get("verify") is True:
+            unverified.add(f"varjyam:{row['name']}")
 
     h = docs["horas"]
     order = tuple(h["chaldean_order"])
@@ -126,7 +130,12 @@ def load_tables(data_dir: Path | None = None) -> Tables:
         nature=nature,
     )
 
-    return Tables(horas, kalam, durm, varj, gow, frozenset(unverified))
+    v2 = docs["vimshottari"]["sequence"]
+    dasha = DashaTable(tuple(r["lord"] for r in v2), tuple(float(r["years"]) for r in v2))
+    if len(dasha.lords) != 9 or sum(dasha.years) != 120:
+        raise ValueError("vimshottari.yaml: expected nine lords whose years sum to 120")
+
+    return Tables(horas, kalam, durm, varj, gow, dasha, frozenset(unverified))
 
 
 def load_scoring_tables(data_dir: Path | None = None) -> ScoringTables:

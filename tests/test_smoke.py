@@ -11,4 +11,4 @@ def test_subpackages_import(name: str) -> None:
 
 
 def test_version() -> None:
-    assert hora_api.__version__ == "0.2.0"
+    assert hora_api.__version__ == "0.3.0"

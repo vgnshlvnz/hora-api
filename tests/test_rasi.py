@@ -112,3 +112,22 @@ def test_moon_change_reported_per_row() -> None:
     assert mesha.chandra_change is not None
     assert (mesha.chandra_change.before.house, mesha.chandra_change.after.house) == (1, 2)
     assert row(MATRIX, "Mesha").cells[0].chandra_change is None
+
+
+def test_conditional_houses_follow_paksha_in_the_matrix() -> None:
+    # 2026-09-22 is shukla: houses 2, 5 and 9 score 100 (they scored 50 with one value).
+    day = D.make_day(date(2026, 9, 22), KL, 3.107, 101.606)
+    horas = D.build_horas(day, "tamil", TABLES)
+    shukla = score_rasis(horas, day, TABLES)
+    flat = score_rasis(horas, day, TABLES, ScoringSettings(chandra_paksha=False))
+    moon_rasi = day.rasi_spans[0].index  # Makara (9) for the whole day
+    assert len(day.rasi_spans) == 1
+    for row_s, row_f in zip(shukla.rasis, flat.rasis, strict=True):
+        house = (moon_rasi - row_s.rasi) % 12 + 1
+        cell_s, cell_f = row_s.cells[1], row_f.cells[1]  # the 08:02 hora
+        if house in (2, 5, 9):
+            assert cell_s.chandra.paksha == "shukla"
+            if cell_s.score is not None and cell_f.score is not None:
+                assert (cell_s.score, cell_f.score) == (100.0, 50.0)
+        else:
+            assert cell_s.chandra.paksha is None and cell_s.score == cell_f.score

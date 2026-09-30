@@ -89,10 +89,20 @@ class TopWindows(BaseModel):
     best_after_sunset: TopWindow | None
 
 
+class DashaOut(BaseModel):
+    """A dasha ("maha") or bhukti ("antar") in force at some point of the day."""
+
+    level: str
+    lord: str
+    start: AwareDatetime
+    end: AwareDatetime
+
+
 class PersonalResponse(BaseModel):
     meta: Meta
     profile: ProfileSummary
     horas: list[ScoredHora]
+    dasha: list[DashaOut]  # dasha and bhukti periods overlapping the day; empty without dasha data
     top: TopWindows
     unverified_tables: list[str]
 

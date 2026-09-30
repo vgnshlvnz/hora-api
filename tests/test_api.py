@@ -95,7 +95,7 @@ def test_golden_day(client: TestClient) -> None:
         assert minutes_from(x["time"], hh, mm) <= 2
 
     assert len(j["gowri"]) == 16 and {g["nature"] for g in j["gowri"]} <= {"good", "bad"}
-    assert j["unverified_tables"] == ["durmuhurta", "gowri", "varjyam"]
+    assert j["unverified_tables"] == ["gowri", "varjyam"]
 
 
 def test_times_are_whole_seconds_and_contiguous(client: TestClient) -> None:
@@ -196,7 +196,7 @@ def test_golden_personal_via_stored_profile(client: TestClient) -> None:
         s["15:02"]["chandra_change"]["after"]["house"],
     ) == (12, 1)
     assert s["07:02"]["components"] == {"tara": 25.0, "chandra": 0.0, "hora": 33.3, "dasha": None}
-    assert j["unverified_tables"] == ["durmuhurta", "functional", "varjyam"]
+    assert j["unverified_tables"] == ["functional", "varjyam"]
 
 
 def test_top_windows(client: TestClient) -> None:
@@ -250,7 +250,7 @@ def test_rasi_matrix(client: TestClient) -> None:
     assert sum("chandrashtama" in c["blocked_reasons"] for c in kanya["cells"]) == 9
     assert sum("chandrashtama" in c["blocked_reasons"] for c in tula["cells"]) == 16
     assert j["horas"][0]["start"].endswith("+08:00")
-    assert j["unverified_tables"] == ["durmuhurta", "varjyam"]
+    assert j["unverified_tables"] == ["varjyam"]
 
 
 def test_profiles_list_never_leaks_birth_data(client: TestClient) -> None:
@@ -346,7 +346,63 @@ def test_openapi_is_published_and_valid(client: TestClient) -> None:
     validate(spec)
     assert set(spec["paths"]) == {
         "/v1/day", "/v1/horas/personal", "/v1/horas/rasi", "/v1/profiles", "/healthz", "/readyz",
-        "/v1/cards/day", "/v1/cards/rasi",
+        "/v1/cards/day", "/v1/cards/rasi", "/v1/cards/personal",
     }  # fmt: skip
     assert set(spec["paths"]["/v1/horas/personal"]) == {"get", "post"}
     assert "X-API-Key" in str(spec["components"]["securitySchemes"])
+
+
+# ---------------------------------------------------------------------------
+# Dasha computed from a stored birth time
+# ---------------------------------------------------------------------------
+
+
+def dasha_client(tmp_path: Path) -> TestClient:
+    birth = datetime.fromisoformat(FIXTURE["birth"]["datetime"])
+    profiles = tmp_path / "profiles.yaml"
+    entry = {**GOLDEN_PROFILE, "birth_datetime": birth}  # a real timestamp in the YAML
+    profiles.write_text(yaml.safe_dump({"profiles": [entry]}))
+    return TestClient(create_app(ApiSettings(profiles_path=profiles)))
+
+
+def test_personal_response_lists_the_running_dasha(tmp_path: Path) -> None:
+    with dasha_client(tmp_path) as c:
+        j = c.get("/v1/horas/personal", params={**PJ, "profile_id": "golden"}).json()
+    assert [(d["level"], d["lord"]) for d in j["dasha"]] == [("maha", "Moon"), ("antar", "Jupiter")]
+    assert j["dasha"][0]["start"].startswith("2026-03-24T05:30:00+08:00")  # the birth, local
+    s = {hhmm(h["start"]): h for h in j["horas"]}
+    assert s["10:02"]["components"]["dasha"] == pytest.approx(16.7, abs=0.1)
+
+
+def test_dasha_is_empty_without_dasha_data(client: TestClient) -> None:
+    j = client.get("/v1/horas/personal", params={**PJ, "profile_id": "golden"}).json()
+    assert j["dasha"] == []
+    assert all(h["components"]["dasha"] is None for h in j["horas"])
+
+
+def test_birth_time_is_never_returned(tmp_path: Path) -> None:
+    with dasha_client(tmp_path) as c:
+        listing = c.get("/v1/profiles")
+        personal = c.get("/v1/horas/personal", params={**PJ, "profile_id": "golden"})
+        card = c.get("/v1/cards/personal", params={**PJ, "profile_id": "golden"})
+    for response in (listing, personal, card):
+        assert "birth" not in response.text.lower()
+    assert listing.json() == {"profiles": [{"id": "golden", "display_name": "Golden (fixture)"}]}
+
+
+def test_inline_profile_with_birth_time(client: TestClient) -> None:
+    body = {**GOLDEN_PROFILE, "birth_datetime": FIXTURE["birth"]["datetime"]}
+    r = client.post("/v1/horas/personal", params=PJ, json=body)
+    assert r.status_code == 200
+    assert [d["lord"] for d in r.json()["dasha"]] == ["Moon", "Jupiter"]
+    naive = {**GOLDEN_PROFILE, "birth_datetime": "2026-03-24T05:30:00"}
+    assert client.post("/v1/horas/personal", params=PJ, json=naive).status_code == 422
+
+
+def test_ayanamsa_reaches_the_dasha_calculation(tmp_path: Path) -> None:
+    with dasha_client(tmp_path) as c:
+        lahiri = c.get("/v1/horas/personal", params={**PJ, "profile_id": "golden"}).json()
+        kp = c.get(
+            "/v1/horas/personal", params={**PJ, "profile_id": "golden", "ayanamsa": "kp"}
+        ).json()
+    assert lahiri["dasha"][0]["end"] != kp["dasha"][0]["end"]

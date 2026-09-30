@@ -1,16 +1,26 @@
 # Source: Dur Muhurta (Durmuhurtam) tables as given in Muhurta Chintamani-derived panchangams
-#   (e.g. Drik Panchang "Durmuhurta"). RECALLED FROM MEMORY, NOT CHECKED AGAINST A PRIMARY
-#   TEXT: traditions disagree, especially for Tuesday, Thursday, Saturday and for night
-#   muhurtas. Check every row against a printed Tamil panchangam before trusting it.
+#   (e.g. Drik Panchang "Durmuhurta"). Every weekday row has been checked against Drik Panchang
+#   for Kuala Lumpur (geoname-id 1735161), which is the reference where traditions disagree:
+#     Friday    2026-10-30 (day muhurtas 4 and 9)
+#     Sunday    2026-11-01, 08, 15, 22: 17:21-18:09 (day muhurta 14)
+#     Monday    2026-11-02, 09, 16, 23: 13:21-14:09 and 15:45-16:33 (day muhurtas 9 and 12)
+#     Tuesday   2026-11-03, 10, 17, 24: 09:21-10:09 (day 4) and 23:45-00:33 (night muhurta 7)
+#     Wednesday 2026-11-04, 11, 18, 25: 12:33-13:21 (day muhurta 8)
+#     Thursday  2026-11-05, 12, 19, 26: 10:57-11:45 and 15:45-16:33 (day muhurtas 6 and 12)
+#     Saturday  2026-11-07, 14, 21, 28: 06:57-07:45 and 07:45-08:33 (day muhurtas 1 and 2)
+#   Three rows were wrong and are corrected: Tuesday night 8 -> 7, Thursday day [7] -> [6, 12],
+#   Saturday day [1] -> [1, 2]. Drik shows the two Saturday windows back to back; the second
+#   (07:45-08:33) sits in the same Dur Muhurtam row of the page and matches the traditional
+#   Saturday pair 1 and 2.
 # The day (sunrise to sunset) and the night (sunset to next sunrise) are each split into
 # `parts` equal muhurtas, numbered from 1. Values are the inauspicious muhurta numbers.
-verify: true
+verify: false
 parts: 15
 weekdays:
-  sunday:    {verify: true, day: [14], night: []}
-  monday:    {verify: true, day: [9, 12], night: []}
-  tuesday:   {verify: true, day: [4], night: [8]}
-  wednesday: {verify: true, day: [8], night: []}
-  thursday:  {verify: true, day: [7], night: []}
-  friday:    {verify: true, day: [4, 9], night: []}
-  saturday:  {verify: true, day: [1], night: []}
+  sunday:    {verify: false, day: [14], night: []}
+  monday:    {verify: false, day: [9, 12], night: []}
+  tuesday:   {verify: false, day: [4], night: [7]}  # was [8]: Drik 23:45-00:33
+  wednesday: {verify: false, day: [8], night: []}
+  thursday:  {verify: false, day: [6, 12], night: []}
+  friday:    {verify: false, day: [4, 9], night: []}  # checked: Drik Panchang, KL, Fri 2026-10-30
+  saturday:  {verify: false, day: [1, 2], night: []}  # was [1]: Drik 06:57-07:45, 07:45-08:33
