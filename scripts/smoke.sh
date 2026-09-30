@@ -89,7 +89,7 @@ if [[ ${SKIP_MCP:-0} != 1 ]]; then
     tools=$(curl -sS --max-time 15 "${mcp_h[@]}" -X POST "$MCP" \
       -d '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' | payload)
     names=$(json_get '",".join(sorted(t["name"] for t in d["result"]["tools"]))' <<<"$tools")
-    if [[ $names == hora_day_card,hora_personal_horas,hora_rasi_card ]]; then
+    if [[ $names == hora_day_card,hora_personal_card,hora_personal_horas,hora_rasi_card ]]; then
       pass "MCP tools/list ($names)"
     else
       fail "MCP tools/list returned '$names'"

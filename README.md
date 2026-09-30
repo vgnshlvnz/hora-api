@@ -33,6 +33,7 @@ See `CLAUDE.md` for the domain rules and git workflow, and `ROADMAP.md` for prog
 | `GET /v1/horas/rasi` | 12 x 24 rasi matrix |
 | `GET /v1/cards/day` | Day summary as a client-neutral chat card |
 | `GET /v1/cards/rasi` | Rasi overview as a client-neutral chat card |
+| `GET /v1/cards/personal?profile_id=` | Personal windows chat card for a stored profile |
 | `GET /v1/profiles` | Profile ids and display names only |
 | `GET /healthz`, `GET /readyz` | Liveness and readiness |
 
@@ -51,7 +52,8 @@ ordered `sections` (each with a stable `id`, a `title` and label/value `rows`, e
 `tone` of `good`, `bad` or `neutral`), and a `footer` naming any unverified tables in use. Times
 are ready-to-show `HH:MM` strings in the request's timezone, with `+1` after local midnight.
 Day card sections: `sun`, `moon`, `avoid`, `nalla_neram`, `horas`. Rasi card sections:
-`chandrashtama`, `best`, `all`.
+`chandrashtama`, `best`, `all`. Personal card sections (stored `profile_id` only): `top` (best
+windows), `blocked` (why fully blocked horas were removed) and `tara_chandra`.
 
 ## MCP server
 

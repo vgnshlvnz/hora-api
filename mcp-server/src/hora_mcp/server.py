@@ -1,4 +1,4 @@
-"""The MCP server: three tools over hora-api, served over streamable HTTP."""
+"""The MCP server: tools over hora-api, served over streamable HTTP."""
 
 from __future__ import annotations
 
@@ -105,6 +105,29 @@ def create_server(
             "convention": convention, "ayanamsa": ayanamsa,
         }  # fmt: skip
         result: dict[str, Any] = await api.get("/v1/cards/rasi", params)
+        return result
+
+    @server.tool(
+        name="hora_personal_card",
+        description="Chat card for a stored profile: best windows (overall, before noon, after "
+        "sunset), why horas are fully blocked (including Chandrashtama), and the day's "
+        "tarabala and chandrabala with change times. `profile_id` must be an id known to the "
+        "API." + _COMMON,
+    )
+    async def hora_personal_card(
+        profile_id: str,
+        date: str | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        tz: str | None = None,
+        convention: Convention | None = None,
+        ayanamsa: Ayanamsa | None = None,
+    ) -> dict[str, Any]:
+        params = {
+            "profile_id": profile_id, "date": date, "lat": lat, "lon": lon, "tz": tz,
+            "convention": convention, "ayanamsa": ayanamsa,
+        }  # fmt: skip
+        result: dict[str, Any] = await api.get("/v1/cards/personal", params)
         return result
 
     @server.tool(
