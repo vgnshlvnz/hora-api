@@ -16,9 +16,9 @@ Stage 1 closed with these questions open. They were answered when stage 2 starte
 
 Follow-on questions the decisions raise. None is answered here.
 
-- **Chat cards:** which chat clients and card formats? One card per query type (day, personal
-  scoring, rasi matrix), or fewer? Which fields does a card show, and does it surface
-  `unverified_tables`?
+- **Chat cards:** the format is client-neutral card JSON on `/v1/cards/*`, covering the day
+  summary and the rasi overview (see the README). Still open: a personal-windows card, other
+  card formats for specific chat clients, and whether cards should surface more or fewer fields.
 - **MCP server:** stdio or HTTP transport? Which tools does it expose, and how does it hold the
   API key and base URL?
 - **ESP32:** what payload does a constrained device fetch (a compact or pre-rendered response)?

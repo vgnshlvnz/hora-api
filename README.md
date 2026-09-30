@@ -31,6 +31,8 @@ See `CLAUDE.md` for the domain rules and git workflow, and `ROADMAP.md` for prog
 | `GET /v1/horas/personal?profile_id=` | Scored horas and top windows for a stored profile |
 | `POST /v1/horas/personal` | Same, with an inline `Profile` body |
 | `GET /v1/horas/rasi` | 12 x 24 rasi matrix |
+| `GET /v1/cards/day` | Day summary as a client-neutral chat card |
+| `GET /v1/cards/rasi` | Rasi overview as a client-neutral chat card |
 | `GET /v1/profiles` | Profile ids and display names only |
 | `GET /healthz`, `GET /readyz` | Liveness and readiness |
 
@@ -41,3 +43,12 @@ Configuration (environment): `PROFILES_PATH` (default `~/.config/hora-api/profil
 the repo), `API_KEYS` (comma-separated; empty turns auth off, otherwise send `X-API-Key`),
 `DEFAULT_LAT`, `DEFAULT_LON`, `DEFAULT_TZ` (default Petaling Jaya), `CACHE_SIZE`,
 `MIN_WINDOW_MINUTES`, `DATA_DIR`. Scoring weights: `HORA_SCORING_*`.
+
+### Chat cards
+
+`/v1/cards/*` take the same query parameters and return a card: `kind`, `title`, `subtitle`,
+ordered `sections` (each with a stable `id`, a `title` and label/value `rows`, each row with a
+`tone` of `good`, `bad` or `neutral`), and a `footer` naming any unverified tables in use. Times
+are ready-to-show `HH:MM` strings in the request's timezone, with `+1` after local midnight.
+Day card sections: `sun`, `moon`, `avoid`, `nalla_neram`, `horas`. Rasi card sections:
+`chandrashtama`, `best`, `all`.
