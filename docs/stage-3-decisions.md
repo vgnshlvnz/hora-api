@@ -55,9 +55,11 @@ Questions the decisions raise. None is answered here.
   the profiles file outside the repo, the request, or a derived value stored next to the
   profile? Which year length (365.25 or 360 days) and which ayanamsa apply, and how deep
   (maha and antar, or pratyantar too)?
-- **Paksha-dependent chandrabala.** Which houses count as good in shukla paksha and which in
-  krishna, which tradition is followed, and is the paksha taken at the start of a hora or over
-  its clean time (a tithi can change inside a hora)?
+- **Paksha-dependent chandrabala:** decided. Houses 2, 5 and 9 have two configurable values,
+  one per paksha (defaults: 1.0 for shukla, 0.5 for krishna), judged at the start of the hora,
+  on by default with a setting to turn it off. The defaults are placeholders for whichever
+  tradition is followed and have not been checked against a source. A tithi that changes inside
+  a hora does not change that hora's score; the personal card does split at the change.
 - **Personal card:** decided. It takes a stored `profile_id` only and shows best windows, why
   horas are blocked (fully blocked horas only) and tara and chandra over the day; the MCP tool
   is `hora_personal_card`. Not decided: a scored-horas section, and an inline-profile form.

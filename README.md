@@ -67,3 +67,12 @@ for the day card, the rasi card and personal horas. It is a separate uv project;
 on a home server (LAN, plain HTTP, keys required), and `scripts/smoke.sh` checks a running
 deployment. A `watcher` sidecar restarts unhealthy containers (capped, with a status file). See
 `docs/self-hosting.md`.
+
+## Chandrabala and paksha
+
+Chandrabala houses 2, 5 and 9 are conditional: their value depends on paksha (shukla or krishna,
+from the tithi at the start of the hora). Set `HORA_SCORING_CHANDRA_CONDITIONAL_SHUKLA_VALUE`
+(default 1.0) and `HORA_SCORING_CHANDRA_CONDITIONAL_KRISHNA_VALUE` (default 0.5), or turn the
+split off with `HORA_SCORING_CHANDRA_PAKSHA=false` to use the single
+`HORA_SCORING_CHANDRA_CONDITIONAL_VALUE`. Scored horas and the rasi matrix use the paksha at the
+start of the hora; the personal card splits its chandrabala rows at the full and new moon.
