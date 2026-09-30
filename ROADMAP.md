@@ -21,5 +21,6 @@ Decisions: docs/stage-3-decisions.md.
 - [ ] vimshottari-dasha: compute dasha and bhukti periods from birth data
 - [ ] paksha-chandrabala: shukla-paksha handling for chandrabala houses 2, 5 and 9
 - [x] personal-card: personal-windows chat card and MCP tool
-- [ ] tls-proxy: TLS reverse proxy in front of the API and MCP server
 - [x] docker-autorestart: restart Docker containers that fail their health check
+- [ ] api-tiers: per-subscriber API keys with tiers (summary vs full detail) and revocation; scope to be defined
+Skipped: tls-proxy (TLS reverse proxy); not needed while OpenClaw runs on the same machine or LAN. Revisit if the API is exposed beyond the LAN.
