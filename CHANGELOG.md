@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.2.0] - Stage 2
+
 ### Added
 
 - self-hosting: `deploy/` (Dockerfile with `api` and `mcp` targets, Docker Compose, systemd units and a readiness timer, env examples, container health probe), `scripts/smoke.sh`, and the `docs/self-hosting.md` runbook including profiles backup and restore.

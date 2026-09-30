@@ -7,7 +7,7 @@
 - [x] rasi-scoring: 12 x 24 rasi matrix
 - [x] http-api: FastAPI /v1 endpoints
 
-## Stage 2: consumers and hosting (current)
+## Stage 2: consumers and hosting (complete)
 Decisions: docs/stage-2-decisions.md.
 - [x] chat-cards: API renders ready-to-show chat card payloads
 - [x] mcp-server: MCP server wrapping the HTTP API
