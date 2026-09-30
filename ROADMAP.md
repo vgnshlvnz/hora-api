@@ -27,4 +27,4 @@ Skipped: tls-proxy (TLS reverse proxy); not needed while OpenClaw runs on the sa
 
 ## Stage 4: table accuracy follow-up (current)
 Decisions: docs/stage-4-decisions.md.
-- [ ] gowri-verification: replace the Gowri Panchangam table with Drik Panchang's (the recalled cycle was wrong) and fix the Uthi nature
+- [x] gowri-verification: replace the Gowri Panchangam table with Drik Panchang's (the recalled cycle was wrong) and fix the Uthi nature

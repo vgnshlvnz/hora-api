@@ -1,41 +1,48 @@
-# Source: Gowri Panchangam (Nalla Neram) as printed in Tamil panchangams. RECALLED FROM
-#   MEMORY, NOT CHECKED AGAINST A PRINTED PANCHANGAM. The day rows follow the rule "cycle
-#   starts at the weekday's own name" (Sunday Uthi, Monday Amirdha, Tuesday Rogam, Wednesday
-#   Laabam, Thursday Dhanam, Friday Sugam, Saturday Soram); the night rows assume the cycle
-#   starts four names later, which is UNCONFIRMED.
+# Source: Gowri Panchangam (Nalla Neram) as published by Drik Panchang, which says it follows the
+#   table in the Pambu Panchangam of Tamil Nadu. Checked against Drik Panchang for Kuala Lumpur
+#   (geoname-id 1735161), 2026-11-01 (Sun) to 2026-11-07 (Sat); every weekday's day and night
+#   sequences were read from that page. The first guess was WRONG: rows were built as a simple
+#   cycle starting at the weekday's own name, but Drik's table is not a cycle (from Monday on,
+#   the order of Visham, Uthi, Amirdha and others differs). Only Sunday's day and night and
+#   Wednesday's day were right; the other 11 sequences are replaced.
+#   Nature: Drik calls Uthi good ("five good: Amirdha, Dhanam, Uthi, Laabam, Sugam; three bad:
+#   Rogam, Soram, Visham"); the old table had Uthi bad. Corrected.
+#   Saturday night stays verify: true: Drik's page printed Soram twice (segments 4 and 8) and no
+#   Rogam. The eight names must each occur once, so Rogam is used for segment 8; this is an
+#   inference, not a Drik value. Check against a printed panchangam or a later Drik page.
 # Day (sunrise to sunset) and night (sunset to next sunrise) are each split into 8 equal
 # segments, listed in order below. Reported as its own layer, never blended into scores.
 verify: true
 segments: 8
 nature:
-  good: [Amirdha, Laabam, Dhanam, Sugam]
-  bad: [Uthi, Rogam, Soram, Visham]
+  good: [Amirdha, Laabam, Dhanam, Sugam, Uthi]
+  bad: [Rogam, Soram, Visham]
 weekdays:
   sunday:
-    verify: true
+    verify: false  # Drik Panchang, KL, 2026-11-01
     day: [Uthi, Amirdha, Rogam, Laabam, Dhanam, Sugam, Soram, Visham]
     night: [Dhanam, Sugam, Soram, Visham, Uthi, Amirdha, Rogam, Laabam]
   monday:
-    verify: true
-    day: [Amirdha, Rogam, Laabam, Dhanam, Sugam, Soram, Visham, Uthi]
-    night: [Sugam, Soram, Visham, Uthi, Amirdha, Rogam, Laabam, Dhanam]
+    verify: false  # Drik Panchang, KL, 2026-11-02
+    day: [Amirdha, Visham, Rogam, Laabam, Dhanam, Sugam, Soram, Uthi]
+    night: [Sugam, Soram, Uthi, Amirdha, Visham, Rogam, Laabam, Dhanam]
   tuesday:
-    verify: true
-    day: [Rogam, Laabam, Dhanam, Sugam, Soram, Visham, Uthi, Amirdha]
-    night: [Soram, Visham, Uthi, Amirdha, Rogam, Laabam, Dhanam, Sugam]
+    verify: false  # Drik Panchang, KL, 2026-11-03
+    day: [Rogam, Laabam, Dhanam, Sugam, Soram, Uthi, Visham, Amirdha]
+    night: [Soram, Uthi, Visham, Amirdha, Rogam, Laabam, Dhanam, Sugam]
   wednesday:
-    verify: true
+    verify: false  # Drik Panchang, KL, 2026-11-04
     day: [Laabam, Dhanam, Sugam, Soram, Visham, Uthi, Amirdha, Rogam]
-    night: [Visham, Uthi, Amirdha, Rogam, Laabam, Dhanam, Sugam, Soram]
-  thursday:
-    verify: true
-    day: [Dhanam, Sugam, Soram, Visham, Uthi, Amirdha, Rogam, Laabam]
     night: [Uthi, Amirdha, Rogam, Laabam, Dhanam, Sugam, Soram, Visham]
+  thursday:
+    verify: false  # Drik Panchang, KL, 2026-11-05
+    day: [Dhanam, Sugam, Soram, Uthi, Amirdha, Visham, Rogam, Laabam]
+    night: [Amirdha, Visham, Rogam, Laabam, Dhanam, Sugam, Soram, Uthi]
   friday:
-    verify: true
-    day: [Sugam, Soram, Visham, Uthi, Amirdha, Rogam, Laabam, Dhanam]
-    night: [Amirdha, Rogam, Laabam, Dhanam, Sugam, Soram, Visham, Uthi]
+    verify: false  # Drik Panchang, KL, 2026-11-06
+    day: [Sugam, Soram, Uthi, Visham, Amirdha, Rogam, Laabam, Dhanam]
+    night: [Rogam, Laabam, Dhanam, Sugam, Soram, Uthi, Visham, Amirdha]
   saturday:
-    verify: true
-    day: [Soram, Visham, Uthi, Amirdha, Rogam, Laabam, Dhanam, Sugam]
-    night: [Rogam, Laabam, Dhanam, Sugam, Soram, Visham, Uthi, Amirdha]
+    verify: true  # Drik Panchang, KL, 2026-11-07
+    day: [Soram, Uthi, Visham, Amirdha, Rogam, Laabam, Dhanam, Sugam]
+    night: [Laabam, Dhanam, Sugam, Soram, Uthi, Visham, Amirdha, Rogam]  # 8th is inferred, see header
