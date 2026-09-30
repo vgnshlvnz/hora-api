@@ -49,10 +49,17 @@ class GowriTable:
 
 
 @dataclass(frozen=True, slots=True)
+class DashaTable:
+    lords: tuple[str, ...]  # 9, in Vimshottari order starting with Ketu
+    years: tuple[float, ...]  # same order; sums to 120
+
+
+@dataclass(frozen=True, slots=True)
 class Tables:
     horas: HoraTable
     kalams: KalamTable
     durmuhurta: DurmuhurtaTable
     varjyam: VarjyamTable
     gowri: GowriTable
+    dasha: DashaTable
     unverified: frozenset[str]  # names of tables (or "table:weekday" rows) marked verify: true

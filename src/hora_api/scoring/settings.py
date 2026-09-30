@@ -34,6 +34,8 @@ class ScoringSettings(BaseSettings):
     # Dasha match: hora lord is the running dasha/bhukti lord, or a natural friend of one.
     dasha_match_value: float = 1.0
     dasha_friend_value: float = 0.5
+    # Length of a year when computing Vimshottari dasha periods from a birth time.
+    dasha_year_days: float = 365.25
 
     # Rasi matrix: chandrabala only, plus an optional generic hora-lord term (off by default).
     rasi_hora_generic: bool = False

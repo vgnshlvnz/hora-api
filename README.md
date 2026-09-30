@@ -76,3 +76,11 @@ from the tithi at the start of the hora). Set `HORA_SCORING_CHANDRA_CONDITIONAL_
 split off with `HORA_SCORING_CHANDRA_PAKSHA=false` to use the single
 `HORA_SCORING_CHANDRA_CONDITIONAL_VALUE`. Scored horas and the rasi matrix use the paksha at the
 start of the hora; the personal card splits its chandrabala rows at the full and new moon.
+
+## Dasha
+
+Scoring can include a dasha component. A profile supplies it in one of two ways: explicit
+`dasha` periods, or an optional `birth_datetime` (timezone-aware) from which Vimshottari dasha and
+bhukti periods are computed using the Moon's longitude then, in the request's ayanamsa. Year length
+is `HORA_SCORING_DASHA_YEAR_DAYS` (default 365.25). `/v1/horas/personal` lists the periods that
+overlap the day in `dasha`. The birth time is never returned.

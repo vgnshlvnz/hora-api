@@ -32,6 +32,7 @@ def test_tables_load_with_expected_shape() -> None:
     )
     assert t.horas.weekday_lords == ("Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn")
     assert len(t.varjyam.start_ghati) == 27
+    assert t.dasha.lords[0] == "Ketu" and sum(t.dasha.years) == 120
     assert len(t.kalams.rahu_kalam) == len(t.durmuhurta.day) == len(t.gowri.day) == 7
     assert all(len(row) == t.gowri.segments for row in t.gowri.day + t.gowri.night)
 

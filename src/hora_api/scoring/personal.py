@@ -16,6 +16,7 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from pydantic import AwareDatetime, BaseModel, BeforeValidator, Field, field_validator
 
 from hora_api.core import astro
+from hora_api.core import dasha as core_dasha
 from hora_api.core.astro import Ayanamsa
 from hora_api.core.day import (
     BlockedWindow,
@@ -78,7 +79,10 @@ class Profile(BaseModel):
     janma_nakshatra: Nakshatra
     janma_rasi: Rasi
     lagna: Rasi
+    # Explicit periods win. Otherwise, with a birth time, Vimshottari periods are computed from
+    # the Moon's longitude then. Never returned by the API; keep profile files outside the repo.
     dasha: list[DashaPeriod] | None = None
+    birth_datetime: AwareDatetime | None = None
     tz_home: str
 
     @field_validator("tz_home")
@@ -101,8 +105,13 @@ def derive_profile(
     display_name: str,
     tz_home: str,
     dasha: list[DashaPeriod] | None = None,
+    keep_birth_datetime: bool = False,
 ) -> Profile:
-    """Derive janma nakshatra, janma rasi and lagna from birth data via core.astro."""
+    """Derive janma nakshatra, janma rasi and lagna from birth data via core.astro.
+
+    The birth time is not kept on the profile unless `keep_birth_datetime` is set (it is what
+    lets dasha be computed).
+    """
     moon = astro.moon_state(birth_dt, ayanamsa)
     lagna = int(astro.ascendant(birth_dt, lat, lon, ayanamsa) // 30)
     return Profile(
@@ -112,6 +121,7 @@ def derive_profile(
         janma_rasi=moon.rasi,
         lagna=lagna,
         dasha=dasha,
+        birth_datetime=birth_dt if keep_birth_datetime else None,
         tz_home=tz_home,
     )
 
@@ -262,18 +272,45 @@ def hora_lord_ranks(lagna: int, tables: ScoringTables | None = None) -> dict[str
     return {p: _functional_rank(t.functional[lagna], p) for p in t.names.planets}
 
 
+def resolve_dasha(
+    profile: Profile,
+    tables: Tables,
+    settings: ScoringSettings | None = None,
+    ayanamsa: Ayanamsa = Ayanamsa.LAHIRI,
+) -> list[DashaPeriod] | None:
+    """The profile's dasha periods: explicit ones, else computed from the birth time, else None.
+
+    The Moon's longitude at birth uses `ayanamsa` (stored janma data is assumed to match it).
+    """
+    if profile.dasha:
+        return profile.dasha
+    if profile.birth_datetime is None:
+        return None
+    cfg = settings or ScoringSettings()
+    moon = astro.moon_state(profile.birth_datetime, ayanamsa)
+    spans = core_dasha.vimshottari(
+        moon.longitude, profile.birth_datetime, tables.dasha, year_days=cfg.dasha_year_days
+    )
+    return [DashaPeriod(lord=x.lord, start=x.start, end=x.end, level=x.level) for x in spans]
+
+
 def dasha_match(
     profile: Profile,
     lord: str,
     at: datetime,
     settings: ScoringSettings,
     tables: ScoringTables | None = None,
+    periods: list[DashaPeriod] | None = None,
 ) -> float | None:
-    """0-1 match of the hora lord with the running dasha/bhukti lords; None without dasha data."""
-    if not profile.dasha:
+    """0-1 match of the hora lord with the running dasha/bhukti lords; None without dasha data.
+
+    `periods` defaults to `profile.dasha`; pass `resolve_dasha(...)` to include computed ones.
+    """
+    periods = profile.dasha if periods is None else periods
+    if not periods:
         return None
     friends = (tables or _default_tables()).friends
-    running = [p.lord for p in profile.dasha if p.start <= at < p.end]
+    running = [p.lord for p in periods if p.start <= at < p.end]
     best = 0.0
     for dasha_lord in running:
         if lord == dasha_lord:
@@ -317,13 +354,18 @@ def score_horas(
     tables: Tables,
     settings: ScoringSettings | None = None,
     scoring_tables: ScoringTables | None = None,
+    ayanamsa: Ayanamsa = Ayanamsa.LAHIRI,
 ) -> list[ScoredHora]:
-    """Score each hora for a profile; fully blocked horas get score None."""
+    """Score each hora for a profile; fully blocked horas get score None.
+
+    `ayanamsa` only matters when dasha is computed from the profile's birth time.
+    """
     cfg = settings or ScoringSettings()
     st = scoring_tables or _default_tables()
     blocked = blocked_windows(day, tables, profile)
 
-    w_dasha = cfg.weight_dasha_when_given if profile.dasha else 0.0
+    periods = resolve_dasha(profile, tables, cfg, ayanamsa)
+    w_dasha = cfg.weight_dasha_when_given if periods else 0.0
     total_weight = cfg.weight_tara + cfg.weight_chandra + cfg.weight_hora + w_dasha
     scale = 100.0 / total_weight
 
@@ -355,7 +397,7 @@ def score_horas(
 
         rank = hora_lord_rank(profile.lagna, hora.lord, st)
         mid = hora.start + (hora.end - hora.start) / 2
-        dasha = dasha_match(profile, hora.lord, mid, cfg, st)
+        dasha = dasha_match(profile, hora.lord, mid, cfg, st, periods)
 
         points_tara = cfg.weight_tara * tara_value(taras[used_t], cfg) * scale
         points_chandra = cfg.weight_chandra * chandra_value(chandras[used_c], cfg) * scale
@@ -401,6 +443,7 @@ __all__ = [
     "derive_profile",
     "hora_lord_rank",
     "hora_lord_ranks",
+    "resolve_dasha",
     "score_horas",
     "tarabala",
 ]

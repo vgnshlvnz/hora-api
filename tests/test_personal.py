@@ -13,6 +13,7 @@ from hypothesis import strategies as st
 from pydantic import ValidationError
 
 from hora_api.core import day as D
+from hora_api.core.astro import Ayanamsa
 from hora_api.core.day import Day, Hora, MoonSpan
 from hora_api.data.loader import load_scoring_tables, load_tables
 from hora_api.scoring import personal as P
@@ -369,3 +370,78 @@ def test_chandra_tone_follows_the_effective_value() -> None:
     strict = ScoringSettings(chandra_conditional_krishna_value=0.0)
     assert P.chandra_tone(krishna, strict) == "bad"
     assert P.chandra_tone(P.chandrabala(1, 3), cfg) == "good"  # 3rd house from Vrishabha: 3rd
+
+
+# ---------------------------------------------------------------------------
+# Dasha computed from a birth time (Vimshottari)
+# ---------------------------------------------------------------------------
+
+BIRTH = datetime.fromisoformat(FIXTURE["birth"]["datetime"])  # synthetic, Moon in Rohini
+WITH_BIRTH = GOLDEN.model_copy(update={"birth_datetime": BIRTH})
+
+
+def test_resolve_dasha_precedence() -> None:
+    assert P.resolve_dasha(GOLDEN, TABLES) is None  # neither periods nor a birth time
+    computed = P.resolve_dasha(WITH_BIRTH, TABLES)
+    assert computed is not None and computed[0].level == "maha" and computed[0].lord == "Moon"
+    assert computed[0].start == BIRTH
+    explicit = P.DashaPeriod(
+        lord="Saturn", start=datetime(2020, 1, 1, tzinfo=UTC), end=datetime(2040, 1, 1, tzinfo=UTC)
+    )
+    both = WITH_BIRTH.model_copy(update={"dasha": [explicit]})
+    assert P.resolve_dasha(both, TABLES) == [explicit]  # explicit periods win
+
+
+def test_computed_dasha_on_the_golden_day() -> None:
+    """Birth 2026-03-24 with the Moon 3.7 degrees into Rohini: Moon dasha, Jupiter bhukti now."""
+    periods = P.resolve_dasha(WITH_BIRTH, TABLES)
+    assert periods is not None
+    now = datetime(2026, 9, 30, 0, 0, tzinfo=UTC)
+    running = [(p.level, p.lord) for p in periods if p.start <= now < p.end]
+    assert running == [("maha", "Moon"), ("antar", "Jupiter")]
+    scored = by_start(P.score_horas(HORAS, PJ, WITH_BIRTH, TABLES))
+    weight = 20 / 120 * 100  # dasha weight 20 of a total of 120
+    assert scored["10:02"].lord == "Jupiter"
+    assert scored["10:02"].components.dasha == pytest.approx(weight, abs=0.1)  # bhukti lord
+    assert scored["08:02"].lord == "Moon"
+    assert scored["08:02"].components.dasha == pytest.approx(weight, abs=0.1)  # dasha lord
+    assert scored["19:02"].lord == "Sun"  # a friend of Moon and of Jupiter: half
+    assert scored["19:02"].components.dasha == pytest.approx(weight / 2, abs=0.1)
+    assert scored["11:02"].lord == "Mars"  # a friend of Jupiter (the bhukti lord) only
+    assert scored["11:02"].components.dasha == pytest.approx(weight / 2, abs=0.1)
+    assert scored["13:02"].lord == "Venus"  # an enemy of Moon and of Jupiter: nothing
+    assert scored["13:02"].components.dasha == 0.0
+
+
+def test_no_dasha_data_leaves_scores_unchanged() -> None:
+    plain = by_start(P.score_horas(HORAS, PJ, GOLDEN, TABLES))
+    assert all(h.components.dasha is None for h in plain.values())
+    assert plain["16:02"].score == 100.0
+
+
+def test_dasha_depends_on_ayanamsa_and_year_length() -> None:
+    lahiri = P.resolve_dasha(WITH_BIRTH, TABLES, ScoringSettings(), Ayanamsa.LAHIRI)
+    kp = P.resolve_dasha(WITH_BIRTH, TABLES, ScoringSettings(), Ayanamsa.KP)
+    savana = P.resolve_dasha(WITH_BIRTH, TABLES, ScoringSettings(dasha_year_days=360.0))
+    assert lahiri and kp and savana
+    assert lahiri[0].end != kp[0].end  # the Moon's longitude at birth differs by ~0.1 degree
+    assert abs(lahiri[0].end - kp[0].end) < timedelta(days=90)
+    assert savana[0].end < lahiri[0].end  # shorter years end the first dasha sooner
+
+
+def test_derive_profile_keeps_the_birth_time_only_on_request() -> None:
+    birth = FIXTURE["birth"]
+    kwargs: dict[str, Any] = {
+        "id": "golden", "display_name": "Golden (fixture)", "tz_home": "Asia/Kuala_Lumpur",
+    }  # fmt: skip
+    args = (BIRTH, birth["lat"], birth["lon"])
+    assert P.derive_profile(*args, **kwargs).birth_datetime is None
+    kept = P.derive_profile(*args, **kwargs, keep_birth_datetime=True)
+    assert kept.birth_datetime == BIRTH and kept.janma_nakshatra == ROHINI
+
+
+def test_profile_accepts_a_birth_time_and_requires_a_timezone() -> None:
+    ok: dict[str, Any] = {**FIXTURE["profile"], "birth_datetime": "2026-03-24T05:30:00+08:00"}
+    assert P.Profile(**ok).birth_datetime == BIRTH
+    with pytest.raises(ValidationError):
+        P.Profile(**{**ok, "birth_datetime": "2026-03-24T05:30:00"})

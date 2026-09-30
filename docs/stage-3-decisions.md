@@ -50,11 +50,12 @@ Questions the decisions raise. None is answered here.
   the project follow?
 - **Generic hora-lord table.** What is a defensible source for a generic favourability value per
   hora lord, and is a 0-1 scale still the right shape?
-- **Vimshottari dasha needs the Moon's exact birth longitude**, and stored profiles hold only the
-  nakshatra, rasi and lagna (no birth date or time, by rule). Where does that input come from:
-  the profiles file outside the repo, the request, or a derived value stored next to the
-  profile? Which year length (365.25 or 360 days) and which ayanamsa apply, and how deep
-  (maha and antar, or pratyantar too)?
+- **Vimshottari dasha:** decided. The profiles file (outside the repo) holds an optional
+  `birth_datetime`; the API computes maha and antar (bhukti) periods from the Moon's longitude
+  then, with 365.25-day years, in the request's ayanamsa. Only the birth time is stored, not
+  the birth place (the Moon's position does not need it). Explicit `dasha` periods take
+  precedence. Not done: pratyantar level, and other dasha systems. A Moon exactly on a nakshatra
+  boundary depends on ayanamsa and time precision.
 - **Paksha-dependent chandrabala:** decided. Houses 2, 5 and 9 have two configurable values,
   one per paksha (defaults: 1.0 for shukla, 0.5 for krishna), judged at the start of the hora,
   on by default with a setting to turn it off. The defaults are placeholders for whichever
