@@ -13,3 +13,13 @@ Decisions: docs/stage-2-decisions.md.
 - [x] mcp-server: MCP server wrapping the HTTP API
 - [x] self-hosting: run the API on a personal server or home network
 Skipped: esp32-client (ESP32 calls the API over the network); not part of stage 2.
+
+## Stage 3: accuracy, personal card and hosting hardening (current)
+Decisions: docs/stage-3-decisions.md.
+- [ ] table-verification: verify durmuhurta, varjyam, gowri and functional against sources
+- [ ] hora-generic-source: replace the placeholder generic hora-lord table with a sourced one
+- [ ] vimshottari-dasha: compute dasha and bhukti periods from birth data
+- [ ] paksha-chandrabala: shukla-paksha handling for chandrabala houses 2, 5 and 9
+- [ ] personal-card: personal-windows chat card and MCP tool
+- [ ] tls-proxy: TLS reverse proxy in front of the API and MCP server
+- [ ] docker-autorestart: restart Docker containers that fail their health check
