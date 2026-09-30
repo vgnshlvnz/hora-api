@@ -34,7 +34,9 @@ Questions the decisions raise. None is answered here.
 - **TLS proxy.** Which proxy, which hostnames, and how are certificates issued for a private
   LAN name (an internal CA, or a local DNS name with a real CA)? How do MCP clients trust it?
   Are the plain HTTP ports still published?
-- **Auto-restart.** By what mechanism (an extra container, a host timer, or a different
-  runner), and how does it avoid restart loops when the profiles file is broken?
+- **Auto-restart:** decided. An own sidecar container built from this repo (the stock autoheal
+  image cannot cap restarts or write a status file), capped at 3 restarts per 30 minutes per
+  container, then it gives up and records that in a status file. Not decided: alerting when it
+  gives up, and the same behaviour for the systemd option (which has its own readiness timer).
 - **Carried over from stage 2:** the deployment files are still unproven on a real host, and the
   ESP32 client, stdio transport and remote access are deferred.

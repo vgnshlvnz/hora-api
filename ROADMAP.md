@@ -22,4 +22,4 @@ Decisions: docs/stage-3-decisions.md.
 - [ ] paksha-chandrabala: shukla-paksha handling for chandrabala houses 2, 5 and 9
 - [x] personal-card: personal-windows chat card and MCP tool
 - [ ] tls-proxy: TLS reverse proxy in front of the API and MCP server
-- [~] docker-autorestart: restart Docker containers that fail their health check
+- [x] docker-autorestart: restart Docker containers that fail their health check

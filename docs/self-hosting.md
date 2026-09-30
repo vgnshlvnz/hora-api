@@ -25,6 +25,7 @@ units. Pick one per machine.
 | `deploy/docker-compose.yml` | Runs both, with health checks and restart |
 | `deploy/env.example` | Compose settings; copy to `deploy/.env` (git-ignored) |
 | `deploy/healthcheck.py` | Container health probe (`api` uses `/readyz`, `mcp` checks it answers) |
+| `deploy/watcher.py` | Sidecar that restarts unhealthy containers, with a cap and a status file |
 | `deploy/systemd/*.service`, `*.timer` | systemd units and the readiness timer |
 | `deploy/systemd/*.env.example` | systemd environment files |
 | `scripts/smoke.sh` | Post-deploy check of health, a day card and an MCP call |
@@ -43,6 +44,9 @@ units. Pick one per machine.
 | `HORA_MCP_TOKEN` | MCP | Bearer token clients must send |
 | `HORA_MCP_ALLOWED_HOSTS` | MCP | Host values accepted, for example `hora.lan:8765`; empty disables the Host check |
 | `PROFILES_DIR`, `API_PUBLISH`, `MCP_PUBLISH` | Compose | Host directory for profiles, and publish addresses |
+| `DOCKER_GID` | Compose | Group that owns the Docker socket (`stat -c %g /var/run/docker.sock`); required |
+| `WATCHER_STATUS_DIR` | Compose | Host directory for the watcher's status file (default `deploy/watcher-status`) |
+| `WATCHER_INTERVAL`, `WATCHER_MAX_RESTARTS`, `WATCHER_WINDOW` | Watcher | Poll seconds (15), restarts allowed per window (3), window seconds (1800) |
 
 Generate secrets with `openssl rand -hex 24`.
 
@@ -61,13 +65,44 @@ docker compose ps                         # both services should become "healthy
 - **Health:** the API reports healthy when `/readyz` returns 200 (ephemeris answers and the
   profiles file loads). The MCP container is healthy when its endpoint answers. `mcp` starts
   after `api` is healthy. Docker restarts a container that exits (`restart: unless-stopped`) but
-  does not restart one that is merely unhealthy; check `docker compose ps`, or run
-  `docker compose restart api` when it shows unhealthy.
+  not one that is merely unhealthy; the `watcher` service below does that.
 - **Narrow the listening address:** set `API_PUBLISH=192.168.1.20:8000` and
   `MCP_PUBLISH=192.168.1.20:8765` in `deploy/.env` to publish on one interface only.
 - **Profiles readable by the container:** the container user has uid 10001, so
   `chmod 644 profiles.yaml` (or `chown 10001` it) and keep the directory listable.
 - **Logs:** `docker compose logs -f api mcp`.
+
+### Restarting unhealthy containers (the watcher)
+
+The `watcher` service polls Docker every 15 seconds and restarts any container labelled
+`hora.autorestart=true` (the API and MCP server) whose health check says "unhealthy".
+
+- **Capped.** At most 3 restarts per 30 minutes per container (`WATCHER_MAX_RESTARTS`,
+  `WATCHER_WINDOW`). A restart does not fix everything (a broken profiles file keeps `/readyz`
+  failing), so when the cap is reached the watcher **gives up** on that container: it logs an
+  error once, stops restarting it, and keeps watching. When the container is healthy again
+  (for example after you fix the profiles file and it reloads) the watcher notes the recovery and
+  its budget applies afresh from the restarts still inside the window.
+- **Status file.** Every poll it writes `deploy/watcher-status/watcher.json`: `ok` (false if it
+  gave up on anything or cannot reach Docker), when it was updated, and per container the state
+  (`ok`, `starting`, `restarting`, `gave_up`, `stopped`), restart count and times. It also holds
+  the restart history, so a restarted watcher does not start over with a full budget.
+- **Set up.**
+  ```
+  stat -c %g /var/run/docker.sock              # put this number in deploy/.env as DOCKER_GID
+  mkdir -p deploy/watcher-status && sudo chown 10001:10001 deploy/watcher-status
+  cd deploy && docker compose up -d --build
+  cat watcher-status/watcher.json ; docker compose logs -f watcher
+  ```
+  Point `scripts/smoke.sh` at it with `WATCHER_STATUS_FILE=deploy/watcher-status/watcher.json` to
+  fail when the file is stale, Docker is unreachable, or a container was given up on.
+- **Security: it mounts the Docker socket.** Anything that can use the socket controls Docker,
+  which is root-equivalent on the host. The watcher runs as a non-root user with a read-only
+  filesystem, no capabilities and `no-new-privileges`, uses only the standard library, and its
+  code only lists labelled containers, inspects them and restarts them. Even so, treat it as
+  trusted. To run without it, start only the app services (`docker compose up -d api mcp`).
+- **Not a monitor.** After giving up it does not alert anyone. Check the status file (the smoke
+  script does) or the logs.
 
 ## Option B: systemd
 
@@ -162,6 +197,9 @@ Configuration and profiles live outside the checkout, so they are unaffected.
 | MCP 421 (misdirected request) | The name clients use is not in `HORA_MCP_ALLOWED_HOSTS` (include the port) |
 | `/readyz` 503 | Profiles file missing permissions, or invalid YAML; see the API log |
 | Container unhealthy, `mcp` never starts | `api` is not healthy yet; check `docker compose logs api` |
+| Watcher log: `gave_up` | Restarting did not help; find the cause in `docker compose logs api` (often the profiles file), fix it, and the watcher resumes when the container is healthy |
+| Watcher unhealthy or `docker_error` in the status file | Wrong `DOCKER_GID` (permission denied on the socket), or the socket path is not `/var/run/docker.sock` |
+| Watcher cannot write the status file | `deploy/watcher-status` is not writable by uid 10001 |
 | MCP tool error "cannot reach hora-api" | Wrong `HORA_API_URL`, or the API is down |
 | Profile name errors ("unknown nakshatra") | Use classical names such as `Rohini`, or indices 0-26 |
 | Times off by hours | Pass the `tz` parameter or set `DEFAULT_TZ` |
@@ -174,5 +212,6 @@ Configuration and profiles live outside the checkout, so they are unaffected.
   compose file (`docker compose config`) and `scripts/smoke.sh` were run for real. Do a first
   deployment with the smoke test in hand.
 - Plain HTTP, shared-secret auth only, no rate limiting.
-- Docker does not restart an unhealthy container by itself (see Option A).
+- The watcher needs the Docker socket (see its security note) and only restarts; it does not
+  alert. It was tested against a fake Docker Engine API over a unix socket, not a real daemon.
 - The MCP health probe only shows the endpoint answers, not that the API behind it works.

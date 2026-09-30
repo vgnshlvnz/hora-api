@@ -65,4 +65,5 @@ for the day card, the rasi card and personal horas. It is a separate uv project;
 
 `deploy/` holds a Docker Compose setup and systemd units for running the API and the MCP server
 on a home server (LAN, plain HTTP, keys required), and `scripts/smoke.sh` checks a running
-deployment. See `docs/self-hosting.md`.
+deployment. A `watcher` sidecar restarts unhealthy containers (capped, with a status file). See
+`docs/self-hosting.md`.
