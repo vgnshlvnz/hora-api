@@ -55,12 +55,28 @@ lists a second Varjyam window in the same Mula, 17:59-19:47 on 2026-11-13 (56 gh
 with the nakshatra). `varjyam.yaml` holds one window per nakshatra, so the second is not
 modelled and Mula stays `verify: true`. Nothing else in the 28 days showed a second window.
 
+## Gowri Panchangam (checked after stage 3 closed)
+
+Drik Panchang's Gowri Panchangam page (`/tamil/tamil-gowri-panchangam.html`) for Kuala Lumpur,
+2026-11-01 (Sunday) to 2026-11-07 (Saturday). The date is honoured when the page is fetched with
+`?geoname-id=1735161&date=DD/MM/YYYY`; the "Running Gowri" widget on the page shows the current
+time and is not the table.
+
+**The recalled table was wrong.** Rows were built as a cycle starting at each weekday's own name.
+Only Sunday (day and night) and Wednesday (day) were right; the other 11 sequences are replaced by
+Drik's, which is not a cycle. Drik also lists **Uthi as good** (five good: Amirdha, Dhanam, Uthi,
+Laabam, Sugam; three bad: Rogam, Soram, Visham); the table had Uthi bad, which flipped its
+label in the API and the day card.
+
+**Open: Saturday night.** Drik's page prints Soram twice (segments 4 and 8) and no Rogam. The
+table uses Rogam for segment 8, an inference, so `gowri:saturday` stays `verify: true`.
+
 ## Still unverified
 
 | Table | Rows checked | Rows unchecked | What would check them |
 | ----- | ------------ | -------------- | --------------------- |
 | `durmuhurta.yaml` | all 7 weekdays | none | done |
 | `varjyam.yaml` | 26 nakshatras | Mula (second window, see above) | Decide whether Mula needs a second window; then one more Drik check |
-| `gowri.yaml` | none | all 7 weekdays | The day pages do not include Gowri Panchangam (it links to a separate Drik page): Nalla Neram for each weekday, day and night |
+| `gowri.yaml` | 6 weekdays (Sun to Fri) | Saturday night (8th segment inferred) | A printed panchangam or another Drik date for Saturday night |
 | `functional.yaml` | none | all | A sourced functional-nature table per lagna (a text, not a calendar page) |
 | `hora_generic.yaml` | none | all | Replaced the placeholder with the conventional benefic/variable/malefic grouping (1.0 / 0.5 / 0.0) by the `hora-generic-source` feature. No primary text: stays `verify: true` until a cited source confirms it |
