@@ -1,15 +1,19 @@
-# Source: NONE. Project placeholder, not from a classical text. It ranks the hora lords by
-#   natural benefic/malefic character (Jupiter, Venus, Moon, Mercury benefic; Sun, Mars, Saturn
-#   malefic) purely so rasi-scoring can optionally include a generic hora-lord term. Off by
-#   default (ScoringSettings.rasi_hora_generic). Replace with a sourced table before enabling it
-#   for real use.
-# Value is a 0-1 favourability of the hora lord for anyone.
+# Source: NO PRIMARY TEXT. This is the conventional benefic/malefic grouping of the planets
+#   (natural benefics Jupiter and Venus; natural malefics Sun, Mars and Saturn; Moon and Mercury
+#   are "variable": the Moon by paksha, Mercury by the planets it is joined with). It is a
+#   grouping, not a scored table from a classical text, so there are three levels only and no
+#   finer ranking is implied. It was chosen over the earlier placeholder, which ranked the lords in
+#   five steps (1.0, 0.75, 0.25, 0.0) with no basis.
+#   verify: true: nobody has checked the grouping or the three values against a cited text. Do
+#   not present these values as sourced.
+# Value is a 0-1 favourability of the hora lord for anyone: benefic 1.0, variable 0.5, malefic 0.0.
+# Used only by the rasi matrix and only if ScoringSettings.rasi_hora_generic is on (off by default).
 verify: true
 lords:
   Jupiter: 1.0
   Venus: 1.0
-  Moon: 0.75
-  Mercury: 0.75
-  Sun: 0.25
+  Moon: 0.5
+  Mercury: 0.5
+  Sun: 0.0
   Mars: 0.0
   Saturn: 0.0
