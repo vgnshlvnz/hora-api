@@ -25,7 +25,12 @@ class ScoringSettings(BaseSettings):
     value_neutral: float = 0.5
     # Tara 1 (Janma) and chandrabala houses 2, 5, 9 are configurable.
     tara_janma_value: float = 0.5
-    chandra_conditional_value: float = 0.5
+    # Houses 2, 5 and 9 depend on paksha (some traditions allow them in shukla paksha): one value
+    # per paksha, judged at the start of the hora. Turn it off to use the single value below.
+    chandra_paksha: bool = True
+    chandra_conditional_shukla_value: float = 1.0
+    chandra_conditional_krishna_value: float = 0.5
+    chandra_conditional_value: float = 0.5  # used when chandra_paksha is off
     # Dasha match: hora lord is the running dasha/bhukti lord, or a natural friend of one.
     dasha_match_value: float = 1.0
     dasha_friend_value: float = 0.5

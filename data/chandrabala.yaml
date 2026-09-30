@@ -1,6 +1,8 @@
 # Source: Chandrabala (Moon's house counted from the janma rasi), Muhurta Chintamani and common
 #   panchangam usage. Good 1, 3, 6, 7, 10, 11; bad 4, 8, 12; 2, 5, 9 are conditional (some
-#   traditions allow them in shukla paksha), so their value is configurable. House 8 is
+#   traditions allow them in shukla paksha). Their value is configurable, one value per paksha
+#   (chandra_conditional_shukla_value, chandra_conditional_krishna_value), judged at the start
+#   of the hora; ScoringSettings.chandra_paksha turns the split off. House 8 is
 #   Chandrashtama, which is a hard block handled in hora_api.core.day, not a penalty.
 # house = ((moon_rasi - janma_rasi) mod 12) + 1.
 verify: false

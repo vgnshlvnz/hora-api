@@ -125,6 +125,8 @@ class TaraDetail(BaseModel):
 class ChandraDetail(BaseModel):
     house: int
     quality: Quality
+    # Paksha the value was judged in; set only for the conditional houses (2, 5, 9).
+    paksha: Literal["shukla", "krishna"] | None = None
 
 
 class TaraChange(BaseModel):
@@ -187,12 +189,22 @@ def tarabala(janma_nak: int, day_nak: int, tables: ScoringTables | None = None) 
 
 
 def chandrabala(
-    janma_rasi: int, moon_rasi: int, tables: ScoringTables | None = None
+    janma_rasi: int,
+    moon_rasi: int,
+    tables: ScoringTables | None = None,
+    paksha: Literal["shukla", "krishna"] | None = None,
 ) -> ChandraDetail:
-    """House of the Moon counted from the janma rasi (house 8 is Chandrashtama)."""
+    """House of the Moon counted from the janma rasi (house 8 is Chandrashtama).
+
+    `paksha` is recorded on the result for the conditional houses (2, 5, 9), whose value depends
+    on it.
+    """
     t = (tables or _default_tables()).chandra
     house = ((moon_rasi - janma_rasi) % 12) + 1
-    return ChandraDetail(house=house, quality=t.quality[house - 1])
+    quality = t.quality[house - 1]
+    return ChandraDetail(
+        house=house, quality=quality, paksha=paksha if quality == "conditional" else None
+    )
 
 
 def _quality_value(quality: Quality, settings: ScoringSettings) -> float:
@@ -211,7 +223,23 @@ def tara_value(tara: TaraDetail, settings: ScoringSettings) -> float:
 
 
 def chandra_value(chandra: ChandraDetail, settings: ScoringSettings) -> float:
+    if chandra.quality == "conditional" and settings.chandra_paksha and chandra.paksha:
+        if chandra.paksha == "shukla":
+            return settings.chandra_conditional_shukla_value
+        return settings.chandra_conditional_krishna_value
     return _quality_value(chandra.quality, settings)
+
+
+def chandra_tone(
+    chandra: ChandraDetail, settings: ScoringSettings
+) -> Literal["good", "bad", "neutral"]:
+    """Good or bad when the effective value equals the good or bad value, otherwise neutral."""
+    value = chandra_value(chandra, settings)
+    if value == settings.value_good:
+        return "good"
+    if value == settings.value_bad:
+        return "bad"
+    return "neutral"
 
 
 def _functional_rank(entry: FunctionalEntry, lord: str) -> int:
@@ -316,7 +344,8 @@ def score_horas(
         )
 
         chandra_pieces = moon_pieces(hora, day.rasi_spans)
-        chandras = [chandrabala(profile.janma_rasi, i, st) for i, _, _ in chandra_pieces]
+        paksha = astro.paksha(hora.start)  # judged at the start of the hora
+        chandras = [chandrabala(profile.janma_rasi, i, st, paksha) for i, _, _ in chandra_pieces]
         used_c = majority_piece(chandra_pieces, clean, hora)
         chandra_change = (
             ChandraChange(at=chandra_pieces[1][1], before=chandras[0], after=chandras[-1])
@@ -366,6 +395,7 @@ __all__ = [
     "Profile",
     "ScoredHora",
     "TaraDetail",
+    "chandra_tone",
     "chandrabala",
     "dasha_match",
     "derive_profile",

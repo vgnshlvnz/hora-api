@@ -19,8 +19,15 @@ from hora_api.api.service import ComputedDay, RequestParams
 from hora_api.core import astro
 from hora_api.core import day as D
 from hora_api.core.tables import Tables
-from hora_api.scoring.personal import Profile, ScoredHora, chandrabala, tarabala
+from hora_api.scoring.personal import (
+    Profile,
+    ScoredHora,
+    chandra_tone,
+    chandrabala,
+    tarabala,
+)
 from hora_api.scoring.rasi import RasiMatrix
+from hora_api.scoring.settings import ScoringSettings
 from hora_api.scoring.tables import NameTable, Quality, ScoringTables
 
 Tone = Literal["good", "bad", "neutral"]
@@ -281,6 +288,7 @@ def personal_card(
     scored: list[ScoredHora],
     top: TopWindows,
     tables: ScoringTables,
+    settings: ScoringSettings,
     unverified: list[str],
 ) -> Card:
     """Best windows, why horas are blocked, and the day's tarabala and chandrabala."""
@@ -330,17 +338,37 @@ def personal_card(
                 tone=_QUALITY_TONE[t.quality],
             )
         )
+    # Houses 2, 5 and 9 depend on paksha, so a span is split where paksha changes (full and new
+    # moon: tithi 15 to 16, and 30 to 1). Neighbouring pieces that read the same are merged.
+    flips = sorted(
+        t.time
+        for t in cd.transitions
+        if t.kind == "tithi" and (t.from_index, t.to_index) in {(15, 16), (30, 1)}
+    )
     chandra_rows = []
     for span in day.rasi_spans:
-        c = chandrabala(profile.janma_rasi, span.index, tables)
-        note = "Chandrashtama" if c.house == 8 else c.quality
-        chandra_rows.append(
-            CardRow(
-                label=f"Chandrabala {_span_words(span.start, span.end, day, clock)}",
-                value=f"{_ordinal(c.house)} house ({note})",
-                tone=_QUALITY_TONE[c.quality],
+        cuts = [span.start, *[f for f in flips if span.start < f < span.end], span.end]
+        pieces: list[tuple[datetime, datetime, str, Tone]] = []
+        for a, b in zip(cuts, cuts[1:], strict=False):
+            c = chandrabala(
+                profile.janma_rasi, span.index, tables, astro.paksha(max(a, day.sunrise))
             )
-        )
+            if c.house == 8:
+                note = "Chandrashtama"
+            elif c.paksha:
+                note = f"conditional, {c.paksha} paksha"
+            else:
+                note = c.quality
+            text = f"{_ordinal(c.house)} house ({note})"
+            tone = chandra_tone(c, settings)
+            if pieces and pieces[-1][2:] == (text, tone):
+                pieces[-1] = (pieces[-1][0], b, text, tone)
+            else:
+                pieces.append((a, b, text, tone))
+        for a, b, text, tone in pieces:
+            chandra_rows.append(
+                CardRow(label=f"Chandrabala {_span_words(a, b, day, clock)}", value=text, tone=tone)
+            )
     moon = CardSection(id="tara_chandra", title="Tara and chandra", rows=tara_rows + chandra_rows)
 
     return Card(

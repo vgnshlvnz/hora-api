@@ -268,7 +268,7 @@ def card_personal(
     )
     top = top_windows(scored, cd.day, p.tz, svc.settings.min_window_minutes)
     unverified = _unverified(svc, {"durmuhurta", "varjyam", "functional"})
-    return personal_card(p, cd, profile, scored, top, svc.scoring_tables, unverified)
+    return personal_card(p, cd, profile, scored, top, svc.scoring_tables, svc.scoring, unverified)
 
 
 @router.get("/profiles", response_model=ProfilesResponse, summary="Stored profile ids")

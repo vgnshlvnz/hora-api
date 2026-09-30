@@ -156,6 +156,11 @@ def ascendant(t: datetime, lat: float, lon: float, ayanamsa: Ayanamsa = Ayanamsa
     return float(ascmc[0]) % 360.0
 
 
+def paksha(t: datetime) -> Literal["shukla", "krishna"]:
+    """Waxing (shukla, tithi 1-15) or waning (krishna, tithi 16-30) fortnight at `t`."""
+    return "shukla" if tithi(t) <= 15 else "krishna"
+
+
 def tithi(t: datetime) -> int:
     """Tithi number 1-30 at `t` (1-15 shukla, 16-30 krishna)."""
     return _tithi_index_jd(_to_jd(t))
@@ -249,6 +254,7 @@ __all__ = [
     "Transition",
     "ascendant",
     "moon_state",
+    "paksha",
     "sun_events",
     "tithi",
     "transitions",

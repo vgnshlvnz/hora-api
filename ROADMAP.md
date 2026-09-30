@@ -19,7 +19,7 @@ Decisions: docs/stage-3-decisions.md.
 - [ ] table-verification: verify durmuhurta, varjyam, gowri and functional against sources
 - [ ] hora-generic-source: replace the placeholder generic hora-lord table with a sourced one
 - [ ] vimshottari-dasha: compute dasha and bhukti periods from birth data
-- [ ] paksha-chandrabala: shukla-paksha handling for chandrabala houses 2, 5 and 9
+- [x] paksha-chandrabala: shukla-paksha handling for chandrabala houses 2, 5 and 9
 - [x] personal-card: personal-windows chat card and MCP tool
 - [x] docker-autorestart: restart Docker containers that fail their health check
 - [ ] api-tiers: per-subscriber API keys with tiers (summary vs full detail) and revocation; scope to be defined
