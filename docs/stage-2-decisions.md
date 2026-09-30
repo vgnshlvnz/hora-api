@@ -8,7 +8,7 @@ Stage 1 closed with these questions open. They were answered when stage 2 starte
 | -------- | -------- |
 | MCP wrapper or direct calls | An MCP server wraps the HTTP API. The `/v1` API stays the single interface. Streamable HTTP transport, in a separate package. |
 | Where chat cards are rendered | In the API. It returns ready-to-show card payloads. |
-| ESP32 | The device calls the API over the network. The core is not ported to C. |
+| ESP32 | Skipped for stage 2. Earlier decision: the device calls the API over the network, and the core is not ported to C. |
 | Where, and whether, the API is hosted | A personal server or home network. |
 | Whether to add a remote | Done: a GitHub remote exists (`vgnshlvnz/hora-api`). `main` and `stage/1` are pushed; tag pushes were blocked in the session that did it, so the tags still need pushing (see the bundle in `vgnshlvnz/hora-sample-app`). |
 
@@ -23,8 +23,8 @@ Follow-on questions the decisions raise. None is answered here.
   tools for the day card, rasi card and personal horas (see `mcp-server/README.md`). Still open:
   a tool for listing profiles or for inline-profile scoring, stdio as a second transport, and TLS
   for the HTTP endpoint.
-- **ESP32:** what payload does a constrained device fetch (a compact or pre-rendered response)?
-  How does it authenticate, and how does it behave when the API is unreachable?
+- **ESP32:** skipped for stage 2, so its questions (payload, authentication, offline behaviour)
+  are not being worked. Revisit in a later stage.
 - **Hosting:** which machine, how is it kept running, and how is it reached from other devices
   (LAN only, VPN, tunnel)? Is TLS terminated in front of the API? Who holds the profiles file?
 - **Licence:** Swiss Ephemeris is dual-licensed (AGPL or commercial). Does personal, non-public
