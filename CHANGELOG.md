@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- table-verification: `varjyam.yaml` had Ardra at 11 ghatikas; Drik Panchang (Kuala Lumpur, 2026-10-30) shows 21, so Ardra's varjyam was placed about four hours early. Ardra is now `verify: false`; per-nakshatra `verify` flags are reported as `varjyam:<name>`; the Friday durmuhurta row is checked. See `docs/table-verification.md`.
+
 ### Added
 
 - api-tiers: per-subscriber API keys in a keys file (hashed, `hora-keys` CLI, reloaded on change) with `free` and `paid` tiers, 403 `tier-required` on paid endpoints, per-key stored-profile scopes, owner keys via `API_KEYS`, key ids in logs, fail-closed keys file; MCP passthrough mode forwarding each caller's own key; deploy files and smoke test updated.
