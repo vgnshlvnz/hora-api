@@ -39,7 +39,9 @@ addopts = "-ra"
 
 [tool.ruff]
 line-length = 100
-src = ["src", "tests"]
+src = ["src", "tests", "mcp-server/src", "mcp-server/tests"]
+# mcp-server is its own project with its own ruff, mypy and pytest configuration.
+extend-exclude = ["mcp-server"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]

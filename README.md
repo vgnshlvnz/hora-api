@@ -52,3 +52,9 @@ ordered `sections` (each with a stable `id`, a `title` and label/value `rows`, e
 are ready-to-show `HH:MM` strings in the request's timezone, with `+1` after local midnight.
 Day card sections: `sun`, `moon`, `avoid`, `nalla_neram`, `horas`. Rasi card sections:
 `chandrashtama`, `best`, `all`.
+
+## MCP server
+
+`mcp-server/` holds `hora-mcp`, an MCP server (streamable HTTP) that wraps this API with tools
+for the day card, the rasi card and personal horas. It is a separate uv project; see
+`mcp-server/README.md`.
