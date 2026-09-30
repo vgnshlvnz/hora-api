@@ -13,6 +13,7 @@ from dataclasses import dataclass
 
 from pydantic import AwareDatetime, BaseModel
 
+from hora_api.core import astro
 from hora_api.core.day import Day, Hora, blocked_windows, clean_parts
 from hora_api.core.tables import Tables
 from hora_api.scoring.personal import (
@@ -92,7 +93,8 @@ def score_rasis(
             )
 
             pieces = moon_pieces(hora, day.rasi_spans)
-            chandras = [chandrabala(rasi, i, st) for i, _, _ in pieces]
+            paksha = astro.paksha(hora.start)  # judged at the start of the hora
+            chandras = [chandrabala(rasi, i, st, paksha) for i, _, _ in pieces]
             used = majority_piece(pieces, clean, hora)
             change = (
                 ChandraChange(at=pieces[1][1], before=chandras[0], after=chandras[-1])
