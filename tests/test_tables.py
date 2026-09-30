@@ -62,3 +62,12 @@ def test_scoring_tables_load_and_report_unverified() -> None:
     assert "Jupiter" in t.friends["Sun"]
     assert t.unverified == {"functional", "hora_generic"}
     assert set(t.hora_generic) == set(t.names.planets)
+
+
+def test_hora_generic_is_a_three_level_grouping() -> None:
+    """Benefic 1.0, variable 0.5, malefic 0.0; no primary text, so it stays verify: true."""
+    t = load_scoring_tables()
+    assert {p: v for p, v in t.hora_generic.items() if v == 1.0} == {"Jupiter": 1.0, "Venus": 1.0}
+    assert {p for p, v in t.hora_generic.items() if v == 0.5} == {"Moon", "Mercury"}
+    assert {p for p, v in t.hora_generic.items() if v == 0.0} == {"Sun", "Mars", "Saturn"}
+    assert "hora_generic" in t.unverified

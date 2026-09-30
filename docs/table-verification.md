@@ -63,4 +63,4 @@ modelled and Mula stays `verify: true`. Nothing else in the 28 days showed a sec
 | `varjyam.yaml` | 26 nakshatras | Mula (second window, see above) | Decide whether Mula needs a second window; then one more Drik check |
 | `gowri.yaml` | none | all 7 weekdays | The day pages do not include Gowri Panchangam (it links to a separate Drik page): Nalla Neram for each weekday, day and night |
 | `functional.yaml` | none | all | A sourced functional-nature table per lagna (a text, not a calendar page) |
-| `hora_generic.yaml` | none | all | Tracked by the `hora-generic-source` feature |
+| `hora_generic.yaml` | none | all | Replaced the placeholder with the conventional benefic/variable/malefic grouping (1.0 / 0.5 / 0.0) by the `hora-generic-source` feature. No primary text: stays `verify: true` until a cited source confirms it |
