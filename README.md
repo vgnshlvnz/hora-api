@@ -19,4 +19,25 @@ See `CLAUDE.md` for the domain rules and git workflow, and `ROADMAP.md` for prog
 | `make test`    | `pytest`                                                  |
 | `make cov`     | `pytest` with coverage report                             |
 | `make check`   | `lint` + `type` + `test`                                  |
-| `make run`     | Serve the API with uvicorn (available once `http-api` lands) |
+| `make run`     | Serve the API with uvicorn on http://127.0.0.1:8000        |
+
+## API
+
+`make run`, then see `http://127.0.0.1:8000/v1/docs`. OpenAPI is at `/v1/openapi.json`.
+
+| Endpoint | Purpose |
+| -------- | ------- |
+| `GET /v1/day` | Sun events, transitions, horas, blocked windows, Gowri layer |
+| `GET /v1/horas/personal?profile_id=` | Scored horas and top windows for a stored profile |
+| `POST /v1/horas/personal` | Same, with an inline `Profile` body |
+| `GET /v1/horas/rasi` | 12 x 24 rasi matrix |
+| `GET /v1/profiles` | Profile ids and display names only |
+| `GET /healthz`, `GET /readyz` | Liveness and readiness |
+
+Common query parameters: `date`, `lat`, `lon`, `tz`, `convention` (`tamil` default, or
+`classical`) and `ayanamsa` (`lahiri` default, or `kp`). Errors are RFC 9457 `problem+json`.
+
+Configuration (environment): `PROFILES_PATH` (default `~/.config/hora-api/profiles.yaml`, outside
+the repo), `API_KEYS` (comma-separated; empty turns auth off, otherwise send `X-API-Key`),
+`DEFAULT_LAT`, `DEFAULT_LON`, `DEFAULT_TZ` (default Petaling Jaya), `CACHE_SIZE`,
+`MIN_WINDOW_MINUTES`, `DATA_DIR`. Scoring weights: `HORA_SCORING_*`.
