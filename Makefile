@@ -1,4 +1,4 @@
-.PHONY: install hooks lint fmt type test cov check run
+.PHONY: install hooks lint fmt type test cov check mcp-check run
 
 install:
 	uv sync
@@ -24,7 +24,12 @@ test:
 cov:
 	uv run pytest --cov=hora_api --cov-report=term-missing
 
-check: lint type test
+check: lint type test mcp-check
+
+# The MCP server is a separate uv project in mcp-server/ with its own environment and gate.
+mcp-check:
+	$(MAKE) -C mcp-server install
+	$(MAKE) -C mcp-server check
 
 # Needs hora_api.api.app, which arrives with the http-api feature.
 run:

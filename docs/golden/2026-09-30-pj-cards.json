@@ -1,0 +1,383 @@
+{
+  "request": {
+    "date": "2026-09-30",
+    "lat": 3.107,
+    "lon": 101.606,
+    "tz": "Asia/Kuala_Lumpur",
+    "convention": "tamil",
+    "ayanamsa": "lahiri"
+  },
+  "day_card": {
+    "kind": "day",
+    "title": "Wednesday 30 Sep 2026",
+    "subtitle": "Asia/Kuala_Lumpur · 3.107, 101.606 · tamil · lahiri",
+    "sections": [
+      {
+        "id": "sun",
+        "title": "Sun",
+        "rows": [
+          {
+            "label": "Sunrise",
+            "value": "07:02",
+            "tone": "neutral"
+          },
+          {
+            "label": "Sunset",
+            "value": "19:05",
+            "tone": "neutral"
+          },
+          {
+            "label": "Next sunrise",
+            "value": "07:02+1",
+            "tone": "neutral"
+          }
+        ]
+      },
+      {
+        "id": "moon",
+        "title": "Moon",
+        "rows": [
+          {
+            "label": "Nakshatra",
+            "value": "Bharani → Krittika (10:07)",
+            "tone": "neutral"
+          },
+          {
+            "label": "Rasi",
+            "value": "Mesha → Vrishabha (15:44)",
+            "tone": "neutral"
+          },
+          {
+            "label": "Tithi",
+            "value": "19 → 20 (17:26)",
+            "tone": "neutral"
+          }
+        ]
+      },
+      {
+        "id": "avoid",
+        "title": "Avoid",
+        "rows": [
+          {
+            "label": "Yamagandam",
+            "value": "08:32–10:03",
+            "tone": "bad"
+          },
+          {
+            "label": "Gulika kalam",
+            "value": "11:33–13:04",
+            "tone": "bad"
+          },
+          {
+            "label": "Durmuhurta",
+            "value": "12:40–13:28",
+            "tone": "bad"
+          },
+          {
+            "label": "Rahu kalam",
+            "value": "13:04–14:34",
+            "tone": "bad"
+          },
+          {
+            "label": "Varjyam",
+            "value": "21:20–22:50",
+            "tone": "bad"
+          }
+        ]
+      },
+      {
+        "id": "nalla_neram",
+        "title": "Nalla Neram (Gowri)",
+        "rows": [
+          {
+            "label": "Laabam",
+            "value": "07:02–08:32",
+            "tone": "good"
+          },
+          {
+            "label": "Dhanam",
+            "value": "08:32–10:03",
+            "tone": "good"
+          },
+          {
+            "label": "Sugam",
+            "value": "10:03–11:33",
+            "tone": "good"
+          },
+          {
+            "label": "Amirdha",
+            "value": "16:05–17:35",
+            "tone": "good"
+          },
+          {
+            "label": "Amirdha",
+            "value": "22:04–23:34",
+            "tone": "good"
+          },
+          {
+            "label": "Laabam",
+            "value": "01:04+1–02:33+1",
+            "tone": "good"
+          },
+          {
+            "label": "Dhanam",
+            "value": "02:33+1–04:03+1",
+            "tone": "good"
+          },
+          {
+            "label": "Sugam",
+            "value": "04:03+1–05:32+1",
+            "tone": "good"
+          }
+        ]
+      },
+      {
+        "id": "horas",
+        "title": "Horas (tamil)",
+        "rows": [
+          {
+            "label": "07:02–08:02",
+            "value": "Mercury",
+            "tone": "neutral"
+          },
+          {
+            "label": "08:02–09:02",
+            "value": "Moon",
+            "tone": "neutral"
+          },
+          {
+            "label": "09:02–10:02",
+            "value": "Saturn",
+            "tone": "neutral"
+          },
+          {
+            "label": "10:02–11:02",
+            "value": "Jupiter",
+            "tone": "neutral"
+          },
+          {
+            "label": "11:02–12:02",
+            "value": "Mars",
+            "tone": "neutral"
+          },
+          {
+            "label": "12:02–13:02",
+            "value": "Sun",
+            "tone": "neutral"
+          },
+          {
+            "label": "13:02–14:02",
+            "value": "Venus",
+            "tone": "neutral"
+          },
+          {
+            "label": "14:02–15:02",
+            "value": "Mercury",
+            "tone": "neutral"
+          },
+          {
+            "label": "15:02–16:02",
+            "value": "Moon",
+            "tone": "neutral"
+          },
+          {
+            "label": "16:02–17:02",
+            "value": "Saturn",
+            "tone": "neutral"
+          },
+          {
+            "label": "17:02–18:02",
+            "value": "Jupiter",
+            "tone": "neutral"
+          },
+          {
+            "label": "18:02–19:02",
+            "value": "Mars",
+            "tone": "neutral"
+          },
+          {
+            "label": "19:02–20:02",
+            "value": "Sun",
+            "tone": "neutral"
+          },
+          {
+            "label": "20:02–21:02",
+            "value": "Venus",
+            "tone": "neutral"
+          },
+          {
+            "label": "21:02–22:02",
+            "value": "Mercury",
+            "tone": "neutral"
+          },
+          {
+            "label": "22:02–23:02",
+            "value": "Moon",
+            "tone": "neutral"
+          },
+          {
+            "label": "23:02–00:02+1",
+            "value": "Saturn",
+            "tone": "neutral"
+          },
+          {
+            "label": "00:02+1–01:02+1",
+            "value": "Jupiter",
+            "tone": "neutral"
+          },
+          {
+            "label": "01:02+1–02:02+1",
+            "value": "Mars",
+            "tone": "neutral"
+          },
+          {
+            "label": "02:02+1–03:02+1",
+            "value": "Sun",
+            "tone": "neutral"
+          },
+          {
+            "label": "03:02+1–04:02+1",
+            "value": "Venus",
+            "tone": "neutral"
+          },
+          {
+            "label": "04:02+1–05:02+1",
+            "value": "Mercury",
+            "tone": "neutral"
+          },
+          {
+            "label": "05:02+1–06:02+1",
+            "value": "Moon",
+            "tone": "neutral"
+          },
+          {
+            "label": "06:02+1–07:02+1",
+            "value": "Saturn",
+            "tone": "neutral"
+          }
+        ]
+      }
+    ],
+    "footer": "Unverified tables in use: durmuhurta, gowri, varjyam.",
+    "unverified_tables": [
+      "durmuhurta",
+      "gowri",
+      "varjyam"
+    ]
+  },
+  "rasi_card": {
+    "kind": "rasi",
+    "title": "Rasis · Wednesday 30 Sep 2026",
+    "subtitle": "Asia/Kuala_Lumpur · 3.107, 101.606 · tamil · lahiri",
+    "sections": [
+      {
+        "id": "chandrashtama",
+        "title": "Chandrashtama (Moon 8th from the rasi)",
+        "rows": [
+          {
+            "label": "Kanya",
+            "value": "until 15:44",
+            "tone": "bad"
+          },
+          {
+            "label": "Tula",
+            "value": "from 15:44",
+            "tone": "bad"
+          }
+        ]
+      },
+      {
+        "id": "best",
+        "title": "Best rasis (by day percentage, then clean share)",
+        "rows": [
+          {
+            "label": "Karka",
+            "value": "100% · 74.9% of the day clean",
+            "tone": "good"
+          },
+          {
+            "label": "Vrischika",
+            "value": "100% · 74.9% of the day clean",
+            "tone": "good"
+          },
+          {
+            "label": "Tula",
+            "value": "100% · 17.4% of the day clean",
+            "tone": "good"
+          }
+        ]
+      },
+      {
+        "id": "all",
+        "title": "All rasis",
+        "rows": [
+          {
+            "label": "Mesha",
+            "value": "62.5% · 74.9% of the day clean",
+            "tone": "neutral"
+          },
+          {
+            "label": "Vrishabha",
+            "value": "75.1% · 74.9% of the day clean",
+            "tone": "neutral"
+          },
+          {
+            "label": "Mithuna",
+            "value": "24.9% · 74.9% of the day clean",
+            "tone": "neutral"
+          },
+          {
+            "label": "Karka",
+            "value": "100% · 74.9% of the day clean",
+            "tone": "neutral"
+          },
+          {
+            "label": "Simha",
+            "value": "87.5% · 74.9% of the day clean",
+            "tone": "neutral"
+          },
+          {
+            "label": "Kanya",
+            "value": "50% · 57.5% of the day clean",
+            "tone": "neutral"
+          },
+          {
+            "label": "Tula",
+            "value": "100% · 17.4% of the day clean",
+            "tone": "neutral"
+          },
+          {
+            "label": "Vrischika",
+            "value": "100% · 74.9% of the day clean",
+            "tone": "neutral"
+          },
+          {
+            "label": "Dhanus",
+            "value": "87.5% · 74.9% of the day clean",
+            "tone": "neutral"
+          },
+          {
+            "label": "Makara",
+            "value": "37.5% · 74.9% of the day clean",
+            "tone": "neutral"
+          },
+          {
+            "label": "Kumbha",
+            "value": "24.9% · 74.9% of the day clean",
+            "tone": "neutral"
+          },
+          {
+            "label": "Meena",
+            "value": "87.5% · 74.9% of the day clean",
+            "tone": "neutral"
+          }
+        ]
+      }
+    ],
+    "footer": "Unverified tables in use: durmuhurta, varjyam.",
+    "unverified_tables": [
+      "durmuhurta",
+      "varjyam"
+    ]
+  }
+}

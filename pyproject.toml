@@ -1,6 +1,6 @@
 [project]
 name = "hora-api"
-version = "0.1.0"
+version = "0.2.0"
 description = "HTTP API for favourable horas and time windows for a person, date and place"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -39,7 +39,9 @@ addopts = "-ra"
 
 [tool.ruff]
 line-length = 100
-src = ["src", "tests"]
+src = ["src", "tests", "mcp-server/src", "mcp-server/tests"]
+# mcp-server is its own project with its own ruff, mypy and pytest configuration.
+extend-exclude = ["mcp-server"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]

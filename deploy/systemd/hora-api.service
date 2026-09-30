@@ -1,0 +1,32 @@
+[Unit]
+Description=hora-api (favourable horas HTTP API)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=hora
+Group=hora
+WorkingDirectory=/opt/hora-api
+# Defaults; /etc/hora-api/hora-api.env overrides them.
+Environment=HORA_BIND=0.0.0.0
+Environment=HORA_PORT=8000
+EnvironmentFile=/etc/hora-api/hora-api.env
+ExecStart=/opt/hora-api/.venv/bin/uvicorn hora_api.api.app:app --host ${HORA_BIND} --port ${HORA_PORT}
+Restart=on-failure
+RestartSec=5
+
+# Hardening: the service only reads its code, tables and /etc/hora-api.
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictSUIDSGID=yes
+LockPersonality=yes
+
+[Install]
+WantedBy=multi-user.target

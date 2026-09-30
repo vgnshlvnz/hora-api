@@ -10,6 +10,7 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from fastapi import APIRouter, Depends, Query, Request, Security
 from fastapi.security import APIKeyHeader
 
+from hora_api.api.cards import Card, day_card, rasi_card
 from hora_api.api.models import (
     BlockedOut,
     DayResponse,
@@ -225,6 +226,27 @@ def rasi_matrix(request: Request, p: Params) -> RasiResponse:
         meta=_meta(p), horas=m.horas, rasis=m.rasis, unverified_tables=_unverified(svc, used)
     )
     return localise(resp, p.tz)
+
+
+@router.get("/cards/day", response_model=Card, summary="Day summary chat card")
+def card_day(request: Request, p: Params) -> Card:
+    """Client-neutral card: sun, moon, windows to avoid, Nalla Neram (Gowri) and horas."""
+    svc = services(request)
+    cd = _computed(svc, p)
+    unverified = _unverified(svc, {"durmuhurta", "varjyam", "gowri"})
+    return day_card(p, cd, svc.tables, svc.scoring_tables.names, unverified)
+
+
+@router.get("/cards/rasi", response_model=Card, summary="Rasi overview chat card")
+def card_rasi(request: Request, p: Params) -> Card:
+    """Client-neutral card: Chandrashtama rasis, best rasis and all twelve day percentages."""
+    svc = services(request)
+    cd = _computed(svc, p)
+    matrix = score_rasis(list(cd.horas), cd.day, svc.tables, svc.scoring, svc.scoring_tables)
+    used = {"durmuhurta", "varjyam"} | (
+        {"hora_generic"} if svc.scoring.rasi_hora_generic else set()
+    )
+    return rasi_card(p, cd, matrix, svc.scoring_tables.names, _unverified(svc, used))
 
 
 @router.get("/profiles", response_model=ProfilesResponse, summary="Stored profile ids")

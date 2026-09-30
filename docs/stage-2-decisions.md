@@ -1,32 +1,34 @@
-# Stage 2: open decisions
+# Stage 2: decisions
 
-Stage 2 is undecided. These questions are open; none is answered here. `stage/2` is not created
-until they are.
+Stage 1 closed with these questions open. They were answered when stage 2 started.
 
-## Consumers
+## Decided
 
-1. **MCP wrapper or direct calls.** Should an MCP server wrap the HTTP API, expose the Python
-   core directly, or should clients call the HTTP API without MCP?
-2. **Where chat cards are rendered.** In the API, in an MCP tool result, in the chat client, or
-   elsewhere? Which formats and which chat clients?
-3. **ESP32.** Does the device call the API over the network, or is the core ported to C? What
-   happens when it is offline?
+| Question | Decision |
+| -------- | -------- |
+| MCP wrapper or direct calls | An MCP server wraps the HTTP API. The `/v1` API stays the single interface. Streamable HTTP transport, in a separate package. |
+| Where chat cards are rendered | In the API. It returns ready-to-show card payloads. |
+| ESP32 | Skipped for stage 2. Earlier decision: the device calls the API over the network, and the core is not ported to C. |
+| Where, and whether, the API is hosted | A personal server or home network, LAN only over plain HTTP, run with Docker Compose or systemd. |
+| Whether to add a remote | Done: a GitHub remote exists (`vgnshlvnz/hora-api`). `main` and `stage/1` are pushed; tag pushes were blocked in the session that did it, so the tags still need pushing (see the bundle in `vgnshlvnz/hora-sample-app`). |
 
-## Hosting
+## Still open
 
-4. **Where, and whether, the API is hosted.** Local only, a personal server, or a cloud service?
-   Who may call it, and how do keys and TLS work in that case?
-5. **Whether to add a remote.** The repository has no remote and nothing is pushed. Should it get
-   one, where, and public or private?
+Follow-on questions the decisions raise. None is answered here.
 
-## Inputs to the decisions
-
-Facts from stage 1 that bear on the questions above; they are not recommendations.
-
-- The API is stateless apart from an in-memory cache; profiles come from a file outside the repo.
-- Swiss Ephemeris (via pyswisseph) is dual-licensed AGPL or commercial. This applies to hosting
-  the API and to any port of the core.
-- Five tables are unverified (see `docs/stage-1.md`). Any consumer shows results that depend on
-  them.
-- The core (`hora_api.core`) is pure Python with no I/O or FastAPI imports.
-- Auth is an optional shared key in a header; there is no TLS termination or rate limiting.
+- **Chat cards:** the format is client-neutral card JSON on `/v1/cards/*`, covering the day
+  summary and the rasi overview (see the README). Still open: a personal-windows card, other
+  card formats for specific chat clients, and whether cards should surface more or fewer fields.
+- **MCP server:** it is a separate package in `mcp-server/`, served over streamable HTTP with
+  tools for the day card, rasi card and personal horas (see `mcp-server/README.md`). Still open:
+  a tool for listing profiles or for inline-profile scoring, stdio as a second transport, and TLS
+  for the HTTP endpoint.
+- **ESP32:** skipped for stage 2, so its questions (payload, authentication, offline behaviour)
+  are not being worked. Revisit in a later stage.
+- **Hosting:** decided as LAN only over plain HTTP, run with Docker Compose or systemd (see
+  `docs/self-hosting.md`). Still open: TLS in front of the services, reaching them beyond the
+  LAN (VPN or tunnel), and which machine runs them.
+- **Licence:** Swiss Ephemeris is dual-licensed (AGPL or commercial). Does personal, non-public
+  hosting change what needs checking?
+- **Unverified tables:** `durmuhurta`, `varjyam`, `gowri`, `functional` and `hora_generic` are
+  still `verify: true`. Every consumer, cards included, shows results that depend on them.
