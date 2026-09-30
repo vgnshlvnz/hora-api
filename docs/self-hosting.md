@@ -148,8 +148,14 @@ profiles:
 - Real profiles never go in the repository. Compose keeps them under `PROFILES_DIR`
   (for example `/srv/hora-api/profiles/profiles.yaml`); systemd uses
   `/etc/hora-api/profiles.yaml` (`chmod 640`, owner `root:hora`).
-- The file holds derived natal data only (nakshatra, rasi, lagna), not birth dates or times.
-  Keep it that way. The API never returns it: `/v1/profiles` lists ids and display names only.
+- The file holds derived natal data (nakshatra, rasi, lagna). A profile may also carry an
+  optional `birth_datetime` (with a UTC offset, for example `2026-03-24T05:30:00+08:00`); the API
+  then computes Vimshottari dasha and bhukti periods from the Moon's position at that moment.
+  **That is a real birth time, so the file is more sensitive with it.** Only add it if you want
+  computed dasha, keep the file mode `640`, and encrypt every copy that leaves the machine. The
+  API never returns it: `/v1/profiles` lists ids and display names only, and no card or scored
+  response includes it. A profile can instead list `dasha` periods explicitly, which take
+  precedence.
 - **Back up** the single file: `cp -p profiles.yaml profiles.yaml.$(date +%F)` into a location
   outside the repo, and include it in the machine's normal backups. If the backup leaves the
   machine, encrypt it (for example with `age` or `gpg`).
