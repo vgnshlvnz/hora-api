@@ -1,0 +1,10 @@
+[Unit]
+Description=hora-api readiness check (restarts hora-api if /readyz fails)
+After=hora-api.service
+
+[Service]
+Type=oneshot
+Environment=HORA_PORT=8000
+EnvironmentFile=-/etc/hora-api/hora-api.env
+# systemd has no HTTP health check of its own: probe /readyz and restart the API if it fails.
+ExecStart=/bin/sh -c 'systemctl is-active --quiet hora-api.service || exit 0; curl -fsS --max-time 5 -o /dev/null http://127.0.0.1:${HORA_PORT}/readyz || systemctl restart hora-api.service'

@@ -58,3 +58,9 @@ Day card sections: `sun`, `moon`, `avoid`, `nalla_neram`, `horas`. Rasi card sec
 `mcp-server/` holds `hora-mcp`, an MCP server (streamable HTTP) that wraps this API with tools
 for the day card, the rasi card and personal horas. It is a separate uv project; see
 `mcp-server/README.md`.
+
+## Self-hosting
+
+`deploy/` holds a Docker Compose setup and systemd units for running the API and the MCP server
+on a home server (LAN, plain HTTP, keys required), and `scripts/smoke.sh` checks a running
+deployment. See `docs/self-hosting.md`.

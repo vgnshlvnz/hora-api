@@ -9,7 +9,7 @@ Stage 1 closed with these questions open. They were answered when stage 2 starte
 | MCP wrapper or direct calls | An MCP server wraps the HTTP API. The `/v1` API stays the single interface. Streamable HTTP transport, in a separate package. |
 | Where chat cards are rendered | In the API. It returns ready-to-show card payloads. |
 | ESP32 | Skipped for stage 2. Earlier decision: the device calls the API over the network, and the core is not ported to C. |
-| Where, and whether, the API is hosted | A personal server or home network. |
+| Where, and whether, the API is hosted | A personal server or home network, LAN only over plain HTTP, run with Docker Compose or systemd. |
 | Whether to add a remote | Done: a GitHub remote exists (`vgnshlvnz/hora-api`). `main` and `stage/1` are pushed; tag pushes were blocked in the session that did it, so the tags still need pushing (see the bundle in `vgnshlvnz/hora-sample-app`). |
 
 ## Still open
@@ -25,8 +25,9 @@ Follow-on questions the decisions raise. None is answered here.
   for the HTTP endpoint.
 - **ESP32:** skipped for stage 2, so its questions (payload, authentication, offline behaviour)
   are not being worked. Revisit in a later stage.
-- **Hosting:** which machine, how is it kept running, and how is it reached from other devices
-  (LAN only, VPN, tunnel)? Is TLS terminated in front of the API? Who holds the profiles file?
+- **Hosting:** decided as LAN only over plain HTTP, run with Docker Compose or systemd (see
+  `docs/self-hosting.md`). Still open: TLS in front of the services, reaching them beyond the
+  LAN (VPN or tunnel), and which machine runs them.
 - **Licence:** Swiss Ephemeris is dual-licensed (AGPL or commercial). Does personal, non-public
   hosting change what needs checking?
 - **Unverified tables:** `durmuhurta`, `varjyam`, `gowri`, `functional` and `hora_generic` are
