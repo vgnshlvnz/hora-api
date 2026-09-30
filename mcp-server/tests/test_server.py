@@ -35,12 +35,15 @@ def problem(status: int, title: str, detail: str, **extra: Any) -> httpx.Respons
     return httpx.Response(status, json=body, headers={"content-type": "application/problem+json"})
 
 
-async def test_lists_the_three_tools() -> None:
+async def test_lists_the_tools() -> None:
     server = create_server(Settings(), Upstream().transport)
     async with Client(server) as client:
         tools = {t.name: t for t in (await client.list_tools()).tools}
-    assert set(tools) == {"hora_day_card", "hora_rasi_card", "hora_personal_horas"}
+    assert set(tools) == {
+        "hora_day_card", "hora_rasi_card", "hora_personal_card", "hora_personal_horas",
+    }  # fmt: skip
     assert tools["hora_personal_horas"].input_schema["required"] == ["profile_id"]
+    assert tools["hora_personal_card"].input_schema["required"] == ["profile_id"]
     assert "required" not in tools["hora_day_card"].input_schema
     schema = tools["hora_day_card"].input_schema["properties"]
     assert set(schema) == {"date", "lat", "lon", "tz", "convention", "ayanamsa"}
@@ -81,6 +84,27 @@ async def test_personal_horas_passes_profile_id() -> None:
     assert result.structured_content == reply
     assert dict(up.requests[0].url.params) == {"profile_id": "golden", "date": "2026-09-30"}
     assert up.requests[0].url.path == "/v1/horas/personal"
+
+
+async def test_personal_card_calls_the_personal_cards_endpoint() -> None:
+    card = {"kind": "personal", "title": "Golden (fixture) · Wednesday 30 Sep 2026", "sections": []}
+    up = Upstream({"/v1/cards/personal": httpx.Response(200, json=card)})
+    async with Client(create_server(Settings(), up.transport)) as client:
+        result = await client.call_tool(
+            "hora_personal_card", {"profile_id": "golden", "tz": "Asia/Kuala_Lumpur"}
+        )
+        missing = await client.call_tool("hora_personal_card", {})
+    assert not result.is_error and result.structured_content == card
+    assert up.requests[0].url.path == "/v1/cards/personal"
+    assert dict(up.requests[0].url.params) == {"profile_id": "golden", "tz": "Asia/Kuala_Lumpur"}
+    assert missing.is_error and len(up.requests) == 1  # profile_id is required; API not called
+
+
+async def test_personal_card_unknown_profile_reaches_the_model() -> None:
+    up = Upstream({"/v1/cards/personal": problem(404, "Profile not found", "No profile 'x'.")})
+    async with Client(create_server(Settings(), up.transport)) as client:
+        result = await client.call_tool("hora_personal_card", {"profile_id": "x"})
+    assert result.is_error and "404 Profile not found: No profile 'x'." in str(result.content)
 
 
 async def test_api_key_is_forwarded() -> None:
