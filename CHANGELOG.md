@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.4.0] - Stage 4
+
 ### Fixed
 
 - gowri-verification: `gowri.yaml` was a recalled cycle and mostly wrong; 11 of 14 day and night sequences now follow Drik Panchang (Kuala Lumpur, 2026-11-01 to 2026-11-07), and Uthi is good, not bad (this changes the nature of Uthi segments in the API and the day card). Six weekdays are `verify: false`; Saturday stays `verify: true` (Drik's 8th night segment is ambiguous, Rogam is inferred). See `docs/table-verification.md`.
