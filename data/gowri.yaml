@@ -1,0 +1,41 @@
+# Source: Gowri Panchangam (Nalla Neram) as printed in Tamil panchangams. RECALLED FROM
+#   MEMORY, NOT CHECKED AGAINST A PRINTED PANCHANGAM. The day rows follow the rule "cycle
+#   starts at the weekday's own name" (Sunday Uthi, Monday Amirdha, Tuesday Rogam, Wednesday
+#   Laabam, Thursday Dhanam, Friday Sugam, Saturday Soram); the night rows assume the cycle
+#   starts four names later, which is UNCONFIRMED.
+# Day (sunrise to sunset) and night (sunset to next sunrise) are each split into 8 equal
+# segments, listed in order below. Reported as its own layer, never blended into scores.
+verify: true
+segments: 8
+nature:
+  good: [Amirdha, Laabam, Dhanam, Sugam]
+  bad: [Uthi, Rogam, Soram, Visham]
+weekdays:
+  sunday:
+    verify: true
+    day: [Uthi, Amirdha, Rogam, Laabam, Dhanam, Sugam, Soram, Visham]
+    night: [Dhanam, Sugam, Soram, Visham, Uthi, Amirdha, Rogam, Laabam]
+  monday:
+    verify: true
+    day: [Amirdha, Rogam, Laabam, Dhanam, Sugam, Soram, Visham, Uthi]
+    night: [Sugam, Soram, Visham, Uthi, Amirdha, Rogam, Laabam, Dhanam]
+  tuesday:
+    verify: true
+    day: [Rogam, Laabam, Dhanam, Sugam, Soram, Visham, Uthi, Amirdha]
+    night: [Soram, Visham, Uthi, Amirdha, Rogam, Laabam, Dhanam, Sugam]
+  wednesday:
+    verify: true
+    day: [Laabam, Dhanam, Sugam, Soram, Visham, Uthi, Amirdha, Rogam]
+    night: [Visham, Uthi, Amirdha, Rogam, Laabam, Dhanam, Sugam, Soram]
+  thursday:
+    verify: true
+    day: [Dhanam, Sugam, Soram, Visham, Uthi, Amirdha, Rogam, Laabam]
+    night: [Uthi, Amirdha, Rogam, Laabam, Dhanam, Sugam, Soram, Visham]
+  friday:
+    verify: true
+    day: [Sugam, Soram, Visham, Uthi, Amirdha, Rogam, Laabam, Dhanam]
+    night: [Amirdha, Rogam, Laabam, Dhanam, Sugam, Soram, Visham, Uthi]
+  saturday:
+    verify: true
+    day: [Soram, Visham, Uthi, Amirdha, Rogam, Laabam, Dhanam, Sugam]
+    night: [Rogam, Laabam, Dhanam, Sugam, Soram, Visham, Uthi, Amirdha]

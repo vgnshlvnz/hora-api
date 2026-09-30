@@ -1,0 +1,17 @@
+# Source: Chaldean order of the seven classical planets and the weekday lords (Sunday=Sun ...
+#   Saturday=Saturn); the standard hora rule described in Surya Siddhanta / Brihat Parashara
+#   Hora Shastra and every hora table derived from them. Supplied in the project brief.
+# Each hora belongs to the next planet in Chaldean order; the first hora of the day belongs to
+# the weekday lord.
+verify: false
+# Chaldean order, slowest to fastest apparent motion.
+chaldean_order: [Saturn, Jupiter, Mars, Sun, Venus, Mercury, Moon]
+# Index 0 = Sunday.
+weekday_lords:
+  sunday: Sun
+  monday: Moon
+  tuesday: Mars
+  wednesday: Mercury
+  thursday: Jupiter
+  friday: Venus
+  saturday: Saturn

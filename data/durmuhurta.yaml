@@ -1,0 +1,16 @@
+# Source: Dur Muhurta (Durmuhurtam) tables as given in Muhurta Chintamani-derived panchangams
+#   (e.g. Drik Panchang "Durmuhurta"). RECALLED FROM MEMORY, NOT CHECKED AGAINST A PRIMARY
+#   TEXT: traditions disagree, especially for Tuesday, Thursday, Saturday and for night
+#   muhurtas. Check every row against a printed Tamil panchangam before trusting it.
+# The day (sunrise to sunset) and the night (sunset to next sunrise) are each split into
+# `parts` equal muhurtas, numbered from 1. Values are the inauspicious muhurta numbers.
+verify: true
+parts: 15
+weekdays:
+  sunday:    {verify: true, day: [14], night: []}
+  monday:    {verify: true, day: [9, 12], night: []}
+  tuesday:   {verify: true, day: [4], night: [8]}
+  wednesday: {verify: true, day: [8], night: []}
+  thursday:  {verify: true, day: [7], night: []}
+  friday:    {verify: true, day: [4, 9], night: []}
+  saturday:  {verify: true, day: [1], night: []}
