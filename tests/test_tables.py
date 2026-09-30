@@ -39,7 +39,8 @@ def test_tables_load_with_expected_shape() -> None:
 
 def test_unverified_tables_are_reported() -> None:
     unverified = load_tables().unverified
-    assert {"durmuhurta", "varjyam", "gowri"} <= unverified
+    assert {"varjyam", "gowri"} <= unverified
+    assert "durmuhurta" not in unverified
     assert "kalams" not in unverified and "horas" not in unverified
 
 

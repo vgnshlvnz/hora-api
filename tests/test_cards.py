@@ -79,8 +79,8 @@ def test_horas_and_gowri_sections(client: TestClient) -> None:
 
 def test_unverified_tables_are_flagged(client: TestClient) -> None:
     card = client.get("/v1/cards/day", params=PJ).json()
-    assert card["unverified_tables"] == ["durmuhurta", "gowri", "varjyam"]
-    assert card["footer"] == "Unverified tables in use: durmuhurta, gowri, varjyam."
+    assert card["unverified_tables"] == ["gowri", "varjyam"]
+    assert card["footer"] == "Unverified tables in use: gowri, varjyam."
 
 
 def test_cards_use_request_timezone_and_options(client: TestClient) -> None:
@@ -113,8 +113,8 @@ def test_golden_rasi_card(client: TestClient) -> None:
     assert [label for label, _, _ in everything][:3] == ["Mesha", "Vrishabha", "Mithuna"]
     assert len(everything) == 12 and everything[-1][0] == "Meena"
     assert everything[5] == ("Kanya", "50% · 57.5% of the day clean", "neutral")
-    assert card["unverified_tables"] == ["durmuhurta", "varjyam"]
-    assert card["footer"] == "Unverified tables in use: durmuhurta, varjyam."
+    assert card["unverified_tables"] == ["varjyam"]
+    assert card["footer"] == "Unverified tables in use: varjyam."
 
 
 def test_span_words_and_clock() -> None:
@@ -200,8 +200,8 @@ def test_golden_personal_card(personal_client: TestClient) -> None:
         ("Chandrabala until 15:44", "12th house (bad)", "bad"),
         ("Chandrabala from 15:44", "1st house (good)", "good"),
     ]
-    assert card["unverified_tables"] == ["durmuhurta", "functional", "varjyam"]
-    assert card["footer"] == "Unverified tables in use: durmuhurta, functional, varjyam."
+    assert card["unverified_tables"] == ["functional", "varjyam"]
+    assert card["footer"] == "Unverified tables in use: functional, varjyam."
 
 
 def test_personal_card_matches_the_scored_horas(personal_client: TestClient) -> None:
