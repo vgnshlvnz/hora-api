@@ -223,7 +223,7 @@ def test_personal_card_shows_chandrashtama(personal_client: TestClient) -> None:
     assert len(blocked) == 8 and all("Chandrashtama" in value for _, value, _ in blocked)
     assert rows(card, "tara_chandra")[2:] == [
         ("Chandrabala until 15:44", "8th house (Chandrashtama)", "bad"),
-        ("Chandrabala from 15:44", "9th house (conditional)", "neutral"),
+        ("Chandrabala from 15:44", "9th house (conditional, krishna paksha)", "neutral"),
     ]
 
 
@@ -245,3 +245,19 @@ def test_personal_card_errors_auth_and_cache(tmp_path: Path) -> None:
         assert c.get("/v1/cards/day", params=PJ, headers=headers).status_code == 200
         cache = c.app.state.services.cache  # type: ignore[attr-defined]
         assert cache.hits >= 1  # the day was computed once and shared
+
+
+def test_personal_card_splits_chandra_rows_at_the_full_moon(tmp_path: Path) -> None:
+    """2026-09-26: Moon in Meena, 5th from Vrischika; full moon at 00:49 on the 27th (KL)."""
+    profiles = tmp_path / "profiles.yaml"
+    vrischika = {**GOLDEN_PROFILE, "id": "v", "display_name": "V", "janma_rasi": "Vrischika"}
+    profiles.write_text(yaml.safe_dump({"profiles": [vrischika]}))
+    with TestClient(create_app(ApiSettings(profiles_path=profiles))) as c:
+        params = {**PJ, "date": "2026-09-26", "profile_id": "v"}
+        card = c.get("/v1/cards/personal", params=params).json()
+    chandra = [r for r in rows(card, "tara_chandra") if r[0].startswith("Chandrabala")]
+    assert chandra == [
+        ("Chandrabala until 08:03", "4th house (bad)", "bad"),  # Moon still in Kumbha
+        ("Chandrabala 08:03–00:49+1", "5th house (conditional, shukla paksha)", "good"),
+        ("Chandrabala from 00:49+1", "5th house (conditional, krishna paksha)", "neutral"),
+    ]

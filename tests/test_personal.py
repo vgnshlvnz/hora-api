@@ -174,9 +174,16 @@ def test_settings_change_scores() -> None:
 
     cond = replace(STABLES.chandra, quality=("conditional",) * 12)
     tables = replace(STABLES, chandra=cond)
-    lenient = ScoringSettings(chandra_conditional_value=1.0)
-    out = by_start(P.score_horas(HORAS, PJ, GOLDEN, TABLES, lenient, tables))["07:02"]
+    # 2026-09-30 is krishna paksha: conditional houses take the krishna value (default 0.5).
+    default = by_start(P.score_horas(HORAS, PJ, GOLDEN, TABLES, None, tables))["07:02"]
+    assert default.components.chandra == 12.5
+    krishna = ScoringSettings(chandra_conditional_krishna_value=1.0)
+    out = by_start(P.score_horas(HORAS, PJ, GOLDEN, TABLES, krishna, tables))["07:02"]
     assert out.components.chandra == 25.0
+    # With the paksha rule off, the single conditional value applies whatever the paksha.
+    flat = ScoringSettings(chandra_paksha=False, chandra_conditional_value=1.0)
+    out = by_start(P.score_horas(HORAS, PJ, GOLDEN, TABLES, flat, tables))["07:02"]
+    assert out.components.chandra == 25.0 and out.chandra.paksha == "krishna"
 
 
 def test_dasha_component() -> None:
@@ -296,3 +303,69 @@ def test_any_profile_scores_consistently(nak: int, rasi: int, lagna: int) -> Non
             assert 0.0 <= s.score <= 100.0
             c = s.components
             assert s.score == pytest.approx(c.tara + c.chandra + c.hora, abs=0.2)
+
+
+# ---------------------------------------------------------------------------
+# Paksha-dependent chandrabala (houses 2, 5 and 9)
+# ---------------------------------------------------------------------------
+
+
+def golden_day(d: date) -> tuple[Day, list[P.ScoredHora]]:
+    day = D.make_day(d, KL, 3.107, 101.606)
+    return day, P.score_horas(D.build_horas(day, "tamil", TABLES), day, GOLDEN, TABLES)
+
+
+def test_conditional_house_is_good_in_shukla_and_half_in_krishna() -> None:
+    # 2026-09-22: shukla, Moon in Makara = 9th from Vrishabha. 2026-09-06: krishna, Mithuna = 2nd.
+    _, shukla = golden_day(date(2026, 9, 22))
+    _, krishna = golden_day(date(2026, 9, 6))
+    s, k = shukla[1], krishna[1]  # the 08:02 hora, clean of any window on both days
+    assert (s.chandra.house, s.chandra.quality, s.chandra.paksha) == (9, "conditional", "shukla")
+    assert (k.chandra.house, k.chandra.quality, k.chandra.paksha) == (2, "conditional", "krishna")
+    assert s.components.chandra == 25.0 and k.components.chandra == 12.5
+
+
+def test_paksha_is_recorded_only_for_conditional_houses() -> None:
+    _, scored = golden_day(date(2026, 9, 30))  # krishna; houses 12 and 1 are not conditional
+    assert all(h.chandra.paksha is None for h in scored)
+    assert P.chandrabala(1, 5, paksha="shukla").paksha == "shukla"  # 5th house: conditional
+    assert P.chandrabala(1, 1, paksha="shukla").paksha is None  # 1st house: not
+    assert P.chandrabala(1, 5).paksha is None  # no paksha given
+
+
+def test_paksha_is_judged_at_the_start_of_the_hora() -> None:
+    """Full moon is at 00:49 on 2026-09-27 KL, inside the 00:03 hora; Moon in Meena is 5th."""
+    profile = GOLDEN.model_copy(update={"janma_rasi": 7})  # Vrischika: Meena is the 5th house
+    day = D.make_day(date(2026, 9, 26), KL, 3.107, 101.606)
+    scored = P.score_horas(D.build_horas(day, "tamil", TABLES), day, profile, TABLES)
+    before, after = scored[17], scored[18]  # sunrise is 07:03, so these start at 00:03 and 01:03
+    assert (hhmm(before.start), hhmm(after.start)) == ("00:03", "01:03")
+    assert (before.chandra.house, before.chandra.paksha) == (5, "shukla")
+    assert (after.chandra.house, after.chandra.paksha) == (5, "krishna")
+    assert before.components.chandra == 25.0 and after.components.chandra == 12.5
+    assert before.chandra_change is None  # the Moon does not change rasi in the hora
+
+
+def test_paksha_values_and_switch_are_settings() -> None:
+    day, _ = golden_day(date(2026, 9, 22))
+    horas = D.build_horas(day, "tamil", TABLES)
+
+    def chandra_points(settings: ScoringSettings) -> float:
+        return P.score_horas(horas, day, GOLDEN, TABLES, settings)[1].components.chandra
+
+    assert chandra_points(ScoringSettings()) == 25.0
+    assert chandra_points(ScoringSettings(chandra_conditional_shukla_value=0.0)) == 0.0
+    assert chandra_points(ScoringSettings(chandra_paksha=False)) == 12.5  # single value 0.5
+    assert (
+        chandra_points(ScoringSettings(chandra_paksha=False, chandra_conditional_value=0.2)) == 5.0
+    )
+
+
+def test_chandra_tone_follows_the_effective_value() -> None:
+    shukla = P.chandrabala(1, 9, paksha="shukla")
+    krishna = P.chandrabala(1, 9, paksha="krishna")
+    cfg = ScoringSettings()
+    assert (P.chandra_tone(shukla, cfg), P.chandra_tone(krishna, cfg)) == ("good", "neutral")
+    strict = ScoringSettings(chandra_conditional_krishna_value=0.0)
+    assert P.chandra_tone(krishna, strict) == "bad"
+    assert P.chandra_tone(P.chandrabala(1, 3), cfg) == "good"  # 3rd house from Vrishabha: 3rd
