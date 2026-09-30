@@ -1,0 +1,4753 @@
+{
+  "request": {
+    "date": "2026-09-30",
+    "lat": 3.107,
+    "lon": 101.606,
+    "tz": "Asia/Kuala_Lumpur",
+    "convention": "tamil",
+    "ayanamsa": "lahiri"
+  },
+  "day": {
+    "meta": {
+      "date": "2026-09-30",
+      "weekday": "Wednesday",
+      "tz": "Asia/Kuala_Lumpur",
+      "lat": 3.107,
+      "lon": 101.606,
+      "convention": "tamil",
+      "ayanamsa": "lahiri"
+    },
+    "sun": {
+      "sunrise": "2026-09-30T07:01:53+08:00",
+      "sunset": "2026-09-30T19:05:23+08:00",
+      "next_sunrise": "2026-10-01T07:01:38+08:00"
+    },
+    "transitions": [
+      {
+        "kind": "nakshatra",
+        "time": "2026-09-30T10:06:59+08:00",
+        "from_index": 1,
+        "to_index": 2,
+        "from_name": "Bharani",
+        "to_name": "Krittika"
+      },
+      {
+        "kind": "rasi",
+        "time": "2026-09-30T15:43:55+08:00",
+        "from_index": 0,
+        "to_index": 1,
+        "from_name": "Mesha",
+        "to_name": "Vrishabha"
+      },
+      {
+        "kind": "tithi",
+        "time": "2026-09-30T17:25:52+08:00",
+        "from_index": 19,
+        "to_index": 20,
+        "from_name": null,
+        "to_name": null
+      }
+    ],
+    "horas": [
+      {
+        "start": "2026-09-30T07:01:53+08:00",
+        "end": "2026-09-30T08:01:53+08:00",
+        "lord": "Mercury",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T08:01:53+08:00",
+        "end": "2026-09-30T09:01:53+08:00",
+        "lord": "Moon",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T09:01:53+08:00",
+        "end": "2026-09-30T10:01:53+08:00",
+        "lord": "Saturn",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T10:01:53+08:00",
+        "end": "2026-09-30T11:01:53+08:00",
+        "lord": "Jupiter",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T11:01:53+08:00",
+        "end": "2026-09-30T12:01:53+08:00",
+        "lord": "Mars",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T12:01:53+08:00",
+        "end": "2026-09-30T13:01:53+08:00",
+        "lord": "Sun",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T13:01:53+08:00",
+        "end": "2026-09-30T14:01:53+08:00",
+        "lord": "Venus",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T14:01:53+08:00",
+        "end": "2026-09-30T15:01:53+08:00",
+        "lord": "Mercury",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T15:01:53+08:00",
+        "end": "2026-09-30T16:01:53+08:00",
+        "lord": "Moon",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T16:01:53+08:00",
+        "end": "2026-09-30T17:01:53+08:00",
+        "lord": "Saturn",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T17:01:53+08:00",
+        "end": "2026-09-30T18:01:53+08:00",
+        "lord": "Jupiter",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T18:01:53+08:00",
+        "end": "2026-09-30T19:01:53+08:00",
+        "lord": "Mars",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T19:01:53+08:00",
+        "end": "2026-09-30T20:01:53+08:00",
+        "lord": "Sun",
+        "is_night": true
+      },
+      {
+        "start": "2026-09-30T20:01:53+08:00",
+        "end": "2026-09-30T21:01:53+08:00",
+        "lord": "Venus",
+        "is_night": true
+      },
+      {
+        "start": "2026-09-30T21:01:53+08:00",
+        "end": "2026-09-30T22:01:53+08:00",
+        "lord": "Mercury",
+        "is_night": true
+      },
+      {
+        "start": "2026-09-30T22:01:53+08:00",
+        "end": "2026-09-30T23:01:53+08:00",
+        "lord": "Moon",
+        "is_night": true
+      },
+      {
+        "start": "2026-09-30T23:01:53+08:00",
+        "end": "2026-10-01T00:01:53+08:00",
+        "lord": "Saturn",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T00:01:53+08:00",
+        "end": "2026-10-01T01:01:53+08:00",
+        "lord": "Jupiter",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T01:01:53+08:00",
+        "end": "2026-10-01T02:01:53+08:00",
+        "lord": "Mars",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T02:01:53+08:00",
+        "end": "2026-10-01T03:01:53+08:00",
+        "lord": "Sun",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T03:01:53+08:00",
+        "end": "2026-10-01T04:01:53+08:00",
+        "lord": "Venus",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T04:01:53+08:00",
+        "end": "2026-10-01T05:01:53+08:00",
+        "lord": "Mercury",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T05:01:53+08:00",
+        "end": "2026-10-01T06:01:53+08:00",
+        "lord": "Moon",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T06:01:53+08:00",
+        "end": "2026-10-01T07:01:38+08:00",
+        "lord": "Saturn",
+        "is_night": true
+      }
+    ],
+    "blocked": [
+      {
+        "start": "2026-09-30T08:32:19+08:00",
+        "end": "2026-09-30T10:02:45+08:00",
+        "reasons": [
+          "yamagandam"
+        ]
+      },
+      {
+        "start": "2026-09-30T11:33:12+08:00",
+        "end": "2026-09-30T12:39:31+08:00",
+        "reasons": [
+          "gulika_kalam"
+        ]
+      },
+      {
+        "start": "2026-09-30T12:39:31+08:00",
+        "end": "2026-09-30T13:03:38+08:00",
+        "reasons": [
+          "durmuhurta",
+          "gulika_kalam"
+        ]
+      },
+      {
+        "start": "2026-09-30T13:03:38+08:00",
+        "end": "2026-09-30T13:27:45+08:00",
+        "reasons": [
+          "durmuhurta",
+          "rahu_kalam"
+        ]
+      },
+      {
+        "start": "2026-09-30T13:27:45+08:00",
+        "end": "2026-09-30T14:34:04+08:00",
+        "reasons": [
+          "rahu_kalam"
+        ]
+      },
+      {
+        "start": "2026-09-30T21:19:58+08:00",
+        "end": "2026-09-30T22:49:42+08:00",
+        "reasons": [
+          "varjyam"
+        ]
+      }
+    ],
+    "gowri": [
+      {
+        "start": "2026-09-30T07:01:53+08:00",
+        "end": "2026-09-30T08:32:19+08:00",
+        "name": "Laabam",
+        "nature": "good",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T08:32:19+08:00",
+        "end": "2026-09-30T10:02:45+08:00",
+        "name": "Dhanam",
+        "nature": "good",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T10:02:45+08:00",
+        "end": "2026-09-30T11:33:12+08:00",
+        "name": "Sugam",
+        "nature": "good",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T11:33:12+08:00",
+        "end": "2026-09-30T13:03:38+08:00",
+        "name": "Soram",
+        "nature": "bad",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T13:03:38+08:00",
+        "end": "2026-09-30T14:34:04+08:00",
+        "name": "Visham",
+        "nature": "bad",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T14:34:04+08:00",
+        "end": "2026-09-30T16:04:31+08:00",
+        "name": "Uthi",
+        "nature": "bad",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T16:04:31+08:00",
+        "end": "2026-09-30T17:34:57+08:00",
+        "name": "Amirdha",
+        "nature": "good",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T17:34:57+08:00",
+        "end": "2026-09-30T19:05:23+08:00",
+        "name": "Rogam",
+        "nature": "bad",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T19:05:23+08:00",
+        "end": "2026-09-30T20:34:55+08:00",
+        "name": "Visham",
+        "nature": "bad",
+        "is_night": true
+      },
+      {
+        "start": "2026-09-30T20:34:55+08:00",
+        "end": "2026-09-30T22:04:27+08:00",
+        "name": "Uthi",
+        "nature": "bad",
+        "is_night": true
+      },
+      {
+        "start": "2026-09-30T22:04:27+08:00",
+        "end": "2026-09-30T23:33:59+08:00",
+        "name": "Amirdha",
+        "nature": "good",
+        "is_night": true
+      },
+      {
+        "start": "2026-09-30T23:33:59+08:00",
+        "end": "2026-10-01T01:03:31+08:00",
+        "name": "Rogam",
+        "nature": "bad",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T01:03:31+08:00",
+        "end": "2026-10-01T02:33:02+08:00",
+        "name": "Laabam",
+        "nature": "good",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T02:33:02+08:00",
+        "end": "2026-10-01T04:02:34+08:00",
+        "name": "Dhanam",
+        "nature": "good",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T04:02:34+08:00",
+        "end": "2026-10-01T05:32:06+08:00",
+        "name": "Sugam",
+        "nature": "good",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T05:32:06+08:00",
+        "end": "2026-10-01T07:01:38+08:00",
+        "name": "Soram",
+        "nature": "bad",
+        "is_night": true
+      }
+    ],
+    "unverified_tables": [
+      "durmuhurta",
+      "gowri",
+      "varjyam"
+    ]
+  },
+  "personal": {
+    "meta": {
+      "date": "2026-09-30",
+      "weekday": "Wednesday",
+      "tz": "Asia/Kuala_Lumpur",
+      "lat": 3.107,
+      "lon": 101.606,
+      "convention": "tamil",
+      "ayanamsa": "lahiri"
+    },
+    "profile": {
+      "id": "golden",
+      "display_name": "Golden (fixture)"
+    },
+    "horas": [
+      {
+        "start": "2026-09-30T07:01:53+08:00",
+        "end": "2026-09-30T08:01:53+08:00",
+        "lord": "Mercury",
+        "is_night": false,
+        "score": 58.3,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T07:01:53+08:00",
+            "end": "2026-09-30T08:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 0.0,
+          "hora": 33.3,
+          "dasha": null
+        },
+        "tara": {
+          "number": 8,
+          "name": "Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 12,
+          "quality": "bad"
+        },
+        "hora_rank": 2,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T08:01:53+08:00",
+        "end": "2026-09-30T09:01:53+08:00",
+        "lord": "Moon",
+        "is_night": false,
+        "score": 25.0,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T08:01:53+08:00",
+            "end": "2026-09-30T08:32:19+08:00"
+          }
+        ],
+        "blocked_reasons": [
+          "yamagandam"
+        ],
+        "components": {
+          "tara": 25.0,
+          "chandra": 0.0,
+          "hora": 0.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 8,
+          "name": "Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 12,
+          "quality": "bad"
+        },
+        "hora_rank": 0,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T09:01:53+08:00",
+        "end": "2026-09-30T10:01:53+08:00",
+        "lord": "Saturn",
+        "is_night": false,
+        "score": null,
+        "clean_parts": [],
+        "blocked_reasons": [
+          "yamagandam"
+        ],
+        "components": {
+          "tara": 25.0,
+          "chandra": 0.0,
+          "hora": 50.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 8,
+          "name": "Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 12,
+          "quality": "bad"
+        },
+        "hora_rank": 3,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T10:01:53+08:00",
+        "end": "2026-09-30T11:01:53+08:00",
+        "lord": "Jupiter",
+        "is_night": false,
+        "score": 41.7,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T10:02:45+08:00",
+            "end": "2026-09-30T11:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [
+          "yamagandam"
+        ],
+        "components": {
+          "tara": 25.0,
+          "chandra": 0.0,
+          "hora": 16.7,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 12,
+          "quality": "bad"
+        },
+        "hora_rank": 1,
+        "tara_change": {
+          "at": "2026-09-30T10:06:59+08:00",
+          "before": {
+            "number": 8,
+            "name": "Mitra",
+            "quality": "good"
+          },
+          "after": {
+            "number": 9,
+            "name": "Parama Mitra",
+            "quality": "good"
+          }
+        },
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T11:01:53+08:00",
+        "end": "2026-09-30T12:01:53+08:00",
+        "lord": "Mars",
+        "is_night": false,
+        "score": 41.7,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T11:01:53+08:00",
+            "end": "2026-09-30T11:33:12+08:00"
+          }
+        ],
+        "blocked_reasons": [
+          "gulika_kalam"
+        ],
+        "components": {
+          "tara": 25.0,
+          "chandra": 0.0,
+          "hora": 16.7,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 12,
+          "quality": "bad"
+        },
+        "hora_rank": 1,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T12:01:53+08:00",
+        "end": "2026-09-30T13:01:53+08:00",
+        "lord": "Sun",
+        "is_night": false,
+        "score": null,
+        "clean_parts": [],
+        "blocked_reasons": [
+          "durmuhurta",
+          "gulika_kalam"
+        ],
+        "components": {
+          "tara": 25.0,
+          "chandra": 0.0,
+          "hora": 0.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 12,
+          "quality": "bad"
+        },
+        "hora_rank": 0,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T13:01:53+08:00",
+        "end": "2026-09-30T14:01:53+08:00",
+        "lord": "Venus",
+        "is_night": false,
+        "score": null,
+        "clean_parts": [],
+        "blocked_reasons": [
+          "durmuhurta",
+          "gulika_kalam",
+          "rahu_kalam"
+        ],
+        "components": {
+          "tara": 25.0,
+          "chandra": 0.0,
+          "hora": 50.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 12,
+          "quality": "bad"
+        },
+        "hora_rank": 3,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T14:01:53+08:00",
+        "end": "2026-09-30T15:01:53+08:00",
+        "lord": "Mercury",
+        "is_night": false,
+        "score": 58.3,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T14:34:04+08:00",
+            "end": "2026-09-30T15:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [
+          "rahu_kalam"
+        ],
+        "components": {
+          "tara": 25.0,
+          "chandra": 0.0,
+          "hora": 33.3,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 12,
+          "quality": "bad"
+        },
+        "hora_rank": 2,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T15:01:53+08:00",
+        "end": "2026-09-30T16:01:53+08:00",
+        "lord": "Moon",
+        "is_night": false,
+        "score": 25.0,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T15:01:53+08:00",
+            "end": "2026-09-30T16:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 0.0,
+          "hora": 0.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 12,
+          "quality": "bad"
+        },
+        "hora_rank": 0,
+        "tara_change": null,
+        "chandra_change": {
+          "at": "2026-09-30T15:43:55+08:00",
+          "before": {
+            "house": 12,
+            "quality": "bad"
+          },
+          "after": {
+            "house": 1,
+            "quality": "good"
+          }
+        }
+      },
+      {
+        "start": "2026-09-30T16:01:53+08:00",
+        "end": "2026-09-30T17:01:53+08:00",
+        "lord": "Saturn",
+        "is_night": false,
+        "score": 100.0,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T16:01:53+08:00",
+            "end": "2026-09-30T17:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 50.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 3,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T17:01:53+08:00",
+        "end": "2026-09-30T18:01:53+08:00",
+        "lord": "Jupiter",
+        "is_night": false,
+        "score": 66.7,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T17:01:53+08:00",
+            "end": "2026-09-30T18:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 16.7,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 1,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T18:01:53+08:00",
+        "end": "2026-09-30T19:01:53+08:00",
+        "lord": "Mars",
+        "is_night": false,
+        "score": 66.7,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T18:01:53+08:00",
+            "end": "2026-09-30T19:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 16.7,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 1,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T19:01:53+08:00",
+        "end": "2026-09-30T20:01:53+08:00",
+        "lord": "Sun",
+        "is_night": true,
+        "score": 50.0,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T19:01:53+08:00",
+            "end": "2026-09-30T20:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 0.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 0,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T20:01:53+08:00",
+        "end": "2026-09-30T21:01:53+08:00",
+        "lord": "Venus",
+        "is_night": true,
+        "score": 100.0,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T20:01:53+08:00",
+            "end": "2026-09-30T21:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 50.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 3,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T21:01:53+08:00",
+        "end": "2026-09-30T22:01:53+08:00",
+        "lord": "Mercury",
+        "is_night": true,
+        "score": 83.3,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T21:01:53+08:00",
+            "end": "2026-09-30T21:19:58+08:00"
+          }
+        ],
+        "blocked_reasons": [
+          "varjyam"
+        ],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 33.3,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 2,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T22:01:53+08:00",
+        "end": "2026-09-30T23:01:53+08:00",
+        "lord": "Moon",
+        "is_night": true,
+        "score": 50.0,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T22:49:42+08:00",
+            "end": "2026-09-30T23:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [
+          "varjyam"
+        ],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 0.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 0,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-09-30T23:01:53+08:00",
+        "end": "2026-10-01T00:01:53+08:00",
+        "lord": "Saturn",
+        "is_night": true,
+        "score": 100.0,
+        "clean_parts": [
+          {
+            "start": "2026-09-30T23:01:53+08:00",
+            "end": "2026-10-01T00:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 50.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 3,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-10-01T00:01:53+08:00",
+        "end": "2026-10-01T01:01:53+08:00",
+        "lord": "Jupiter",
+        "is_night": true,
+        "score": 66.7,
+        "clean_parts": [
+          {
+            "start": "2026-10-01T00:01:53+08:00",
+            "end": "2026-10-01T01:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 16.7,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 1,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-10-01T01:01:53+08:00",
+        "end": "2026-10-01T02:01:53+08:00",
+        "lord": "Mars",
+        "is_night": true,
+        "score": 66.7,
+        "clean_parts": [
+          {
+            "start": "2026-10-01T01:01:53+08:00",
+            "end": "2026-10-01T02:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 16.7,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 1,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-10-01T02:01:53+08:00",
+        "end": "2026-10-01T03:01:53+08:00",
+        "lord": "Sun",
+        "is_night": true,
+        "score": 50.0,
+        "clean_parts": [
+          {
+            "start": "2026-10-01T02:01:53+08:00",
+            "end": "2026-10-01T03:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 0.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 0,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-10-01T03:01:53+08:00",
+        "end": "2026-10-01T04:01:53+08:00",
+        "lord": "Venus",
+        "is_night": true,
+        "score": 100.0,
+        "clean_parts": [
+          {
+            "start": "2026-10-01T03:01:53+08:00",
+            "end": "2026-10-01T04:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 50.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 3,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-10-01T04:01:53+08:00",
+        "end": "2026-10-01T05:01:53+08:00",
+        "lord": "Mercury",
+        "is_night": true,
+        "score": 83.3,
+        "clean_parts": [
+          {
+            "start": "2026-10-01T04:01:53+08:00",
+            "end": "2026-10-01T05:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 33.3,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 2,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-10-01T05:01:53+08:00",
+        "end": "2026-10-01T06:01:53+08:00",
+        "lord": "Moon",
+        "is_night": true,
+        "score": 50.0,
+        "clean_parts": [
+          {
+            "start": "2026-10-01T05:01:53+08:00",
+            "end": "2026-10-01T06:01:53+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 0.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 0,
+        "tara_change": null,
+        "chandra_change": null
+      },
+      {
+        "start": "2026-10-01T06:01:53+08:00",
+        "end": "2026-10-01T07:01:38+08:00",
+        "lord": "Saturn",
+        "is_night": true,
+        "score": 100.0,
+        "clean_parts": [
+          {
+            "start": "2026-10-01T06:01:53+08:00",
+            "end": "2026-10-01T07:01:38+08:00"
+          }
+        ],
+        "blocked_reasons": [],
+        "components": {
+          "tara": 25.0,
+          "chandra": 25.0,
+          "hora": 50.0,
+          "dasha": null
+        },
+        "tara": {
+          "number": 9,
+          "name": "Parama Mitra",
+          "quality": "good"
+        },
+        "chandra": {
+          "house": 1,
+          "quality": "good"
+        },
+        "hora_rank": 3,
+        "tara_change": null,
+        "chandra_change": null
+      }
+    ],
+    "top": {
+      "best_overall": {
+        "start": "2026-09-30T16:01:53+08:00",
+        "end": "2026-09-30T17:01:53+08:00",
+        "lord": "Saturn",
+        "score": 100.0
+      },
+      "best_before_noon": {
+        "start": "2026-09-30T07:01:53+08:00",
+        "end": "2026-09-30T08:01:53+08:00",
+        "lord": "Mercury",
+        "score": 58.3
+      },
+      "best_after_sunset": {
+        "start": "2026-09-30T20:01:53+08:00",
+        "end": "2026-09-30T21:01:53+08:00",
+        "lord": "Venus",
+        "score": 100.0
+      }
+    },
+    "unverified_tables": [
+      "durmuhurta",
+      "functional",
+      "varjyam"
+    ]
+  },
+  "rasi": {
+    "meta": {
+      "date": "2026-09-30",
+      "weekday": "Wednesday",
+      "tz": "Asia/Kuala_Lumpur",
+      "lat": 3.107,
+      "lon": 101.606,
+      "convention": "tamil",
+      "ayanamsa": "lahiri"
+    },
+    "horas": [
+      {
+        "start": "2026-09-30T07:01:53+08:00",
+        "end": "2026-09-30T08:01:53+08:00",
+        "lord": "Mercury",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T08:01:53+08:00",
+        "end": "2026-09-30T09:01:53+08:00",
+        "lord": "Moon",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T09:01:53+08:00",
+        "end": "2026-09-30T10:01:53+08:00",
+        "lord": "Saturn",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T10:01:53+08:00",
+        "end": "2026-09-30T11:01:53+08:00",
+        "lord": "Jupiter",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T11:01:53+08:00",
+        "end": "2026-09-30T12:01:53+08:00",
+        "lord": "Mars",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T12:01:53+08:00",
+        "end": "2026-09-30T13:01:53+08:00",
+        "lord": "Sun",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T13:01:53+08:00",
+        "end": "2026-09-30T14:01:53+08:00",
+        "lord": "Venus",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T14:01:53+08:00",
+        "end": "2026-09-30T15:01:53+08:00",
+        "lord": "Mercury",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T15:01:53+08:00",
+        "end": "2026-09-30T16:01:53+08:00",
+        "lord": "Moon",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T16:01:53+08:00",
+        "end": "2026-09-30T17:01:53+08:00",
+        "lord": "Saturn",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T17:01:53+08:00",
+        "end": "2026-09-30T18:01:53+08:00",
+        "lord": "Jupiter",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T18:01:53+08:00",
+        "end": "2026-09-30T19:01:53+08:00",
+        "lord": "Mars",
+        "is_night": false
+      },
+      {
+        "start": "2026-09-30T19:01:53+08:00",
+        "end": "2026-09-30T20:01:53+08:00",
+        "lord": "Sun",
+        "is_night": true
+      },
+      {
+        "start": "2026-09-30T20:01:53+08:00",
+        "end": "2026-09-30T21:01:53+08:00",
+        "lord": "Venus",
+        "is_night": true
+      },
+      {
+        "start": "2026-09-30T21:01:53+08:00",
+        "end": "2026-09-30T22:01:53+08:00",
+        "lord": "Mercury",
+        "is_night": true
+      },
+      {
+        "start": "2026-09-30T22:01:53+08:00",
+        "end": "2026-09-30T23:01:53+08:00",
+        "lord": "Moon",
+        "is_night": true
+      },
+      {
+        "start": "2026-09-30T23:01:53+08:00",
+        "end": "2026-10-01T00:01:53+08:00",
+        "lord": "Saturn",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T00:01:53+08:00",
+        "end": "2026-10-01T01:01:53+08:00",
+        "lord": "Jupiter",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T01:01:53+08:00",
+        "end": "2026-10-01T02:01:53+08:00",
+        "lord": "Mars",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T02:01:53+08:00",
+        "end": "2026-10-01T03:01:53+08:00",
+        "lord": "Sun",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T03:01:53+08:00",
+        "end": "2026-10-01T04:01:53+08:00",
+        "lord": "Venus",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T04:01:53+08:00",
+        "end": "2026-10-01T05:01:53+08:00",
+        "lord": "Mercury",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T05:01:53+08:00",
+        "end": "2026-10-01T06:01:53+08:00",
+        "lord": "Moon",
+        "is_night": true
+      },
+      {
+        "start": "2026-10-01T06:01:53+08:00",
+        "end": "2026-10-01T07:01:38+08:00",
+        "lord": "Saturn",
+        "is_night": true
+      }
+    ],
+    "rasis": [
+      {
+        "rasi": 0,
+        "name": "Mesha",
+        "cells": [
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1826.311404,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3547.377192,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1878.934212,
+            "blocked_reasons": [
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam",
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1668.44298,
+            "blocked_reasons": [
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": {
+              "at": "2026-09-30T15:43:55+08:00",
+              "before": {
+                "house": 1,
+                "quality": "good"
+              },
+              "after": {
+                "house": 2,
+                "quality": "conditional"
+              }
+            }
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 1085.450412,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 730.72142,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3585.323596,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          }
+        ],
+        "day_percent": 62.5,
+        "clean_percent": 74.9
+      },
+      {
+        "rasi": 1,
+        "name": "Vrishabha",
+        "cells": [
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 1826.311404,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3547.377192,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 1878.934212,
+            "blocked_reasons": [
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam",
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 1668.44298,
+            "blocked_reasons": [
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": {
+              "at": "2026-09-30T15:43:55+08:00",
+              "before": {
+                "house": 12,
+                "quality": "bad"
+              },
+              "after": {
+                "house": 1,
+                "quality": "good"
+              }
+            }
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1085.450412,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 730.72142,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3585.323596,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 1,
+              "quality": "good"
+            },
+            "chandra_change": null
+          }
+        ],
+        "day_percent": 75.1,
+        "clean_percent": 74.9
+      },
+      {
+        "rasi": 2,
+        "name": "Mithuna",
+        "cells": [
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1826.311404,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3547.377192,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1878.934212,
+            "blocked_reasons": [
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam",
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1668.44298,
+            "blocked_reasons": [
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": {
+              "at": "2026-09-30T15:43:55+08:00",
+              "before": {
+                "house": 11,
+                "quality": "good"
+              },
+              "after": {
+                "house": 12,
+                "quality": "bad"
+              }
+            }
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 1085.450412,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 730.72142,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3585.323596,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 12,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          }
+        ],
+        "day_percent": 24.9,
+        "clean_percent": 74.9
+      },
+      {
+        "rasi": 3,
+        "name": "Karka",
+        "cells": [
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1826.311404,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3547.377192,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1878.934212,
+            "blocked_reasons": [
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam",
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1668.44298,
+            "blocked_reasons": [
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": {
+              "at": "2026-09-30T15:43:55+08:00",
+              "before": {
+                "house": 10,
+                "quality": "good"
+              },
+              "after": {
+                "house": 11,
+                "quality": "good"
+              }
+            }
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1085.450412,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 730.72142,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3585.323596,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 11,
+              "quality": "good"
+            },
+            "chandra_change": null
+          }
+        ],
+        "day_percent": 100.0,
+        "clean_percent": 74.9
+      },
+      {
+        "rasi": 4,
+        "name": "Simha",
+        "cells": [
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 1826.311404,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3547.377192,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 1878.934212,
+            "blocked_reasons": [
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam",
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 1668.44298,
+            "blocked_reasons": [
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": {
+              "at": "2026-09-30T15:43:55+08:00",
+              "before": {
+                "house": 9,
+                "quality": "conditional"
+              },
+              "after": {
+                "house": 10,
+                "quality": "good"
+              }
+            }
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1085.450412,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 730.72142,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3585.323596,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 10,
+              "quality": "good"
+            },
+            "chandra_change": null
+          }
+        ],
+        "day_percent": 87.5,
+        "clean_percent": 74.9
+      },
+      {
+        "rasi": 5,
+        "name": "Kanya",
+        "cells": [
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama",
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama",
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama",
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama",
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama",
+              "durmuhurta",
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama",
+              "durmuhurta",
+              "gulika_kalam",
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama",
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 1077.53803,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": {
+              "at": "2026-09-30T15:43:55+08:00",
+              "before": {
+                "house": 8,
+                "quality": "bad"
+              },
+              "after": {
+                "house": 9,
+                "quality": "conditional"
+              }
+            }
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 1085.450412,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 730.72142,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3585.323596,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 9,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          }
+        ],
+        "day_percent": 50.0,
+        "clean_percent": 57.5
+      },
+      {
+        "rasi": 6,
+        "name": "Tula",
+        "cells": [
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1826.311404,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3547.377192,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1878.934212,
+            "blocked_reasons": [
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam",
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1668.44298,
+            "blocked_reasons": [
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 2522.46197,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": {
+              "at": "2026-09-30T15:43:55+08:00",
+              "before": {
+                "house": 7,
+                "quality": "good"
+              },
+              "after": {
+                "house": 8,
+                "quality": "bad"
+              }
+            }
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama",
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama",
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "chandrashtama"
+            ],
+            "chandra": {
+              "house": 8,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          }
+        ],
+        "day_percent": 100.0,
+        "clean_percent": 17.4
+      },
+      {
+        "rasi": 7,
+        "name": "Vrischika",
+        "cells": [
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1826.311404,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3547.377192,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1878.934212,
+            "blocked_reasons": [
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam",
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1668.44298,
+            "blocked_reasons": [
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": {
+              "at": "2026-09-30T15:43:55+08:00",
+              "before": {
+                "house": 6,
+                "quality": "good"
+              },
+              "after": {
+                "house": 7,
+                "quality": "good"
+              }
+            }
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1085.450412,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 730.72142,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3585.323596,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 7,
+              "quality": "good"
+            },
+            "chandra_change": null
+          }
+        ],
+        "day_percent": 100.0,
+        "clean_percent": 74.9
+      },
+      {
+        "rasi": 8,
+        "name": "Dhanus",
+        "cells": [
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 1826.311404,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3547.377192,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 1878.934212,
+            "blocked_reasons": [
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam",
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 1668.44298,
+            "blocked_reasons": [
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": {
+              "at": "2026-09-30T15:43:55+08:00",
+              "before": {
+                "house": 5,
+                "quality": "conditional"
+              },
+              "after": {
+                "house": 6,
+                "quality": "good"
+              }
+            }
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1085.450412,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 730.72142,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3585.323596,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 6,
+              "quality": "good"
+            },
+            "chandra_change": null
+          }
+        ],
+        "day_percent": 87.5,
+        "clean_percent": 74.9
+      },
+      {
+        "rasi": 9,
+        "name": "Makara",
+        "cells": [
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 1826.311404,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3547.377192,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 1878.934212,
+            "blocked_reasons": [
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam",
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 1668.44298,
+            "blocked_reasons": [
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": {
+              "at": "2026-09-30T15:43:55+08:00",
+              "before": {
+                "house": 4,
+                "quality": "bad"
+              },
+              "after": {
+                "house": 5,
+                "quality": "conditional"
+              }
+            }
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 1085.450412,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 730.72142,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3585.323596,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 5,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          }
+        ],
+        "day_percent": 37.5,
+        "clean_percent": 74.9
+      },
+      {
+        "rasi": 10,
+        "name": "Kumbha",
+        "cells": [
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1826.311404,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3547.377192,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1878.934212,
+            "blocked_reasons": [
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam",
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1668.44298,
+            "blocked_reasons": [
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": {
+              "at": "2026-09-30T15:43:55+08:00",
+              "before": {
+                "house": 3,
+                "quality": "good"
+              },
+              "after": {
+                "house": 4,
+                "quality": "bad"
+              }
+            }
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 1085.450412,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 730.72142,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 0.0,
+            "clean_seconds": 3585.323596,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 4,
+              "quality": "bad"
+            },
+            "chandra_change": null
+          }
+        ],
+        "day_percent": 24.9,
+        "clean_percent": 74.9
+      },
+      {
+        "rasi": 11,
+        "name": "Meena",
+        "cells": [
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 1826.311404,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3547.377192,
+            "blocked_reasons": [
+              "yamagandam"
+            ],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 1878.934212,
+            "blocked_reasons": [
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam"
+            ],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": null,
+            "clean_seconds": 0.0,
+            "blocked_reasons": [
+              "durmuhurta",
+              "gulika_kalam",
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 1668.44298,
+            "blocked_reasons": [
+              "rahu_kalam"
+            ],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 50.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 2,
+              "quality": "conditional"
+            },
+            "chandra_change": {
+              "at": "2026-09-30T15:43:55+08:00",
+              "before": {
+                "house": 2,
+                "quality": "conditional"
+              },
+              "after": {
+                "house": 3,
+                "quality": "good"
+              }
+            }
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 1085.450412,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 730.72142,
+            "blocked_reasons": [
+              "varjyam"
+            ],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3600.0,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          },
+          {
+            "score": 100.0,
+            "clean_seconds": 3585.323596,
+            "blocked_reasons": [],
+            "chandra": {
+              "house": 3,
+              "quality": "good"
+            },
+            "chandra_change": null
+          }
+        ],
+        "day_percent": 87.5,
+        "clean_percent": 74.9
+      }
+    ],
+    "unverified_tables": [
+      "durmuhurta",
+      "varjyam"
+    ]
+  }
+}

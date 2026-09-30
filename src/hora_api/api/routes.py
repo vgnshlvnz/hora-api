@@ -1,0 +1,271 @@
+"""HTTP endpoints. Everything under /v1 is JSON; errors are RFC 9457 problem+json."""
+
+from __future__ import annotations
+
+import hmac
+from datetime import UTC, date, datetime
+from typing import Annotated, Any
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
+
+from fastapi import APIRouter, Depends, Query, Request, Security
+from fastapi.security import APIKeyHeader
+
+from hora_api.api.models import (
+    BlockedOut,
+    DayResponse,
+    GowriOut,
+    HealthResponse,
+    HoraOut,
+    Meta,
+    PersonalResponse,
+    ProfilesResponse,
+    ProfileSummary,
+    RasiResponse,
+    ReadyResponse,
+    SunOut,
+    TransitionOut,
+    localise,
+)
+from hora_api.api.problems import ProblemDetail, ProblemError
+from hora_api.api.profiles import ProfileFileError
+from hora_api.api.service import (
+    ComputedDay,
+    RequestParams,
+    Services,
+    compute_day,
+    top_windows,
+)
+from hora_api.core import astro
+from hora_api.core import day as D
+from hora_api.core.astro import Ayanamsa
+from hora_api.core.day import Convention
+from hora_api.scoring.personal import Profile, score_horas
+from hora_api.scoring.rasi import score_rasis
+
+api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
+
+_PROBLEMS: dict[int | str, dict[str, Any]] = {
+    401: {"model": ProblemDetail, "description": "Missing or invalid X-API-Key"},
+    422: {"model": ProblemDetail, "description": "Invalid parameters"},
+}
+
+
+def services(request: Request) -> Services:
+    svc: Services = request.app.state.services
+    return svc
+
+
+def require_api_key(
+    request: Request, key: Annotated[str | None, Security(api_key_header)] = None
+) -> None:
+    """Checks X-API-Key against API_KEYS. Authentication is off when API_KEYS is empty."""
+    allowed = services(request).settings.key_set
+    if not allowed:
+        return
+    if key is None or not any(hmac.compare_digest(key, k) for k in allowed):
+        raise ProblemError(
+            401, "Unauthorized", "A valid X-API-Key header is required.",
+            type_="urn:hora-api:problem:unauthorized", headers={"WWW-Authenticate": "ApiKey"},
+        )  # fmt: skip
+
+
+def request_params(
+    request: Request,
+    date_: Annotated[
+        date | None, Query(alias="date", description="Local date; default today")
+    ] = None,
+    lat: Annotated[float | None, Query(ge=-90, le=90)] = None,
+    lon: Annotated[float | None, Query(ge=-180, le=180)] = None,
+    tz: Annotated[str | None, Query(description="IANA timezone, e.g. Asia/Kuala_Lumpur")] = None,
+    convention: Annotated[Convention, Query(description="Hora convention")] = "tamil",
+    ayanamsa: Annotated[Ayanamsa, Query()] = Ayanamsa.LAHIRI,
+) -> RequestParams:
+    cfg = services(request).settings
+    tz_name = tz or cfg.default_tz
+    try:
+        zone = ZoneInfo(tz_name)
+    except (ZoneInfoNotFoundError, ValueError, OSError) as e:
+        raise ProblemError(
+            422, "Unknown timezone", f"{tz_name!r} is not an IANA timezone.",
+            type_="urn:hora-api:problem:unknown-timezone",
+        ) from e  # fmt: skip
+    return RequestParams(
+        date=date_ or datetime.now(zone).date(),
+        lat=cfg.default_lat if lat is None else lat,
+        lon=cfg.default_lon if lon is None else lon,
+        tz_name=tz_name,
+        tz=zone,
+        convention=convention,
+        ayanamsa=ayanamsa,
+    )
+
+
+Params = Annotated[RequestParams, Depends(request_params)]
+
+
+def _meta(p: RequestParams) -> Meta:
+    return Meta(
+        date=p.date, weekday=p.date.strftime("%A"), tz=p.tz_name, lat=p.lat, lon=p.lon,
+        convention=p.convention, ayanamsa=p.ayanamsa,
+    )  # fmt: skip
+
+
+def _computed(svc: Services, p: RequestParams) -> ComputedDay:
+    try:
+        return compute_day(svc, p)
+    except ValueError as e:
+        raise ProblemError(
+            422, "No sunrise or sunset", str(e), type_="urn:hora-api:problem:no-sun-event"
+        ) from e
+
+
+def _unverified(svc: Services, used: set[str]) -> list[str]:
+    known = svc.tables.unverified | svc.scoring_tables.unverified
+    return sorted(used & known)
+
+
+router = APIRouter(prefix="/v1", dependencies=[Depends(require_api_key)], responses=_PROBLEMS)
+
+
+@router.get("/day", response_model=DayResponse, summary="Panchangam day")
+def get_day(request: Request, p: Params) -> DayResponse:
+    """Sun events, nakshatra/rasi/tithi transitions, horas, blocked windows and the Gowri layer."""
+    svc = services(request)
+    cd = _computed(svc, p)
+    names = svc.scoring_tables.names
+    transitions = []
+    for t in cd.transitions:
+        pool = {"nakshatra": names.nakshatras, "rasi": names.rasis}.get(t.kind)
+        transitions.append(
+            TransitionOut(
+                kind=t.kind,
+                time=t.time,
+                from_index=t.from_index,
+                to_index=t.to_index,
+                from_name=pool[t.from_index] if pool else None,
+                to_name=pool[t.to_index] if pool else None,
+            )  # fmt: skip
+        )
+    blocked = D.blocked_windows(cd.day, svc.tables)
+    resp = DayResponse(
+        meta=_meta(p),
+        sun=SunOut(sunrise=cd.day.sunrise, sunset=cd.day.sunset, next_sunrise=cd.day.next_sunrise),
+        transitions=transitions,
+        horas=[
+            HoraOut(start=h.start, end=h.end, lord=h.lord, is_night=h.is_night) for h in cd.horas
+        ],
+        blocked=[BlockedOut(start=b.start, end=b.end, reasons=list(b.reasons)) for b in blocked],
+        gowri=[
+            GowriOut(start=g.start, end=g.end, name=g.name, nature=g.nature, is_night=g.is_night)
+            for g in cd.gowri
+        ],
+        unverified_tables=_unverified(svc, {"durmuhurta", "varjyam", "gowri"}),
+    )
+    return localise(resp, p.tz)
+
+
+def _personal(svc: Services, p: RequestParams, profile: Profile) -> PersonalResponse:
+    cd = _computed(svc, p)
+    scored = score_horas(
+        list(cd.horas), cd.day, profile, svc.tables, svc.scoring, svc.scoring_tables
+    )
+    resp = PersonalResponse(
+        meta=_meta(p),
+        profile=ProfileSummary(id=profile.id, display_name=profile.display_name),
+        horas=scored,
+        top=top_windows(scored, cd.day, p.tz, svc.settings.min_window_minutes),
+        unverified_tables=_unverified(svc, {"durmuhurta", "varjyam", "functional"}),
+    )
+    return localise(resp, p.tz)
+
+
+@router.get(
+    "/horas/personal", response_model=PersonalResponse, summary="Scored horas for a stored profile"
+)
+def personal_get(
+    request: Request,
+    p: Params,
+    profile_id: Annotated[str, Query(description="Id from GET /v1/profiles")],
+) -> PersonalResponse:
+    svc = services(request)
+    try:
+        profiles = svc.profiles.get()
+    except ProfileFileError as e:
+        raise ProblemError(
+            503, "Profiles unavailable", "The profiles file could not be loaded.",
+            type_="urn:hora-api:problem:profiles-unavailable",
+        ) from e  # fmt: skip
+    profile = profiles.get(profile_id)
+    if profile is None:
+        raise ProblemError(
+            404, "Profile not found", f"No profile with id {profile_id!r}.",
+            type_="urn:hora-api:problem:profile-not-found",
+        )  # fmt: skip
+    return _personal(svc, p, profile)
+
+
+@router.post(
+    "/horas/personal", response_model=PersonalResponse, summary="Scored horas for an inline profile"
+)
+def personal_post(request: Request, p: Params, profile: Profile) -> PersonalResponse:
+    """For clients that do not store profiles. Nothing in the body is stored."""
+    return _personal(services(request), p, profile)
+
+
+@router.get("/horas/rasi", response_model=RasiResponse, summary="12 x 24 rasi matrix")
+def rasi_matrix(request: Request, p: Params) -> RasiResponse:
+    """Every rasi against every hora by chandrabala alone, plus per-rasi day percentages."""
+    svc = services(request)
+    cd = _computed(svc, p)
+    m = score_rasis(list(cd.horas), cd.day, svc.tables, svc.scoring, svc.scoring_tables)
+    used = {"durmuhurta", "varjyam"} | (
+        {"hora_generic"} if svc.scoring.rasi_hora_generic else set()
+    )
+    resp = RasiResponse(
+        meta=_meta(p), horas=m.horas, rasis=m.rasis, unverified_tables=_unverified(svc, used)
+    )
+    return localise(resp, p.tz)
+
+
+@router.get("/profiles", response_model=ProfilesResponse, summary="Stored profile ids")
+def list_profiles(request: Request) -> ProfilesResponse:
+    """Ids and display names only, never birth data."""
+    try:
+        profiles = services(request).profiles.get()
+    except ProfileFileError as e:
+        raise ProblemError(
+            503, "Profiles unavailable", "The profiles file could not be loaded.",
+            type_="urn:hora-api:problem:profiles-unavailable",
+        ) from e  # fmt: skip
+    return ProfilesResponse(
+        profiles=[ProfileSummary(id=p.id, display_name=p.display_name) for p in profiles.values()]
+    )
+
+
+health = APIRouter(tags=["health"])
+
+
+@health.get("/healthz", response_model=HealthResponse)
+def healthz() -> HealthResponse:
+    """Liveness: the process is up."""
+    return HealthResponse(status="ok")
+
+
+@health.get("/readyz", response_model=ReadyResponse, responses={503: {"model": ProblemDetail}})
+def readyz(request: Request) -> ReadyResponse:
+    """Readiness: the ephemeris answers and the profiles file loads."""
+    try:
+        astro.moon_state(datetime.now(UTC))
+    except Exception as e:  # swisseph raises assorted errors
+        raise ProblemError(
+            503, "Ephemeris unavailable", "The ephemeris could not be used.",
+            type_="urn:hora-api:problem:ephemeris-unavailable",
+        ) from e  # fmt: skip
+    try:
+        count = len(services(request).profiles.get())
+    except ProfileFileError as e:
+        raise ProblemError(
+            503, "Profiles unavailable", "The profiles file could not be loaded.",
+            type_="urn:hora-api:problem:profiles-unavailable",
+        ) from e  # fmt: skip
+    return ReadyResponse(status="ready", profiles=count)

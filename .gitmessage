@@ -1,0 +1,9 @@
+type(scope): summary
+
+
+Stage: 1
+Feature: 
+# Types: feat, fix, test, refactor, docs, chore, data
+# Scope = feature name. Fill in Stage and Feature; the commit-msg hook rejects
+# commits without them. Commits that change a data/*.yaml table also need:
+# Source: <text/reference>

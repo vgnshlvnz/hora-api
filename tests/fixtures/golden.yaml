@@ -1,0 +1,14 @@
+# Synthetic fixture profile "golden". NOT a real person: the birth instant was searched for
+# so that it yields the golden nakshatra/rasi/lagna. Real profiles live outside the repo.
+profile:
+  id: golden
+  display_name: Golden (fixture)
+  janma_nakshatra: Rohini
+  janma_rasi: Vrishabha
+  lagna: Kumbha
+  tz_home: Asia/Kuala_Lumpur
+# A synthetic birth that derives to the profile above (Petaling Jaya, Lahiri).
+birth:
+  datetime: "2026-03-24T05:30:00+08:00"
+  lat: 3.107
+  lon: 101.606

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Refuse pushing main unless it is a tagged stage merge; then run make check.
+set -u
+zero=0000000000000000000000000000000000000000
+
+while read -r local_ref local_sha remote_ref _remote_sha; do
+  [[ $local_sha == "$zero" ]] && continue
+  if [[ $remote_ref == refs/heads/main ]]; then
+    is_merge=$(git rev-list --merges -n1 "$local_sha^!" 2>/dev/null)
+    tagged=$(git tag --points-at "$local_sha" -l 'stage-*')
+    if [[ -z $is_merge || -z $tagged ]]; then
+      echo "pre-push: refusing to push main: $local_sha is not a stage merge tagged stage-*." >&2
+      echo "Close the stage first (merge stage/N into main with --no-ff, then tag stage-N)." >&2
+      exit 1
+    fi
+  fi
+done
+
+exec make check

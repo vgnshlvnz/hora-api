@@ -1,0 +1,31 @@
+# Source: Rahu Kalam, Yamagandam and Gulika Kalam segment tables as widely published in
+#   Tamil and North Indian panchangams (e.g. Drik Panchang "Rahu Kalam", "Yamaganda",
+#   "Gulika Kalam" pages). Values supplied in the project brief.
+# The day (sunrise to sunset) is split into `parts` equal segments; each value below is the
+# 1-based segment that is inauspicious on that weekday.
+verify: false
+parts: 8
+rahu_kalam:
+  sunday: 8
+  monday: 2
+  tuesday: 7
+  wednesday: 5
+  thursday: 6
+  friday: 4
+  saturday: 3
+yamagandam:
+  sunday: 5
+  monday: 4
+  tuesday: 3
+  wednesday: 2
+  thursday: 1
+  friday: 7
+  saturday: 6
+gulika_kalam:
+  sunday: 7
+  monday: 6
+  tuesday: 5
+  wednesday: 4
+  thursday: 3
+  friday: 2
+  saturday: 1

@@ -1,0 +1,17 @@
+# Source: Tarabala (the nine Taras counted from the janma nakshatra), Muhurta Chintamani and
+#   common panchangam usage. Qualities as given in the project brief: 2 Sampat, 4 Kshema,
+#   6 Sadhana, 8 Mitra, 9 Parama Mitra are good; 3, 5, 7 are bad; 1 Janma is neutral (its
+#   value is configurable). Names of the bad taras (Vipat, Pratyari, Naidhana) are the usual
+#   ones; some texts say Vadha for Naidhana.
+# count = ((day_nakshatra - janma_nakshatra) mod 27) + 1; tara = ((count - 1) mod 9) + 1.
+verify: false
+taras:
+  - {number: 1, name: Janma,       quality: neutral}
+  - {number: 2, name: Sampat,      quality: good}
+  - {number: 3, name: Vipat,       quality: bad}
+  - {number: 4, name: Kshema,      quality: good}
+  - {number: 5, name: Pratyari,    quality: bad}
+  - {number: 6, name: Sadhana,     quality: good}
+  - {number: 7, name: Naidhana,    quality: bad}
+  - {number: 8, name: Mitra,       quality: good}
+  - {number: 9, name: Parama Mitra, quality: good}
