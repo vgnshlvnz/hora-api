@@ -1,0 +1,14 @@
+.git
+.githooks
+.venv
+mcp-server/.venv
+**/__pycache__
+.mypy_cache
+.ruff_cache
+.pytest_cache
+.hypothesis
+tests
+mcp-server/tests
+docs
+deploy/.env
+*.bundle

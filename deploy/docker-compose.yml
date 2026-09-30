@@ -1,0 +1,54 @@
+# hora-api and its MCP server. Run from this directory:  docker compose up -d --build
+# Configuration comes from deploy/.env (copy env.example); nothing secret lives in this file.
+name: hora-api
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: api
+    image: hora-api:local
+    restart: unless-stopped
+    environment:
+      # Plain HTTP on the LAN: keys are mandatory, so this refuses to start without them.
+      API_KEYS: ${API_KEYS:?set API_KEYS in deploy/.env}
+      DEFAULT_LAT: ${DEFAULT_LAT:-3.107}
+      DEFAULT_LON: ${DEFAULT_LON:-101.606}
+      DEFAULT_TZ: ${DEFAULT_TZ:-Asia/Kuala_Lumpur}
+    volumes:
+      # Profiles live outside the repo, read-only in the container.
+      - ${PROFILES_DIR:?set PROFILES_DIR in deploy/.env}:/profiles:ro
+    ports:
+      - "${API_PUBLISH:-0.0.0.0:8000}:8000"
+    healthcheck:
+      test: ["CMD", "python", "/app/healthcheck.py", "api"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  mcp:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: mcp
+    image: hora-mcp:local
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      HORA_API_URL: http://api:8000
+      # One of the keys in API_KEYS.
+      HORA_API_KEY: ${HORA_API_KEY:?set HORA_API_KEY in deploy/.env}
+      HORA_MCP_TOKEN: ${HORA_MCP_TOKEN:?set HORA_MCP_TOKEN in deploy/.env}
+      HORA_MCP_ALLOWED_HOSTS: ${HORA_MCP_ALLOWED_HOSTS:-}
+    ports:
+      - "${MCP_PUBLISH:-0.0.0.0:8765}:8765"
+    healthcheck:
+      test: ["CMD", "python", "/app/healthcheck.py", "mcp"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s

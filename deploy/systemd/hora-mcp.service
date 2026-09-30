@@ -1,0 +1,28 @@
+[Unit]
+Description=hora-mcp (MCP server for hora-api, streamable HTTP)
+After=network-online.target hora-api.service
+Wants=network-online.target hora-api.service
+
+[Service]
+User=hora
+Group=hora
+WorkingDirectory=/opt/hora-api/mcp-server
+EnvironmentFile=/etc/hora-api/hora-mcp.env
+ExecStart=/opt/hora-api/mcp-server/.venv/bin/hora-mcp
+Restart=on-failure
+RestartSec=5
+
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictSUIDSGID=yes
+LockPersonality=yes
+
+[Install]
+WantedBy=multi-user.target
