@@ -76,6 +76,9 @@ def load_tables(data_dir: Path | None = None) -> Tables:
         for day, row in docs[name]["weekdays"].items():
             if row.get("verify") is True:
                 unverified.add(f"{name}:{day}")
+    for row in docs["varjyam"]["nakshatras"]:
+        if row.get("verify") is True:
+            unverified.add(f"varjyam:{row['name']}")
 
     h = docs["horas"]
     order = tuple(h["chaldean_order"])
