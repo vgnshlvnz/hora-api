@@ -243,3 +243,14 @@ def test_horas_tile_the_day_and_blocked_windows_are_disjoint(d: date, conv: str)
     for h in horas:
         clean = D.clean_parts(h, blocked)
         assert all(h.start <= c.start < c.end <= h.end for c in clean)
+
+
+def test_varjyam_with_two_windows_in_one_nakshatra() -> None:
+    day = synthetic_day()
+    started = day.sunrise - timedelta(hours=2)
+    mula = MoonSpan(18, started, started + timedelta(hours=24))  # Mula: windows at 20 and 56
+    first, second = D.varjyam(replace(day, nakshatra_spans=(mula,)), TABLES)
+    assert first.start == started + timedelta(hours=8) and second.start == started + timedelta(
+        hours=22, minutes=24
+    )
+    assert first.end - first.start == second.end - second.start == timedelta(minutes=96)
