@@ -1,0 +1,100 @@
+# Source: Functional nature of planets per lagna, after Brihat Parashara Hora Shastra (BPHS)
+#   ch. 34 (Yogakaraka and functional benefics/malefics), derived mechanically from the sign
+#   lordships: house h from lagna L is sign (L + h - 1) mod 12.
+#     lagna_lord      lord of house 1
+#     yogakaraka      one planet owning a kendra (4, 7, 10) and a trikona (5, 9)
+#     trikona_lords   lords of houses 5 and 9
+#     dusthana_lords  lords of houses 6, 8, 12
+#     maraka_lords    lords of houses 2 and 7
+#     neutral_lords   lords of houses 3, 4, 10, 11
+# Ranking (hora_lord_rank in code): 3 yogakaraka or lagna lord; 2 trikona lord; 1 neutral lord;
+# 0 lord of dusthana/maraka houses only. Precedence, most favourable role first, is a PROJECT
+# CONVENTION chosen to reproduce the reference ranks for Kumbha lagna (a planet that is a
+# maraka lord but also owns a neutral house, like Jupiter for Kumbha, ranks 1). BPHS does not
+# prescribe a numeric rank, so the whole table is marked verify: true.
+verify: true
+lagnas:
+  - lagna: Mesha
+    lagna_lord: Mars
+    yogakaraka: null
+    trikona_lords: [Sun, Jupiter]
+    dusthana_lords: [Mars, Mercury, Jupiter]
+    maraka_lords: [Venus]
+    neutral_lords: [Moon, Mercury, Saturn]
+  - lagna: Vrishabha
+    lagna_lord: Venus
+    yogakaraka: Saturn
+    trikona_lords: [Mercury, Saturn]
+    dusthana_lords: [Mars, Jupiter, Venus]
+    maraka_lords: [Mars, Mercury]
+    neutral_lords: [Sun, Moon, Jupiter, Saturn]
+  - lagna: Mithuna
+    lagna_lord: Mercury
+    yogakaraka: null
+    trikona_lords: [Venus, Saturn]
+    dusthana_lords: [Mars, Venus, Saturn]
+    maraka_lords: [Moon, Jupiter]
+    neutral_lords: [Sun, Mars, Mercury, Jupiter]
+  - lagna: Karka
+    lagna_lord: Moon
+    yogakaraka: Mars
+    trikona_lords: [Mars, Jupiter]
+    dusthana_lords: [Mercury, Jupiter, Saturn]
+    maraka_lords: [Sun, Saturn]
+    neutral_lords: [Mars, Mercury, Venus]
+  - lagna: Simha
+    lagna_lord: Sun
+    yogakaraka: Mars
+    trikona_lords: [Mars, Jupiter]
+    dusthana_lords: [Moon, Jupiter, Saturn]
+    maraka_lords: [Mercury, Saturn]
+    neutral_lords: [Mars, Mercury, Venus]
+  - lagna: Kanya
+    lagna_lord: Mercury
+    yogakaraka: null
+    trikona_lords: [Venus, Saturn]
+    dusthana_lords: [Sun, Mars, Saturn]
+    maraka_lords: [Jupiter, Venus]
+    neutral_lords: [Moon, Mars, Mercury, Jupiter]
+  - lagna: Tula
+    lagna_lord: Venus
+    yogakaraka: Saturn
+    trikona_lords: [Mercury, Saturn]
+    dusthana_lords: [Mercury, Jupiter, Venus]
+    maraka_lords: [Mars]
+    neutral_lords: [Sun, Moon, Jupiter, Saturn]
+  - lagna: Vrischika
+    lagna_lord: Mars
+    yogakaraka: null
+    trikona_lords: [Moon, Jupiter]
+    dusthana_lords: [Mars, Mercury, Venus]
+    maraka_lords: [Jupiter, Venus]
+    neutral_lords: [Sun, Mercury, Saturn]
+  - lagna: Dhanus
+    lagna_lord: Jupiter
+    yogakaraka: null
+    trikona_lords: [Sun, Mars]
+    dusthana_lords: [Moon, Mars, Venus]
+    maraka_lords: [Mercury, Saturn]
+    neutral_lords: [Mercury, Jupiter, Venus, Saturn]
+  - lagna: Makara
+    lagna_lord: Saturn
+    yogakaraka: Venus
+    trikona_lords: [Mercury, Venus]
+    dusthana_lords: [Sun, Mercury, Jupiter]
+    maraka_lords: [Moon, Saturn]
+    neutral_lords: [Mars, Jupiter, Venus]
+  - lagna: Kumbha
+    lagna_lord: Saturn
+    yogakaraka: Venus
+    trikona_lords: [Mercury, Venus]
+    dusthana_lords: [Moon, Mercury, Saturn]
+    maraka_lords: [Sun, Jupiter]
+    neutral_lords: [Mars, Jupiter, Venus]
+  - lagna: Meena
+    lagna_lord: Jupiter
+    yogakaraka: null
+    trikona_lords: [Moon, Mars]
+    dusthana_lords: [Sun, Venus, Saturn]
+    maraka_lords: [Mars, Mercury]
+    neutral_lords: [Mercury, Jupiter, Venus, Saturn]

@@ -21,9 +21,18 @@ from hora_api.core.tables import (
     Tables,
     VarjyamTable,
 )
+from hora_api.scoring.tables import (
+    ChandraTable,
+    FunctionalEntry,
+    NameTable,
+    Quality,
+    ScoringTables,
+    TaraTable,
+)
 
 WEEKDAYS: Final = ("sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday")
 TABLE_FILES: Final = ("horas", "kalams", "durmuhurta", "varjyam", "gowri")
+SCORING_TABLE_FILES: Final = ("names", "tarabala", "chandrabala", "functional", "friendship")
 
 
 def default_data_dir() -> Path:
@@ -111,3 +120,46 @@ def load_tables(data_dir: Path | None = None) -> Tables:
     )
 
     return Tables(horas, kalam, durm, varj, gow, frozenset(unverified))
+
+
+def load_scoring_tables(data_dir: Path | None = None) -> ScoringTables:
+    root = data_dir or default_data_dir()
+    docs = {name: _read(root, name) for name in SCORING_TABLE_FILES}
+    unverified = frozenset(n for n, d in docs.items() if d.get("verify") is True)
+
+    n = docs["names"]
+    names = NameTable(tuple(n["nakshatras"]), tuple(n["rasis"]), tuple(n["planets"]))
+    if (len(names.nakshatras), len(names.rasis), len(names.planets)) != (27, 12, 7):
+        raise ValueError("names.yaml: expected 27 nakshatras, 12 rasis, 7 planets")
+
+    taras = sorted(docs["tarabala"]["taras"], key=lambda t: t["number"])
+    if [t["number"] for t in taras] != list(range(1, 10)):
+        raise ValueError("tarabala.yaml: expected taras numbered 1-9")
+    tara = TaraTable(
+        tuple(t["name"] for t in taras), tuple(cast("Quality", t["quality"]) for t in taras)
+    )
+
+    houses = docs["chandrabala"]["houses"]
+    if sorted(houses) != list(range(1, 13)):
+        raise ValueError("chandrabala.yaml: expected houses 1-12")
+    chandra = ChandraTable(tuple(cast("Quality", houses[h]) for h in range(1, 13)))
+
+    entries: dict[int, FunctionalEntry] = {}
+    for row in docs["functional"]["lagnas"]:
+        lagna = names.rasis.index(row["lagna"])
+        entries[lagna] = FunctionalEntry(
+            lagna=lagna,
+            lagna_lord=row["lagna_lord"],
+            yogakaraka=row["yogakaraka"],
+            trikona_lords=frozenset(row["trikona_lords"]),
+            dusthana_lords=frozenset(row["dusthana_lords"]),
+            maraka_lords=frozenset(row["maraka_lords"]),
+            neutral_lords=frozenset(row["neutral_lords"]),
+        )
+    if sorted(entries) != list(range(12)):
+        raise ValueError("functional.yaml: expected one entry per lagna")
+
+    friends = {p: frozenset(row["friends"]) for p, row in docs["friendship"]["planets"].items()}
+    return ScoringTables(
+        names, tara, chandra, tuple(entries[i] for i in range(12)), friends, unverified
+    )

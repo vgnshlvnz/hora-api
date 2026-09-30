@@ -1,0 +1,7 @@
+# Source: Standard Sanskrit names of the 27 nakshatras (Ashwini first), the 12 rasis (Mesha
+#   first) and the 7 classical planets, as used throughout BPHS and Muhurta Chintamani.
+#   The list position is the index used by the code (nakshatra 0-26, rasi 0-11).
+verify: false
+nakshatras: [Ashwini, Bharani, Krittika, Rohini, Mrigashira, Ardra, Punarvasu, Pushya, Ashlesha, Magha, Purva Phalguni, Uttara Phalguni, Hasta, Chitra, Swati, Vishakha, Anuradha, Jyeshtha, Mula, Purva Ashadha, Uttara Ashadha, Shravana, Dhanishta, Shatabhisha, Purva Bhadrapada, Uttara Bhadrapada, Revati]
+rasis: [Mesha, Vrishabha, Mithuna, Karka, Simha, Kanya, Tula, Vrischika, Dhanus, Makara, Kumbha, Meena]
+planets: [Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn]

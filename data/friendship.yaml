@@ -1,0 +1,12 @@
+# Source: Naisargika Maitri (natural friendship) of the seven planets, BPHS ch. 3 (verses on
+#   natural friends, enemies and neutrals). Nodes are omitted: they do not rule horas.
+# `friends` is what dasha matching uses; `enemies` and `neutrals` are kept for completeness.
+verify: false
+planets:
+  Sun:     {friends: [Moon, Mars, Jupiter], enemies: [Venus, Saturn], neutrals: [Mercury]}
+  Moon:    {friends: [Sun, Mercury], enemies: [], neutrals: [Mars, Jupiter, Venus, Saturn]}
+  Mars:    {friends: [Sun, Moon, Jupiter], enemies: [Mercury], neutrals: [Venus, Saturn]}
+  Mercury: {friends: [Sun, Venus], enemies: [Moon], neutrals: [Mars, Jupiter, Saturn]}
+  Jupiter: {friends: [Sun, Moon, Mars], enemies: [Mercury, Venus], neutrals: [Saturn]}
+  Venus:   {friends: [Mercury, Saturn], enemies: [Sun, Moon], neutrals: [Mars, Jupiter]}
+  Saturn:  {friends: [Mercury, Venus], enemies: [Sun, Moon, Mars], neutrals: [Jupiter]}
