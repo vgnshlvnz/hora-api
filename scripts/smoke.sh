@@ -8,6 +8,8 @@
 #   HORA_MCP_TOKEN   bearer token, if set on the MCP server
 #   SKIP_MCP=1       skip the MCP checks
 #   REQUIRE_AUTH=1   fail (instead of warn) if the API answers without a key
+#   FREE_KEY         a free-tier key: if set, check it gets the day card and a 403 on /v1/horas/rasi
+#                    (HORA_API_KEY must then be a paid or owner key)
 #   WATCHER_STATUS_FILE  the watcher's status file (deploy/watcher-status/watcher.json); if set,
 #                    check it is fresh and no container was given up on
 #
@@ -68,6 +70,20 @@ fi
 
 code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "${api_key[@]}" "$API/v1/profiles")
 [[ $code == 200 ]] && pass "API /v1/profiles" || fail "API /v1/profiles returned $code"
+
+# --- Tiers -------------------------------------------------------------------------------
+if [[ -n ${FREE_KEY:-} ]]; then
+  code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 -H "X-API-Key: $FREE_KEY" \
+    "$API/v1/cards/day?$QUERY")
+  [[ $code == 200 ]] && pass "free key gets the day card" || fail "free key day card returned $code"
+  body=$(curl -s -w '\n%{http_code}' --max-time 15 -H "X-API-Key: $FREE_KEY" "$API/v1/horas/rasi?$QUERY")
+  code=${body##*$'\n'}
+  if [[ $code == 403 && $body == *tier-required* ]]; then
+    pass "free key is refused on paid endpoints (403 tier-required)"
+  else
+    fail "free key on /v1/horas/rasi returned $code, expected 403 tier-required"
+  fi
+fi
 
 # --- Watcher -----------------------------------------------------------------------------
 if [[ -n ${WATCHER_STATUS_FILE:-} ]]; then
