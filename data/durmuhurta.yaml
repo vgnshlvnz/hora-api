@@ -2,6 +2,9 @@
 #   (e.g. Drik Panchang "Durmuhurta"). RECALLED FROM MEMORY, NOT CHECKED AGAINST A PRIMARY
 #   TEXT: traditions disagree, especially for Tuesday, Thursday, Saturday and for night
 #   muhurtas. Check every row against a printed Tamil panchangam before trusting it.
+#   Checked so far against Drik Panchang: Friday (Kuala Lumpur, 2026-10-30: Dur Muhurtam
+#   09:21-10:09 and 13:21-14:09, the 4th and 9th day muhurtas, and no night one). Rows with
+#   verify: true have not been checked.
 # The day (sunrise to sunset) and the night (sunset to next sunrise) are each split into
 # `parts` equal muhurtas, numbered from 1. Values are the inauspicious muhurta numbers.
 verify: true
@@ -12,5 +15,5 @@ weekdays:
   tuesday:   {verify: true, day: [4], night: [8]}
   wednesday: {verify: true, day: [8], night: []}
   thursday:  {verify: true, day: [7], night: []}
-  friday:    {verify: true, day: [4, 9], night: []}
+  friday:    {verify: false, day: [4, 9], night: []}  # checked: Drik Panchang, KL, Fri 2026-10-30
   saturday:  {verify: true, day: [1], night: []}
