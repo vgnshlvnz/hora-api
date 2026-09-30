@@ -3,7 +3,7 @@
 ## Stage 1: query API (current)
 - [x] astro-core: sunrise/sunset, nakshatra/rasi/tithi transitions
 - [x] hora-engine: horas, kalams, durmuhurta, varjyam, gowri
-- [~] personal-scoring: tarabala, chandrabala, hora lord rank, dasha
+- [x] personal-scoring: tarabala, chandrabala, hora lord rank, dasha
 - [ ] rasi-scoring: 12 x 24 rasi matrix
 - [ ] http-api: FastAPI /v1 endpoints
 
