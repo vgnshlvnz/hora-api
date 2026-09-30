@@ -32,3 +32,10 @@ Decisions: docs/stage-4-decisions.md.
 ## Stage 5: varjyam model (complete)
 Decisions: docs/stage-5-decisions.md.
 - [x] mula-varjyam-window: let a nakshatra carry more than one varjyam window, for Mula's second one
+
+## Stage 6: sources and second checks (current)
+Decisions: docs/stage-6-decisions.md.
+- [ ] functional-source: replace the functional-nature table per lagna with a sourced one
+- [ ] second-check: check varjyam, durmuhurta and Gowri against Drik for a second lunar month (and a second place if one is named)
+- [ ] chandrabala-paksha-source: replace the placeholder paksha values for chandrabala houses 2, 5 and 9 with a sourced tradition
+Skipped: host-validation (proving the deploy files on a real host); needs a host and is not in this stage.
