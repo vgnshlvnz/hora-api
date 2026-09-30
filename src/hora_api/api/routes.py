@@ -13,6 +13,7 @@ from fastapi.security import APIKeyHeader
 from hora_api.api.cards import Card, day_card, personal_card, rasi_card
 from hora_api.api.models import (
     BlockedOut,
+    DashaOut,
     DayResponse,
     GowriOut,
     HealthResponse,
@@ -40,7 +41,7 @@ from hora_api.core import astro
 from hora_api.core import day as D
 from hora_api.core.astro import Ayanamsa
 from hora_api.core.day import Convention
-from hora_api.scoring.personal import Profile, score_horas
+from hora_api.scoring.personal import Profile, resolve_dasha, score_horas
 from hora_api.scoring.rasi import score_rasis
 
 api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
@@ -168,12 +169,18 @@ def get_day(request: Request, p: Params) -> DayResponse:
 def _personal(svc: Services, p: RequestParams, profile: Profile) -> PersonalResponse:
     cd = _computed(svc, p)
     scored = score_horas(
-        list(cd.horas), cd.day, profile, svc.tables, svc.scoring, svc.scoring_tables
+        list(cd.horas), cd.day, profile, svc.tables, svc.scoring, svc.scoring_tables, p.ayanamsa
     )
+    periods = resolve_dasha(profile, svc.tables, svc.scoring, p.ayanamsa) or []
     resp = PersonalResponse(
         meta=_meta(p),
         profile=ProfileSummary(id=profile.id, display_name=profile.display_name),
         horas=scored,
+        dasha=[
+            DashaOut(level=d.level, lord=d.lord, start=d.start, end=d.end)
+            for d in periods
+            if d.start < cd.day.next_sunrise and d.end > cd.day.sunrise
+        ],
         top=top_windows(scored, cd.day, p.tz, svc.settings.min_window_minutes),
         unverified_tables=_unverified(svc, {"durmuhurta", "varjyam", "functional"}),
     )
@@ -264,7 +271,7 @@ def card_personal(
     profile = _stored_profile(svc, profile_id)
     cd = _computed(svc, p)
     scored = score_horas(
-        list(cd.horas), cd.day, profile, svc.tables, svc.scoring, svc.scoring_tables
+        list(cd.horas), cd.day, profile, svc.tables, svc.scoring, svc.scoring_tables, p.ayanamsa
     )
     top = top_windows(scored, cd.day, p.tz, svc.settings.min_window_minutes)
     unverified = _unverified(svc, {"durmuhurta", "varjyam", "functional"})
