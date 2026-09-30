@@ -8,6 +8,8 @@
 #   HORA_MCP_TOKEN   bearer token, if set on the MCP server
 #   SKIP_MCP=1       skip the MCP checks
 #   REQUIRE_AUTH=1   fail (instead of warn) if the API answers without a key
+#   WATCHER_STATUS_FILE  the watcher's status file (deploy/watcher-status/watcher.json); if set,
+#                    check it is fresh and no container was given up on
 #
 # The day card is the golden Petaling Jaya day (Wed 2026-09-30, Lahiri, tamil), so the checks
 # assert known values; they do not depend on today's date.
@@ -66,6 +68,34 @@ fi
 
 code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "${api_key[@]}" "$API/v1/profiles")
 [[ $code == 200 ]] && pass "API /v1/profiles" || fail "API /v1/profiles returned $code"
+
+# --- Watcher -----------------------------------------------------------------------------
+if [[ -n ${WATCHER_STATUS_FILE:-} ]]; then
+  if [[ -r $WATCHER_STATUS_FILE ]]; then
+    verdict=$(python3 - "$WATCHER_STATUS_FILE" <<'PY'
+import json, sys, time
+d = json.load(open(sys.argv[1]))
+age = time.time() - d["updated_epoch"]
+stale = age > 3 * d["policy"]["interval_seconds"]
+gave_up = [n for n, s in d["services"].items() if s["state"] == "gave_up"]
+if d.get("docker_error"):
+    print("FAIL|watcher cannot reach Docker: " + d["docker_error"])
+elif stale:
+    print("FAIL|watcher status is stale (%.0fs old)" % age)
+elif gave_up:
+    print("FAIL|watcher gave up restarting: " + ", ".join(gave_up))
+else:
+    print("PASS|watcher status fresh; restarts in window: " + str(sum(s["restarts_in_window"] for s in d["services"].values())))
+PY
+)
+    case ${verdict%%|*} in
+      PASS) pass "${verdict#*|}" ;;
+      *) fail "${verdict#*|}" ;;
+    esac
+  else
+    fail "WATCHER_STATUS_FILE $WATCHER_STATUS_FILE is not readable"
+  fi
+fi
 
 # --- MCP ---------------------------------------------------------------------------------
 if [[ ${SKIP_MCP:-0} != 1 ]]; then
