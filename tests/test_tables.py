@@ -58,4 +58,5 @@ def test_scoring_tables_load_and_report_unverified() -> None:
     assert len(t.names.nakshatras) == 27 and t.names.rasis[10] == "Kumbha"
     assert len(t.functional) == 12 and t.functional[10].yogakaraka == "Venus"
     assert "Jupiter" in t.friends["Sun"]
-    assert t.unverified == {"functional"}
+    assert t.unverified == {"functional", "hora_generic"}
+    assert set(t.hora_generic) == set(t.names.planets)

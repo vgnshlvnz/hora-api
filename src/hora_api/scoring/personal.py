@@ -264,7 +264,7 @@ def _overlap(a_start: datetime, a_end: datetime, b_start: datetime, b_end: datet
     return max(0.0, (min(a_end, b_end) - max(a_start, b_start)).total_seconds())
 
 
-def _pieces(hora: Hora, spans: Sequence[MoonSpan]) -> list[tuple[int, datetime, datetime]]:
+def moon_pieces(hora: Hora, spans: Sequence[MoonSpan]) -> list[tuple[int, datetime, datetime]]:
     """(index, start, end) of each Moon span inside the hora, in time order."""
     return [
         (s.index, max(s.start, hora.start), min(s.end, hora.end))
@@ -273,7 +273,7 @@ def _pieces(hora: Hora, spans: Sequence[MoonSpan]) -> list[tuple[int, datetime, 
     ]
 
 
-def _majority(
+def majority_piece(
     pieces: list[tuple[int, datetime, datetime]], clean: Sequence[Interval], hora: Hora
 ) -> int:
     """Position of the piece covering most of the hora's clean time (whole hora if none)."""
@@ -306,18 +306,18 @@ def score_horas(
             {r for w in blocked if w.start < hora.end and w.end > hora.start for r in w.reasons}
         )
 
-        tara_pieces = _pieces(hora, day.nakshatra_spans)
+        tara_pieces = moon_pieces(hora, day.nakshatra_spans)
         taras = [tarabala(profile.janma_nakshatra, i, st) for i, _, _ in tara_pieces]
-        used_t = _majority(tara_pieces, clean, hora)
+        used_t = majority_piece(tara_pieces, clean, hora)
         tara_change = (
             TaraChange(at=tara_pieces[1][1], before=taras[0], after=taras[-1])
             if len(taras) > 1
             else None
         )
 
-        chandra_pieces = _pieces(hora, day.rasi_spans)
+        chandra_pieces = moon_pieces(hora, day.rasi_spans)
         chandras = [chandrabala(profile.janma_rasi, i, st) for i, _, _ in chandra_pieces]
-        used_c = _majority(chandra_pieces, clean, hora)
+        used_c = majority_piece(chandra_pieces, clean, hora)
         chandra_change = (
             ChandraChange(at=chandra_pieces[1][1], before=chandras[0], after=chandras[-1])
             if len(chandras) > 1
