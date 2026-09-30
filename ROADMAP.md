@@ -31,4 +31,4 @@ Decisions: docs/stage-4-decisions.md.
 
 ## Stage 5: varjyam model (current)
 Decisions: docs/stage-5-decisions.md.
-- [ ] mula-varjyam-window: let a nakshatra carry more than one varjyam window, for Mula's second one
+- [~] mula-varjyam-window: let a nakshatra carry more than one varjyam window, for Mula's second one
