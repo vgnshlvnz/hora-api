@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# Enforce: conventional-commit subject + Stage:/Feature: trailers (merge commits included).
+set -u
+
+msg_file=$1
+git_dir=$(git rev-parse --git-dir)
+
+# Message without comment lines.
+body=$(grep -v '^#' "$msg_file")
+subject=$(printf '%s\n' "$body" | sed -n '/./{p;q;}')
+trailers=$(printf '%s\n' "$body" | git interpret-trailers --parse)
+
+types='feat|fix|test|refactor|docs|chore|data|merge|release'
+errors=()
+
+if ! [[ $subject =~ ^($types)\([a-z0-9][a-z0-9-]*\):\ .+ ]]; then
+  errors+=("subject must be 'type(scope): summary' (types: ${types//|/, }); got: ${subject:-<empty>}")
+fi
+
+trailer_value() { printf '%s\n' "$trailers" | sed -n "s/^$1:[[:space:]]*//p" | tail -n1; }
+
+stage=$(trailer_value Stage)
+feature=$(trailer_value Feature)
+[[ $stage =~ ^[0-9]+$ ]] || errors+=("missing or invalid 'Stage: <number>' trailer")
+[[ $feature =~ ^[a-z0-9][a-z0-9-]*$ ]] || errors+=("missing or invalid 'Feature: <name>' trailer")
+
+# A commit that changes a classical table must cite its source (not for merges).
+if [[ ! -f $git_dir/MERGE_HEAD ]] && git diff --cached --name-only | grep -Eq '^data/.*\.ya?ml$'; then
+  [[ -n $(trailer_value Source) ]] || errors+=("data/*.yaml changed: add a 'Source: <text/reference>' trailer")
+fi
+
+if ((${#errors[@]})); then
+  {
+    echo "commit-msg: commit rejected"
+    for e in "${errors[@]}"; do echo "  - $e"; done
+    cat <<'FORMAT'
+
+Expected format:
+
+  type(scope): summary
+
+  optional body
+
+  Stage: 1
+  Feature: <feature>
+  Source: <text/reference>      (only when a data/*.yaml table changes)
+
+Add trailers with:
+  git commit --trailer "Stage: 1" --trailer "Feature: <feature>"
+Merge commits: git merge --no-ff ... -m "merge(sN): <feature>" -m $'Stage: N\nFeature: <feature>'
+FORMAT
+  } >&2
+  exit 1
+fi
