@@ -18,7 +18,14 @@ the detail. Decisions:
 - **Topology:** OpenClaw runs on the same machine or LAN as the API and MCP server. The API is
   not exposed to the internet, so the `tls-proxy` feature is skipped for now.
 - **Gating:** enforced in both places. OpenClaw decides who may ask; the API also enforces
-  tiers. That adds a feature, `api-tiers` (scope to be defined below).
+  tiers. That adds a feature, `api-tiers`. Its decisions:
+
+  - **Free tier:** `GET /v1/day` and `GET /v1/cards/day`. Paid: `/v1/horas/rasi`,
+    `/v1/cards/rasi`, `/v1/horas/personal` (GET and POST), `/v1/cards/personal`, `/v1/profiles`.
+  - **Free key on a paid endpoint:** a 403 problem with an upgrade message, no reduced response.
+  - **Where the tier comes from:** per-subscriber keys in a keys file outside the repo (stored
+    hashed), revoked by editing the file; the MCP server can pass each caller's own key through.
+  - **Profiles:** each key lists the stored profile ids it may use.
 
 Open questions this raises (none answered here):
 

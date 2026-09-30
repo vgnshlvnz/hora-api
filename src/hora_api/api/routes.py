@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hmac
 from datetime import UTC, date, datetime
 from typing import Annotated, Any
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
@@ -11,6 +10,7 @@ from fastapi import APIRouter, Depends, Query, Request, Security
 from fastapi.security import APIKeyHeader
 
 from hora_api.api.cards import Card, day_card, personal_card, rasi_card
+from hora_api.api.keys import LOCAL, KeyFileError, Principal
 from hora_api.api.models import (
     BlockedOut,
     DashaOut,
@@ -47,7 +47,8 @@ from hora_api.scoring.rasi import score_rasis
 api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 
 _PROBLEMS: dict[int | str, dict[str, Any]] = {
-    401: {"model": ProblemDetail, "description": "Missing or invalid X-API-Key"},
+    401: {"model": ProblemDetail, "description": "Missing, invalid or revoked X-API-Key"},
+    403: {"model": ProblemDetail, "description": "The key's tier does not allow this endpoint"},
     422: {"model": ProblemDetail, "description": "Invalid parameters"},
 }
 
@@ -57,18 +58,42 @@ def services(request: Request) -> Services:
     return svc
 
 
-def require_api_key(
+def authenticate(
     request: Request, key: Annotated[str | None, Security(api_key_header)] = None
-) -> None:
-    """Checks X-API-Key against API_KEYS. Authentication is off when API_KEYS is empty."""
-    allowed = services(request).settings.key_set
-    if not allowed:
-        return
-    if key is None or not any(hmac.compare_digest(key, k) for k in allowed):
+) -> Principal:
+    """Identify the caller from X-API-Key. Authentication is off when no key is configured."""
+    keys = services(request).keys
+    try:
+        if not keys.auth_required():
+            request.state.principal_id = LOCAL.id
+            return LOCAL
+        principal = keys.lookup(key)
+    except KeyFileError as e:  # fail closed: a broken keys file never opens the API
+        raise ProblemError(
+            503, "Keys unavailable", "The keys file could not be loaded.",
+            type_="urn:hora-api:problem:keys-unavailable",
+        ) from e  # fmt: skip
+    if principal is None:
         raise ProblemError(
             401, "Unauthorized", "A valid X-API-Key header is required.",
             type_="urn:hora-api:problem:unauthorized", headers={"WWW-Authenticate": "ApiKey"},
         )  # fmt: skip
+    request.state.principal_id = principal.id
+    return principal
+
+
+Caller = Annotated[Principal, Depends(authenticate)]
+
+
+def require_paid(caller: Caller) -> Principal:
+    """Refuse free keys on the endpoints that need a subscription."""
+    if not caller.is_paid:
+        raise ProblemError(
+            403, "Paid tier required",
+            "This endpoint needs a paid subscription; your key is on the free tier.",
+            type_="urn:hora-api:problem:tier-required", tier=caller.tier, required_tier="paid",
+        )  # fmt: skip
+    return caller
 
 
 def request_params(
@@ -126,7 +151,8 @@ def _unverified(svc: Services, used: set[str]) -> list[str]:
     return sorted(used & known)
 
 
-router = APIRouter(prefix="/v1", dependencies=[Depends(require_api_key)], responses=_PROBLEMS)
+router = APIRouter(prefix="/v1", dependencies=[Depends(authenticate)], responses=_PROBLEMS)
+PAID = [Depends(require_paid)]
 
 
 @router.get("/day", response_model=DayResponse, summary="Panchangam day")
@@ -187,7 +213,7 @@ def _personal(svc: Services, p: RequestParams, profile: Profile) -> PersonalResp
     return localise(resp, p.tz)
 
 
-def _stored_profile(svc: Services, profile_id: str) -> Profile:
+def _stored_profile(svc: Services, profile_id: str, caller: Principal) -> Profile:
     try:
         profiles = svc.profiles.get()
     except ProfileFileError as e:
@@ -196,7 +222,7 @@ def _stored_profile(svc: Services, profile_id: str) -> Profile:
             type_="urn:hora-api:problem:profiles-unavailable",
         ) from e  # fmt: skip
     profile = profiles.get(profile_id)
-    if profile is None:
+    if profile is None or not caller.can_use(profile_id):  # same answer: no existence leak
         raise ProblemError(
             404, "Profile not found", f"No profile with id {profile_id!r}.",
             type_="urn:hora-api:problem:profile-not-found",
@@ -205,26 +231,35 @@ def _stored_profile(svc: Services, profile_id: str) -> Profile:
 
 
 @router.get(
-    "/horas/personal", response_model=PersonalResponse, summary="Scored horas for a stored profile"
+    "/horas/personal",
+    response_model=PersonalResponse,
+    summary="Scored horas for a stored profile",
+    dependencies=PAID,
 )
 def personal_get(
     request: Request,
     p: Params,
+    caller: Caller,
     profile_id: Annotated[str, Query(description="Id from GET /v1/profiles")],
 ) -> PersonalResponse:
     svc = services(request)
-    return _personal(svc, p, _stored_profile(svc, profile_id))
+    return _personal(svc, p, _stored_profile(svc, profile_id, caller))
 
 
 @router.post(
-    "/horas/personal", response_model=PersonalResponse, summary="Scored horas for an inline profile"
+    "/horas/personal",
+    response_model=PersonalResponse,
+    summary="Scored horas for an inline profile",
+    dependencies=PAID,
 )
 def personal_post(request: Request, p: Params, profile: Profile) -> PersonalResponse:
     """For clients that do not store profiles. Nothing in the body is stored."""
     return _personal(services(request), p, profile)
 
 
-@router.get("/horas/rasi", response_model=RasiResponse, summary="12 x 24 rasi matrix")
+@router.get(
+    "/horas/rasi", response_model=RasiResponse, summary="12 x 24 rasi matrix", dependencies=PAID
+)
 def rasi_matrix(request: Request, p: Params) -> RasiResponse:
     """Every rasi against every hora by chandrabala alone, plus per-rasi day percentages."""
     svc = services(request)
@@ -248,7 +283,9 @@ def card_day(request: Request, p: Params) -> Card:
     return day_card(p, cd, svc.tables, svc.scoring_tables.names, unverified)
 
 
-@router.get("/cards/rasi", response_model=Card, summary="Rasi overview chat card")
+@router.get(
+    "/cards/rasi", response_model=Card, summary="Rasi overview chat card", dependencies=PAID
+)
 def card_rasi(request: Request, p: Params) -> Card:
     """Client-neutral card: Chandrashtama rasis, best rasis and all twelve day percentages."""
     svc = services(request)
@@ -260,15 +297,18 @@ def card_rasi(request: Request, p: Params) -> Card:
     return rasi_card(p, cd, matrix, svc.scoring_tables.names, _unverified(svc, used))
 
 
-@router.get("/cards/personal", response_model=Card, summary="Personal windows chat card")
+@router.get(
+    "/cards/personal", response_model=Card, summary="Personal windows chat card", dependencies=PAID
+)
 def card_personal(
     request: Request,
     p: Params,
+    caller: Caller,
     profile_id: Annotated[str, Query(description="Id from GET /v1/profiles")],
 ) -> Card:
     """Client-neutral card: best windows, why horas are blocked, and tara/chandra for a profile."""
     svc = services(request)
-    profile = _stored_profile(svc, profile_id)
+    profile = _stored_profile(svc, profile_id, caller)
     cd = _computed(svc, p)
     scored = score_horas(
         list(cd.horas), cd.day, profile, svc.tables, svc.scoring, svc.scoring_tables, p.ayanamsa
@@ -278,9 +318,11 @@ def card_personal(
     return personal_card(p, cd, profile, scored, top, svc.scoring_tables, svc.scoring, unverified)
 
 
-@router.get("/profiles", response_model=ProfilesResponse, summary="Stored profile ids")
-def list_profiles(request: Request) -> ProfilesResponse:
-    """Ids and display names only, never birth data."""
+@router.get(
+    "/profiles", response_model=ProfilesResponse, summary="Stored profile ids", dependencies=PAID
+)
+def list_profiles(request: Request, caller: Caller) -> ProfilesResponse:
+    """Ids and display names of the stored profiles this key may use; never birth data."""
     try:
         profiles = services(request).profiles.get()
     except ProfileFileError as e:
@@ -289,7 +331,11 @@ def list_profiles(request: Request) -> ProfilesResponse:
             type_="urn:hora-api:problem:profiles-unavailable",
         ) from e  # fmt: skip
     return ProfilesResponse(
-        profiles=[ProfileSummary(id=p.id, display_name=p.display_name) for p in profiles.values()]
+        profiles=[
+            ProfileSummary(id=p.id, display_name=p.display_name)
+            for p in profiles.values()
+            if caller.can_use(p.id)
+        ]
     )
 
 
@@ -304,13 +350,20 @@ def healthz() -> HealthResponse:
 
 @health.get("/readyz", response_model=ReadyResponse, responses={503: {"model": ProblemDetail}})
 def readyz(request: Request) -> ReadyResponse:
-    """Readiness: the ephemeris answers and the profiles file loads."""
+    """Readiness: the ephemeris answers and the profiles and keys files load."""
     try:
         astro.moon_state(datetime.now(UTC))
     except Exception as e:  # swisseph raises assorted errors
         raise ProblemError(
             503, "Ephemeris unavailable", "The ephemeris could not be used.",
             type_="urn:hora-api:problem:ephemeris-unavailable",
+        ) from e  # fmt: skip
+    try:
+        services(request).keys.auth_required()
+    except KeyFileError as e:
+        raise ProblemError(
+            503, "Keys unavailable", "The keys file could not be loaded.",
+            type_="urn:hora-api:problem:keys-unavailable",
         ) from e  # fmt: skip
     try:
         count = len(services(request).profiles.get())

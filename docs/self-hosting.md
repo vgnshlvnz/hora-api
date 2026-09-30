@@ -8,9 +8,11 @@ units. Pick one per machine.
 
 - Anyone on the network can read traffic, including API keys and the MCP bearer token. Do not
   expose either port to the internet, and do not port-forward them.
-- Both services therefore require credentials: `API_KEYS` for the API (`X-API-Key` header) and
-  `HORA_MCP_TOKEN` for the MCP server (`Authorization: Bearer`). The Compose file refuses to
-  start without them. The MCP server holds an API key, so its token is as sensitive as the key.
+- Both services therefore require credentials: keys for the API (`X-API-Key` header) and, for the
+  MCP server, either one shared `HORA_MCP_TOKEN` or each caller's own key (`HORA_MCP_PASSTHROUGH`).
+  The Compose file refuses to start without `API_KEYS`, and the MCP server refuses to listen
+  beyond loopback without one of its two access modes. In shared mode the MCP server holds an
+  API key, so its token is as sensitive as that key.
 - Put TLS in front later if you need it; nothing here rules that out.
 - The API answers about a date and place, and stored profiles hold a person's nakshatra, rasi
   and lagna. Treat the profiles file as personal data (see "Profiles").
@@ -34,14 +36,16 @@ units. Pick one per machine.
 
 | Variable | Used by | Meaning |
 | -------- | ------- | ------- |
-| `API_KEYS` | API | Comma-separated keys accepted in `X-API-Key` |
+| `API_KEYS` | API | Owner keys accepted in `X-API-Key` (paid tier, every profile) |
+| `KEYS_PATH` | API | Per-subscriber keys file with tiers and profile scopes (`KEYS_DIR` in Compose) |
 | `PROFILES_PATH` | API | Profiles file (systemd; Compose mounts it at `/profiles/profiles.yaml`) |
 | `DEFAULT_LAT`, `DEFAULT_LON`, `DEFAULT_TZ` | API | Place used when a request omits it |
 | `HORA_BIND`, `HORA_PORT` | systemd API unit | uvicorn interface and port |
 | `HORA_API_URL` | MCP | The API to wrap (`http://api:8000` in Compose) |
-| `HORA_API_KEY` | MCP | One of the keys in `API_KEYS` |
+| `HORA_API_KEY` | MCP | Shared mode: one of the keys in `API_KEYS` |
+| `HORA_MCP_PASSTHROUGH` | MCP | Passthrough mode: each caller's own key is the bearer token |
 | `HORA_MCP_HOST`, `HORA_MCP_PORT` | MCP | Where it listens |
-| `HORA_MCP_TOKEN` | MCP | Bearer token clients must send |
+| `HORA_MCP_TOKEN` | MCP | Shared mode: the one bearer token clients must send |
 | `HORA_MCP_ALLOWED_HOSTS` | MCP | Host values accepted, for example `hora.lan:8765`; empty disables the Host check |
 | `PROFILES_DIR`, `API_PUBLISH`, `MCP_PUBLISH` | Compose | Host directory for profiles, and publish addresses |
 | `DOCKER_GID` | Compose | Group that owns the Docker socket (`stat -c %g /var/run/docker.sock`); required |
@@ -130,6 +134,64 @@ systemctl enable --now hora-api hora-mcp hora-healthcheck.timer
   `hora-api`. It does nothing while the API is stopped on purpose.
 - **Logs:** `journalctl -u hora-api -u hora-mcp -f`. Status: `systemctl status hora-api hora-mcp`.
 
+## Subscribers, tiers and keys
+
+For serving more than one person (for example subscribers reached through an assistant such as
+OpenClaw running on the same machine or LAN) each person gets their own key.
+
+| Tier | Endpoints |
+| ---- | --------- |
+| free | `GET /v1/day`, `GET /v1/cards/day` |
+| paid | everything else: `/v1/horas/rasi`, `/v1/cards/rasi`, `/v1/horas/personal` (GET and POST), `/v1/cards/personal`, `/v1/profiles` |
+
+`/healthz` and `/readyz` need no key. A free key on a paid endpoint gets a 403 problem
+(`urn:hora-api:problem:tier-required`, with `tier` and `required_tier`). A missing, unknown or
+revoked key gets 401.
+
+**The keys file** (`KEYS_PATH`, outside the repo, mode 600) holds one entry per key. The key
+itself is never stored, only its SHA-256:
+
+```yaml
+keys:
+  - id: alice
+    hash: sha256:...
+    tier: paid
+    profiles: [alice-me, alice-partner]   # stored profile ids this key may use; "*" means all
+    revoked: false
+```
+
+Manage it with `hora-keys` (installed with the project; `uv run hora-keys ...`):
+
+```
+hora-keys --file /etc/hora-api/keys.yaml add --id alice --tier paid --profiles alice-me
+hora-keys --file /etc/hora-api/keys.yaml list          # ids, tiers, state; never keys or hashes
+hora-keys --file /etc/hora-api/keys.yaml revoke alice  # takes effect on the next request
+hora-keys --file /etc/hora-api/keys.yaml restore alice
+```
+
+`add` prints the key **once**; hand it to the subscriber and do not lose it, because it cannot be
+shown again. The file is re-read when it changes, so no restart is needed to add, downgrade or
+revoke. With Compose the keys directory is mounted read-only, so run `hora-keys` on the host
+against `deploy/keys/keys.yaml` (or wherever `KEYS_DIR` points).
+
+- **Profile scope.** A key sees and uses only the stored profiles it lists. Anything else looks
+  exactly like a profile that does not exist (404). A paid key with no `profiles` can still send
+  an inline profile with `POST /v1/horas/personal`; nothing in the body is stored.
+- **Owner keys.** Keys in `API_KEYS` keep working as owner keys (paid, every profile), for you or
+  an admin tool.
+- **Authentication is on as soon as any key exists** (in `API_KEYS` or the file, even a revoked
+  one). If the keys file cannot be read, requests get 503 rather than being let through, and
+  `/readyz` fails.
+- **Logs** show the key's `id`, never the key.
+
+**Through the MCP server.** Set `HORA_MCP_PASSTHROUGH=true` (and drop `HORA_MCP_TOKEN` and
+`HORA_API_KEY`): each caller sends its own hora-api key as its bearer token, the MCP server
+forwards it as `X-API-Key`, and hora-api applies that caller's tier and profile scope. The MCP
+server only insists that a bearer token is present; hora-api decides whether it is valid. In shared
+mode (`HORA_MCP_TOKEN`) every caller behind the token gets the rights of the one upstream key.
+The assistant that fronts your subscribers must hold each subscriber's key and present the right
+one per request; deciding who is a subscriber stays with it.
+
 ## Profiles
 
 The API reads profiles from `PROFILES_PATH` and reloads the file when it changes, so edits need
@@ -172,7 +234,9 @@ HORA_MCP_URL=http://hora.lan:8765/mcp HORA_MCP_TOKEN=... scripts/smoke.sh
 It checks `/healthz` and `/readyz`, that a request without a key is rejected, the golden
 Petaling Jaya day card (sunrise 07:02, Bharani to Krittika), the profiles list, and over MCP:
 `initialize`, `tools/list`, a `hora_day_card` call, and that the token is enforced. It exits 1 if
-anything fails. Set `REQUIRE_AUTH=1` to fail when the API answers without a key, or `SKIP_MCP=1`.
+anything fails. Set `REQUIRE_AUTH=1` to fail when the API answers without a key, `SKIP_MCP=1`, or `FREE_KEY=...`
+(with a paid or owner key in `HORA_API_KEY`) to check that a free key gets the day card and a 403 on
+paid endpoints.
 
 ## Upgrade and roll back
 
@@ -198,7 +262,10 @@ Configuration and profiles live outside the checkout, so they are unaffected.
 | Symptom | Likely cause |
 | ------- | ------------ |
 | Compose stops with "required variable ... is missing" | `deploy/.env` lacks `API_KEYS`, `HORA_API_KEY`, `HORA_MCP_TOKEN` or `PROFILES_DIR` |
-| API 401 | Missing or wrong `X-API-Key` |
+| API 401 | Missing, wrong or revoked `X-API-Key` |
+| API 403 `tier-required` | A free key on a paid endpoint; upgrade the key with `hora-keys` |
+| API 503 `keys-unavailable` | The keys file is unreadable or invalid YAML; requests fail closed until it is fixed |
+| Profile 404 for a profile that exists | The key's `profiles` list does not include it |
 | MCP 401 | Missing or wrong bearer token |
 | MCP 421 (misdirected request) | The name clients use is not in `HORA_MCP_ALLOWED_HOSTS` (include the port) |
 | `/readyz` 503 | Profiles file missing permissions, or invalid YAML; see the API log |

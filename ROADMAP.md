@@ -22,5 +22,5 @@ Decisions: docs/stage-3-decisions.md.
 - [x] paksha-chandrabala: shukla-paksha handling for chandrabala houses 2, 5 and 9
 - [x] personal-card: personal-windows chat card and MCP tool
 - [x] docker-autorestart: restart Docker containers that fail their health check
-- [ ] api-tiers: per-subscriber API keys with tiers (summary vs full detail) and revocation; scope to be defined
+- [x] api-tiers: per-subscriber API keys with tiers (free: day; paid: rasi, personal, profiles), profile scopes and revocation
 Skipped: tls-proxy (TLS reverse proxy); not needed while OpenClaw runs on the same machine or LAN. Revisit if the API is exposed beyond the LAN.

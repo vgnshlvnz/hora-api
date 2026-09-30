@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from datetime import date, datetime, time, timedelta
 from zoneinfo import ZoneInfo
 
+from hora_api.api.keys import KeyStore
 from hora_api.api.models import TopWindow, TopWindows
 from hora_api.api.profiles import ProfileStore
 from hora_api.api.settings import ApiSettings
@@ -81,6 +82,7 @@ class Services:
     scoring_tables: ScoringTables
     scoring: ScoringSettings
     profiles: ProfileStore
+    keys: KeyStore
     cache: DayCache
 
 

@@ -84,3 +84,11 @@ Scoring can include a dasha component. A profile supplies it in one of two ways:
 bhukti periods are computed using the Moon's longitude then, in the request's ayanamsa. Year length
 is `HORA_SCORING_DASHA_YEAR_DAYS` (default 365.25). `/v1/horas/personal` lists the periods that
 overlap the day in `dasha`. The birth time is never returned.
+
+## Keys and tiers
+
+By default the API needs no key. Set `API_KEYS` (owner keys) and/or a keys file (`KEYS_PATH`,
+managed with `hora-keys`) and every `/v1` request needs `X-API-Key`. A key file entry has a tier:
+`free` keys may use the day endpoints only; `paid` keys may use everything, limited to the stored
+profiles their entry lists. Free keys get a 403 problem on paid endpoints. See
+`docs/self-hosting.md`.
