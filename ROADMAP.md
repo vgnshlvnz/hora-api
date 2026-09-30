@@ -24,3 +24,7 @@ Decisions: docs/stage-3-decisions.md.
 - [x] docker-autorestart: restart Docker containers that fail their health check
 - [x] api-tiers: per-subscriber API keys with tiers (free: day; paid: rasi, personal, profiles), profile scopes and revocation
 Skipped: tls-proxy (TLS reverse proxy); not needed while OpenClaw runs on the same machine or LAN. Revisit if the API is exposed beyond the LAN.
+
+## Stage 4: table accuracy follow-up (current)
+Decisions: docs/stage-4-decisions.md.
+- [ ] gowri-verification: replace the Gowri Panchangam table with Drik Panchang's (the recalled cycle was wrong) and fix the Uthi nature
