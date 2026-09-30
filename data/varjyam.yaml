@@ -1,0 +1,36 @@
+# Source: Tyajya / Varjyam ghatikas per nakshatra, Muhurta Chintamani (Tyajya table) as
+#   reproduced in common panchangams (e.g. Drik Panchang "Varjyam"). RECALLED FROM MEMORY,
+#   NOT CHECKED AGAINST A PRIMARY TEXT; verify each start ghati before trusting it.
+# Varjyam starts `start_ghati` ghatikas into the nakshatra (of `ghatikas_per_nakshatra` in
+# total) and lasts `duration_ghatikas`. Both are scaled to the nakshatra's actual duration.
+verify: true
+ghatikas_per_nakshatra: 60
+duration_ghatikas: 4
+nakshatras:
+  - {name: Ashwini,           start_ghati: 50}
+  - {name: Bharani,           start_ghati: 24}
+  - {name: Krittika,          start_ghati: 30}
+  - {name: Rohini,            start_ghati: 40}
+  - {name: Mrigashira,        start_ghati: 14}
+  - {name: Ardra,             start_ghati: 11}
+  - {name: Punarvasu,         start_ghati: 30}
+  - {name: Pushya,            start_ghati: 20}
+  - {name: Ashlesha,          start_ghati: 32}
+  - {name: Magha,             start_ghati: 30}
+  - {name: Purva Phalguni,    start_ghati: 20}
+  - {name: Uttara Phalguni,   start_ghati: 18}
+  - {name: Hasta,             start_ghati: 22}
+  - {name: Chitra,            start_ghati: 20}
+  - {name: Swati,             start_ghati: 14}
+  - {name: Vishakha,          start_ghati: 14}
+  - {name: Anuradha,          start_ghati: 10}
+  - {name: Jyeshtha,          start_ghati: 14}
+  - {name: Mula,              start_ghati: 20}
+  - {name: Purva Ashadha,     start_ghati: 24}
+  - {name: Uttara Ashadha,    start_ghati: 20}
+  - {name: Shravana,          start_ghati: 10}
+  - {name: Dhanishta,         start_ghati: 10}
+  - {name: Shatabhisha,       start_ghati: 18}
+  - {name: Purva Bhadrapada,  start_ghati: 16}
+  - {name: Uttara Bhadrapada, start_ghati: 24}
+  - {name: Revati,            start_ghati: 30}
