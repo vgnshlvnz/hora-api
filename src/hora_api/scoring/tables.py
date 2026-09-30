@@ -44,4 +44,5 @@ class ScoringTables:
     chandra: ChandraTable
     functional: tuple[FunctionalEntry, ...]  # indexed by lagna
     friends: dict[str, frozenset[str]]  # planet -> natural friends
+    hora_generic: dict[str, float]  # planet -> generic 0-1 favourability (rasi-scoring)
     unverified: frozenset[str]

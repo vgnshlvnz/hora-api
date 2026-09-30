@@ -32,7 +32,14 @@ from hora_api.scoring.tables import (
 
 WEEKDAYS: Final = ("sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday")
 TABLE_FILES: Final = ("horas", "kalams", "durmuhurta", "varjyam", "gowri")
-SCORING_TABLE_FILES: Final = ("names", "tarabala", "chandrabala", "functional", "friendship")
+SCORING_TABLE_FILES: Final = (
+    "names",
+    "tarabala",
+    "chandrabala",
+    "functional",
+    "friendship",
+    "hora_generic",
+)
 
 
 def default_data_dir() -> Path:
@@ -160,6 +167,15 @@ def load_scoring_tables(data_dir: Path | None = None) -> ScoringTables:
         raise ValueError("functional.yaml: expected one entry per lagna")
 
     friends = {p: frozenset(row["friends"]) for p, row in docs["friendship"]["planets"].items()}
+    hora_generic = {p: float(v) for p, v in docs["hora_generic"]["lords"].items()}
+    if set(hora_generic) != set(names.planets):
+        raise ValueError("hora_generic.yaml: expected a value for each of the 7 planets")
     return ScoringTables(
-        names, tara, chandra, tuple(entries[i] for i in range(12)), friends, unverified
+        names,
+        tara,
+        chandra,
+        tuple(entries[i] for i in range(12)),
+        friends,
+        hora_generic,
+        unverified,
     )
