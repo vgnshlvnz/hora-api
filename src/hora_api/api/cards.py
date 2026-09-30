@@ -14,12 +14,14 @@ from zoneinfo import ZoneInfo
 
 from pydantic import BaseModel
 
+from hora_api.api.models import TopWindow, TopWindows
 from hora_api.api.service import ComputedDay, RequestParams
 from hora_api.core import astro
 from hora_api.core import day as D
 from hora_api.core.tables import Tables
+from hora_api.scoring.personal import Profile, ScoredHora, chandrabala, tarabala
 from hora_api.scoring.rasi import RasiMatrix
-from hora_api.scoring.tables import NameTable
+from hora_api.scoring.tables import NameTable, Quality, ScoringTables
 
 Tone = Literal["good", "bad", "neutral"]
 
@@ -29,6 +31,7 @@ _REASON_LABELS = {
     D.REASON_GULIKA: "Gulika kalam",
     D.REASON_DURMUHURTA: "Durmuhurta",
     D.REASON_VARJYAM: "Varjyam",
+    D.REASON_CHANDRASHTAMA: "Chandrashtama",
 }
 
 
@@ -39,13 +42,15 @@ class CardRow(BaseModel):
 
 
 class CardSection(BaseModel):
-    id: str  # stable: sun, moon, avoid, nalla_neram, horas (day); chandrashtama, best, all (rasi)
+    # Stable ids. Day: sun, moon, avoid, nalla_neram, horas. Rasi: chandrashtama, best, all.
+    # Personal: top, blocked, tara_chandra.
+    id: str
     title: str
     rows: list[CardRow]
 
 
 class Card(BaseModel):
-    kind: Literal["day", "rasi"]
+    kind: Literal["day", "rasi", "personal"]
     title: str
     subtitle: str
     sections: list[CardSection]
@@ -247,6 +252,102 @@ def rasi_card(
         title=_title("Rasis · ", p.date),
         subtitle=_subtitle(p),
         sections=[s for s in (chandrashtama, best, everything) if s.rows],
+        footer=_footer(unverified),
+        unverified_tables=unverified,
+    )
+
+
+def _ordinal(n: int) -> str:
+    suffix = "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
+
+
+_QUALITY_TONE: dict[Quality, Tone] = {
+    "good": "good",
+    "bad": "bad",
+    "neutral": "neutral",
+    "conditional": "neutral",
+}
+
+
+def _score(score: float) -> str:
+    return f"{score:g}"
+
+
+def personal_card(
+    p: RequestParams,
+    cd: ComputedDay,
+    profile: Profile,
+    scored: list[ScoredHora],
+    top: TopWindows,
+    tables: ScoringTables,
+    unverified: list[str],
+) -> Card:
+    """Best windows, why horas are blocked, and the day's tarabala and chandrabala."""
+    clock = _Clock(p.tz, p.date)
+    day = cd.day
+
+    def top_row(label: str, w: TopWindow | None) -> CardRow:
+        if w is None:
+            return CardRow(label=label, value="none")
+        return CardRow(
+            label=label,
+            value=f"{clock.span(w.start, w.end)} {w.lord} ({_score(w.score)})",
+            tone="good",
+        )
+
+    best = CardSection(
+        id="top",
+        title="Best windows",
+        rows=[
+            top_row("Best overall", top.best_overall),
+            top_row("Best before noon", top.best_before_noon),
+            top_row("Best after sunset", top.best_after_sunset),
+        ],
+    )
+
+    blocked = CardSection(
+        id="blocked",
+        title="Fully blocked horas",
+        rows=[
+            CardRow(
+                label=clock.span(h.start, h.end),
+                value=f"{h.lord} — {', '.join(_REASON_LABELS[r] for r in h.blocked_reasons)}",
+                tone="bad",
+            )
+            for h in scored
+            if h.score is None
+        ],
+    )
+
+    tara_rows = []
+    for span in day.nakshatra_spans:
+        t = tarabala(profile.janma_nakshatra, span.index, tables)
+        tara_rows.append(
+            CardRow(
+                label=f"Tarabala {_span_words(span.start, span.end, day, clock)}",
+                value=f"{t.name} ({_ordinal(t.number)}, {t.quality})",
+                tone=_QUALITY_TONE[t.quality],
+            )
+        )
+    chandra_rows = []
+    for span in day.rasi_spans:
+        c = chandrabala(profile.janma_rasi, span.index, tables)
+        note = "Chandrashtama" if c.house == 8 else c.quality
+        chandra_rows.append(
+            CardRow(
+                label=f"Chandrabala {_span_words(span.start, span.end, day, clock)}",
+                value=f"{_ordinal(c.house)} house ({note})",
+                tone=_QUALITY_TONE[c.quality],
+            )
+        )
+    moon = CardSection(id="tara_chandra", title="Tara and chandra", rows=tara_rows + chandra_rows)
+
+    return Card(
+        kind="personal",
+        title=_title(f"{profile.display_name} · ", p.date),
+        subtitle=_subtitle(p),
+        sections=[s for s in (best, blocked, moon) if s.rows],
         footer=_footer(unverified),
         unverified_tables=unverified,
     )

@@ -10,7 +10,7 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from fastapi import APIRouter, Depends, Query, Request, Security
 from fastapi.security import APIKeyHeader
 
-from hora_api.api.cards import Card, day_card, rasi_card
+from hora_api.api.cards import Card, day_card, personal_card, rasi_card
 from hora_api.api.models import (
     BlockedOut,
     DayResponse,
@@ -180,15 +180,7 @@ def _personal(svc: Services, p: RequestParams, profile: Profile) -> PersonalResp
     return localise(resp, p.tz)
 
 
-@router.get(
-    "/horas/personal", response_model=PersonalResponse, summary="Scored horas for a stored profile"
-)
-def personal_get(
-    request: Request,
-    p: Params,
-    profile_id: Annotated[str, Query(description="Id from GET /v1/profiles")],
-) -> PersonalResponse:
-    svc = services(request)
+def _stored_profile(svc: Services, profile_id: str) -> Profile:
     try:
         profiles = svc.profiles.get()
     except ProfileFileError as e:
@@ -202,7 +194,19 @@ def personal_get(
             404, "Profile not found", f"No profile with id {profile_id!r}.",
             type_="urn:hora-api:problem:profile-not-found",
         )  # fmt: skip
-    return _personal(svc, p, profile)
+    return profile
+
+
+@router.get(
+    "/horas/personal", response_model=PersonalResponse, summary="Scored horas for a stored profile"
+)
+def personal_get(
+    request: Request,
+    p: Params,
+    profile_id: Annotated[str, Query(description="Id from GET /v1/profiles")],
+) -> PersonalResponse:
+    svc = services(request)
+    return _personal(svc, p, _stored_profile(svc, profile_id))
 
 
 @router.post(
@@ -247,6 +251,24 @@ def card_rasi(request: Request, p: Params) -> Card:
         {"hora_generic"} if svc.scoring.rasi_hora_generic else set()
     )
     return rasi_card(p, cd, matrix, svc.scoring_tables.names, _unverified(svc, used))
+
+
+@router.get("/cards/personal", response_model=Card, summary="Personal windows chat card")
+def card_personal(
+    request: Request,
+    p: Params,
+    profile_id: Annotated[str, Query(description="Id from GET /v1/profiles")],
+) -> Card:
+    """Client-neutral card: best windows, why horas are blocked, and tara/chandra for a profile."""
+    svc = services(request)
+    profile = _stored_profile(svc, profile_id)
+    cd = _computed(svc, p)
+    scored = score_horas(
+        list(cd.horas), cd.day, profile, svc.tables, svc.scoring, svc.scoring_tables
+    )
+    top = top_windows(scored, cd.day, p.tz, svc.settings.min_window_minutes)
+    unverified = _unverified(svc, {"durmuhurta", "varjyam", "functional"})
+    return personal_card(p, cd, profile, scored, top, svc.scoring_tables, unverified)
 
 
 @router.get("/profiles", response_model=ProfilesResponse, summary="Stored profile ids")
